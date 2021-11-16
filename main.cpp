@@ -45,83 +45,6 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	return TRUE;										// Initialization Went OK
 }
 
-float r1 = 0;
-float r2 = 0;
-float r3 = 0;
-float r4 = 0;
-float r5 = 0;
-
-void drawRobotHand() {
-	glPushMatrix();
-	glColor3f(1, 1, 0);
-
-	if (keys['A']) {
-		r1 += 1;
-	}
-
-	if (keys['S']) {
-		r2 += 1;
-	}
-
-	if (keys['D']) {
-		r3 += 1;
-	}
-
-	if (keys['F']) {
-		r4 += 1;
-	}
-
-	if (keys['G']) {
-		r5 += 1;
-	}
-
-	/* -- 1 -- */
-	glRotatef(r1, 0, 0, 1);
-
-	glBegin(GL_LINES);
-	glVertex3f(0, 0, 0);
-	glVertex3f(1, 0, 0);
-	glEnd();
-
-	/* -- 2 -- */
-	glTranslated(1, 0, 0);
-	glRotatef(r2, 0, 0, 1);
-
-	glBegin(GL_LINES);
-	glVertex3f(0, 0, 0);
-	glVertex3f(0, -1, 0);
-	glEnd();
-
-	/* -- 3 -- */
-	glTranslated(0, -1, 0);
-	glPushMatrix();
-	glRotatef(r3, 0, 0, 1);
-
-	glBegin(GL_LINES);
-	glVertex3f(0, 0, 0);
-	glVertex3f(1, -1, 0);
-	glEnd();
-
-	/* -- 4 -- */
-	glPopMatrix();
-	glRotatef(r4, 0, 0, 1);
-	glBegin(GL_LINES);
-	glVertex3f(0, 0, 0);
-	glVertex3f(-1, -1, 0);
-	glEnd();
-
-	/* -- 5 -- */
-
-	glTranslated(-1, -1, 0);
-	glRotatef(r5, 0, 0, 1);
-	glBegin(GL_LINES);
-	glVertex3f(0, 0, 0);
-	glVertex3f(1, -1, 0);
-	glEnd();
-
-	glPopMatrix();
-}
-
 void drawCircle(float cx, float cy, int radius) {
 	float z = -10;
 	glBegin(GL_TRIANGLE_FAN);
@@ -148,22 +71,16 @@ void drawSquare(bool isRed = true, float z = -6)
 }
 
 
-GLUquadric* quadric = gluNewQuadric();
-
 void DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
 	glLoadIdentity(); // Reset The Current Modelview Matrix
-	gluLookAt(
+	/*gluLookAt(
 		0, 0, 10,
 		0, 0, 0,
 		0, 1, 0
-	);
-	
-	drawRobotHand();
-		
-
+	);*/
 	
 	glFlush();
     //DO NOT REMOVE THIS
