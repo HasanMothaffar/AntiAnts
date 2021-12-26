@@ -1,8 +1,8 @@
-//***************************************************************************
-//  Camera based on Vectors
-//***************************************************************************
+#ifndef CAMERA_H
+#define CAMERA_H
 
 #include <glut.h>		
+#include "utility.h"
 #define PI 3.141592653589
 #define PIdiv180 (PI/180.0)
 
@@ -10,10 +10,6 @@
 //Note: All angles in degrees  //
 /////////////////////////////////
 
-struct Vector3dStruct  
-{
-	GLfloat x,y,z;
-};
 Vector3dStruct Vector3dCreate ( GLfloat x, GLfloat y, GLfloat z );
 Vector3dStruct NormalizeVector3d( Vector3dStruct v);
 class Camera
@@ -46,8 +42,6 @@ public:
 	void MoveDownward(GLfloat Distance);
 
 	void SetRotateX(GLfloat Angle);
-
-
 };
 
-
+#endif // !CAMERA_H

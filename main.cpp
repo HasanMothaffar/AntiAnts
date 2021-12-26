@@ -7,6 +7,8 @@
 #include "texture.h"
 #include "camera.h"
 #include "utility.h"
+#include "skybox.h"
+#include "bullet.h"
 
 using namespace std;
 
@@ -19,10 +21,6 @@ int windowWidth = 1920;
 int windowHeight = 1080;
 char *windowTitle = "Computer Screen";
 
-const float SKYBOX_WIDTH = 50.0f;
-const float SKYBOX_HEIGHT = 50.0f;
-const float SKYBOX_LENGTH = 200.0f;
-
 bool keys[256];			 // Array Used For The Keyboard Routine
 bool active = TRUE;		 // Window Active Flag Set To TRUE By Default
 bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
@@ -30,6 +28,7 @@ bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 
 Camera camera;
+Skybox skybox;
 
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The GL Window
 {
@@ -52,34 +51,14 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 	camera = Camera();
 }
 
-int circuit;
-struct Bullet
-{
-	Vector3dStruct position;
-	Vector3dStruct view;
-	float speed;
-};
+int circuit_texture;
+vector<Bullet *> bullets;
 
-vector<Bullet> bullets;
+// A vector of iterators that work on vectors of the type: vector<Bullet *>
+vector<vector<Bullet *>::iterator> toDeleteBullets;
 
 int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 {
-	
-
-Bullet b = {
-	{0, 4, -20},
-	{0, 0, -1},
-	0.001f
-};
-
-Bullet c = {
-	{0, 4, -10},
-	{0, 0, -1},
-	0.001f
-};
-
-	bullets.push_back(b);
-	bullets.push_back(c);
 	glShadeModel(GL_SMOOTH);						   // Enable Smooth Shading
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);			   // Black Background
 	glClearDepth(1.0f);								   // Depth Buffer Setup
@@ -88,13 +67,14 @@ Bullet c = {
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
 
 	glEnable(GL_TEXTURE_2D);
-	circuit = LoadTexture("assets/circuit.bmp");
+	circuit_texture = LoadTexture("assets/circuit.bmp");
+	skybox = Skybox();
 
 	return TRUE; // Initialization Went OK
 }
 
-GLfloat step = 0.1;
-GLfloat angle = 0.2;
+GLfloat step = 1;
+GLfloat angle = 1;
 
 void moveCamera()
 {
@@ -137,110 +117,15 @@ void moveCamera()
 	camera.Render();
 }
 
-void drawSkybox()
-{
-	// X Coordinates: [-SKYBOX_WIDTH, SKYBOX_WIDTH]
-	// Y Coordinates: [0, SKYBOX_LENGTH]
-	// Z Coordinates: [0, SKYBOX_HEIGHT]
-	glPushMatrix();
-
-	// Bottom
-	glBindTexture(GL_TEXTURE_2D, circuit);
-	glColor3f(1, 1, 1);
-	glBegin(GL_QUADS);
-	glTexCoord2d(0, 0);
-	glVertex3f(-SKYBOX_WIDTH, 0, 0);
-
-	glTexCoord2d(1, 0);
-	glVertex3f(SKYBOX_WIDTH, 0, 0);
-
-	glTexCoord2d(1, 1);
-	glVertex3f(SKYBOX_WIDTH, 0, -SKYBOX_LENGTH);
-
-	glTexCoord2d(0, 1);
-	glVertex3f(-SKYBOX_WIDTH, 0, -SKYBOX_LENGTH);
-	glEnd();
-
-	// Back
-	glBindTexture(GL_TEXTURE_2D, circuit);
-	glColor3f(1, 1, 1);
-	glBegin(GL_QUADS);
-	glTexCoord2d(0, 0);
-	glVertex3f(-SKYBOX_WIDTH, 0, -SKYBOX_LENGTH);
-
-	glTexCoord2d(1, 0);
-	glVertex3f(SKYBOX_WIDTH, 0, -SKYBOX_LENGTH);
-
-	glTexCoord2d(1, 1);
-	glVertex3f(SKYBOX_WIDTH, SKYBOX_HEIGHT, -SKYBOX_LENGTH);
-
-	glTexCoord2d(0, 1);
-	glVertex3f(-SKYBOX_WIDTH, SKYBOX_HEIGHT, -SKYBOX_LENGTH);
-	glEnd();
-
-	// Right
-	glBindTexture(GL_TEXTURE_2D, circuit);
-	glColor3f(1, 1, 1);
-	glBegin(GL_QUADS);
-	glTexCoord2d(0, 0);
-	glVertex3f(SKYBOX_WIDTH, 0, 0);
-
-	glTexCoord2d(1, 0);
-	glVertex3f(SKYBOX_WIDTH, 0, -SKYBOX_LENGTH);
-
-	glTexCoord2d(1, 1);
-	glVertex3f(SKYBOX_WIDTH, SKYBOX_HEIGHT, -SKYBOX_LENGTH);
-
-	glTexCoord2d(0, 1);
-	glVertex3f(SKYBOX_WIDTH, SKYBOX_HEIGHT, 0);
-	glEnd();
-
-	// Front
-	glBindTexture(GL_TEXTURE_2D, circuit);
-	glColor3f(1, 1, 1);
-	glBegin(GL_QUADS);
-	glTexCoord2d(0, 0);
-	glVertex3f(SKYBOX_WIDTH, 0, 0);
-
-	glTexCoord2d(1, 0);
-	glVertex3f(SKYBOX_WIDTH, SKYBOX_HEIGHT, 0);
-
-	glTexCoord2d(1, 1);
-	glVertex3f(-SKYBOX_WIDTH, SKYBOX_HEIGHT, 0);
-
-	glTexCoord2d(0, 1);
-	glVertex3f(-SKYBOX_WIDTH, 0, 0);
-	glEnd();
-
-	// Left
-	glBindTexture(GL_TEXTURE_2D, circuit);
-	glColor3f(1, 1, 1);
-	glBegin(GL_QUADS);
-	glTexCoord2d(0, 0);
-	glVertex3f(-SKYBOX_WIDTH, 0, 0);
-
-	glTexCoord2d(1, 0);
-	glVertex3f(-SKYBOX_WIDTH, 0, -SKYBOX_LENGTH);
-
-	glTexCoord2d(1, 1);
-	glVertex3f(-SKYBOX_WIDTH, SKYBOX_HEIGHT, -SKYBOX_LENGTH);
-
-	glTexCoord2d(0, 1);
-	glVertex3f(-SKYBOX_WIDTH, SKYBOX_HEIGHT, 0);
-	glEnd();
-
-	glPopMatrix();
-}
-
 void drawColumn(float x, float y, float z)
 {
 	const float width = 1;
 	const float length = 2;
 	const float height = 2;
 	const Color color = {
-		0.4,
-		0.4,
-		0.4};
+		1,
+		0,
+		0};
 
 	glColor3f(color.red, color.green, color.blue);
 	glPushMatrix();
@@ -281,7 +166,7 @@ void drawColumn(float x, float y, float z)
 
 void spawnAnts()
 {
-	for (float x = -SKYBOX_WIDTH + 20; x <= SKYBOX_WIDTH - 20; x += 20)
+	for (float x = -skybox.width + 20; x <= skybox.width - 20; x += 20)
 	{
 		for (float z = -50; z >= -150; z -= 50)
 		{
@@ -290,61 +175,33 @@ void spawnAnts()
 	}
 }
 
-
-
-
-//bullets.push_back(b);
-
-void shiftBullet(Bullet *bullet)
-{
-	bullet->view.x += bullet->view.x * bullet->speed;
-	bullet->view.y += bullet->view.y * bullet->speed;
-	bullet->view.z += bullet->view.z * bullet->speed;
-}
-
 void drawBullets()
 {
-	for (int i = 0; i < bullets.size(); i++)
-	{
-		glPushMatrix();
-		glColor3f(1, 0, 0);
-		glPointSize(20);
-		glBegin(GL_POINTS);
-		Vector3dStruct position = bullets[i].position;
-	 	Vector3dStruct view = bullets[i].view;
-	 	Vector3dStruct temp = { view.x + position.x, view.y + position.y, view.z + position.z };
-		glVertex3f(temp.x, temp.y, temp.z);
-		glEnd();
-		shiftBullet(&bullets[i]);
-		glPopMatrix();
-	}
-
+	for (auto bullet: bullets) bullet->draw();
 }
 
-void listenForBullets()
+void removeOutOfBoundariesBullets()
 {
-	if (keys['W'])
+	for (auto it = bullets.begin(); it != bullets.end(); it++)
 	{
-		Bullet bullet = {
-			camera.Position,
-			camera.View,
-			3.0f
-		};
-
-		bullets.push_back(bullet);
-	}
-
-	if (keys['P']) {
-		int x;
-		for (int i = 0; i < 10; i++) {
-			int y = 2 / 2;
+		if (
+			(*it)->isOutOfBoundaries(skybox)
+		)
+		{
+			toDeleteBullets.push_back(it);
 		}
 	}
+
+	for (auto it = toDeleteBullets.begin(); it != toDeleteBullets.end(); it++) {
+		bullets.erase(*it);
+	}
+
+	toDeleteBullets.clear();
 }
 
 void handleBullets()
 {
-	listenForBullets();
+	removeOutOfBoundariesBullets();
 	drawBullets();
 }
 
@@ -353,12 +210,16 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	moveCamera();			// Should be the first function call because it may contain rotations!
-	glTranslatef(0, -2, 0); // Shift the scene below a bit for a better view
-	drawSkybox();
+	glTranslatef(0, -1, 0); // Shift the scene below a bit for a better view
+	skybox.draw(circuit_texture);
+
+	glDisable(GL_TEXTURE_2D);
 	spawnAnts();
 	handleBullets();
+	glEnable(GL_TEXTURE_2D);
 
 	glFlush();
+	SwapBuffers(hDC);
 	return TRUE;
 }
 
@@ -404,13 +265,13 @@ GLvoid KillGLWindow(GLvoid) // Properly Kill The Window
 }
 
 /*	This Code Creates Our OpenGL Window.  Parameters Are:					*
-*	title			- Title To Appear At The Top Of The Window				*
-*	width			- Width Of The GL Window Or Fullscreen Mode				*
-*	height			- Height Of The GL Window Or Fullscreen Mode			*
-*	bits			- Number Of Bits To Use For Color (8/16/24/32)			*
-*	fullscreenflag	- Use Fullscreen Mode (TRUE) Or Windowed Mode (FALSE)	*/
+ *	title			- Title To Appear At The Top Of The Window				*
+ *	width			- Width Of The GL Window Or Fullscreen Mode				*
+ *	height			- Height Of The GL Window Or Fullscreen Mode			*
+ *	bits			- Number Of Bits To Use For Color (8/16/24/32)			*
+ *	fullscreenflag	- Use Fullscreen Mode (TRUE) Or Windowed Mode (FALSE)	*/
 
-BOOL CreateGLWindow(const char *title, int width, int height, int bits, bool fullscreenflag)
+BOOL CreateGLWindow(char *title, int width, int height, int bits, bool fullscreenflag)
 {
 	GLuint PixelFormat;				  // Holds The Results After Searching For A Match
 	WNDCLASS wc;					  // Windows Class Structure
@@ -456,9 +317,7 @@ BOOL CreateGLWindow(const char *title, int width, int height, int bits, bool ful
 		if (ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL)
 		{
 			// If The Mode Fails, Offer Two Options.  Quit Or Use Windowed Mode.
-			if (MessageBox(
-					NULL, "The Requested Fullscreen Mode Is Not Supported By\nYour Video Card. Use Windowed Mode Instead?",
-					"GL template", MB_YESNO | MB_ICONEXCLAMATION) == IDYES)
+			if (MessageBox(NULL, "The Requested Fullscreen Mode Is Not Supported By\nYour Video Card. Use Windowed Mode Instead?", "NeHe GL", MB_YESNO | MB_ICONEXCLAMATION) == IDYES)
 			{
 				fullscreen = FALSE; // Windowed Mode Selected.  Fullscreen = FALSE
 			}
@@ -582,8 +441,20 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 						 WPARAM wParam, // Additional Message Information
 						 LPARAM lParam) // Additional Message Information
 {
+	static PAINTSTRUCT ps;
+
 	switch (uMsg) // Check For Windows Messages
 	{
+	case WM_PAINT:
+		DrawGLScene();
+		BeginPaint(hWnd, &ps);
+		EndPaint(hWnd, &ps);
+		return 0;
+
+	case WM_TIMER:
+		DrawGLScene();
+		return 0;
+
 	case WM_ACTIVATE: // Watch For Window Activate Message
 	{
 		if (!HIWORD(wParam)) // Check Minimization State
@@ -624,7 +495,11 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 	case WM_KEYUP: // Has A Key Been Released?
 	{
 		keys[wParam] = FALSE; // If So, Mark It As FALSE
-		return 0;			  // Jump Back
+		if (wParam == VK_SPACE)
+		{
+			bullets.push_back(Bullet::createBullet(camera));
+		}
+		return 0; // Jump Back
 	}
 
 	case WM_SIZE: // Resize The OpenGL Window
@@ -653,56 +528,19 @@ int WINAPI WinMain(HINSTANCE hInstance,		// Instance
 	}
 
 	// Create Our OpenGL Window
-	if (!CreateGLWindow(windowTitle, windowWidth, windowHeight, 16, fullscreen))
+	if (!CreateGLWindow("Computer Screen", 800, 600, 16, fullscreen))
 	{
 		return 0; // Quit If Window Was Not Created
 	}
 
-	while (!done) // Loop That Runs While done=FALSE
-	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) // Is There A Message Waiting?
-		{
-			if (msg.message == WM_QUIT) // Have We Received A Quit Message?
-			{
-				done = TRUE; // If So done=TRUE
-			}
-			else // If Not, Deal With Window Messages
-			{
-				TranslateMessage(&msg); // Translate The Message
-				DispatchMessage(&msg);	// Dispatch The Message
-			}
-		}
-		else // If There Are No Messages
-		{
-			// Draw The Scene.  Watch For ESC Key And Quit Messages From DrawGLScene()
-			if (active) // Program Active?
-			{
-				if (keys[VK_ESCAPE]) // Was ESC Pressed?
-				{
-					done = TRUE; // ESC Signalled A Quit
-				}
-				else // Not Time To Quit, Update Screen
-				{
-					DrawGLScene();	  // Draw The Scene
-					SwapBuffers(hDC); // Swap Buffers (Double Buffering)
-				}
-			}
+	//Set drawing timer to 20 frame per second
+	UINT timer = SetTimer(hWnd, 0, 20, (TIMERPROC)NULL);
 
-			if (keys[VK_F1]) // Is F1 Being Pressed?
-			{
-				keys[VK_F1] = FALSE;	  // If So Make Key FALSE
-				KillGLWindow();			  // Kill Our Current Window
-				fullscreen = !fullscreen; // Toggle Fullscreen / Windowed Mode
-				// Recreate Our OpenGL Window
-				if (!CreateGLWindow("OpenGL template", windowWidth, windowHeight, 16, fullscreen))
-				{
-					return 0; // Quit If Window Was Not Created
-				}
-			}
-		}
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
 
-	// Shutdown
-	KillGLWindow();		 // Kill The Window
-	return (msg.wParam); // Exit The Program
+	return 0;
 }

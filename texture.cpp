@@ -3,21 +3,8 @@
 #include <windows.h>
 #include <gl.h>			// Header File For The OpenGL32 Library
 #include <glu.h>			// Header File For The GLu32 Library
-#include <glaux.h>		// Header File For The Glaux Library
-//#include <glut.h>
 
-//#define _CRT_SECURE_NO_DEPRECATE
-
-
-/**********************************************************
- *
- * VARIABLES DECLARATION
- *
- *********************************************************/
-
-int num_texture=-1; //Counter to keep track of the last loaded texture
-
-
+int num_texture = -1; //Counter to keep track of the last loaded texture
 
 /**********************************************************
  *

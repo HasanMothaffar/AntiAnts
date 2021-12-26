@@ -19,11 +19,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
-    <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="skybox.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="utility.h" />
   </ItemGroup>

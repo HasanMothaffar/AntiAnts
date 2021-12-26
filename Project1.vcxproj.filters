@@ -32,13 +32,13 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Skybox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,6 +50,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="skybox.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
