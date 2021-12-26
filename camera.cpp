@@ -4,7 +4,6 @@
 #include <glut.h>			// Header File For The GLut32 Library
 #include <fstream>
 #include <math.h>
-
 #include "camera.h"
 
 #include <stdlib.h>   /* for exit */

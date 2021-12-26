@@ -12,24 +12,8 @@ public:
 
 	float speed;
 
-	void draw() {
-		glPushMatrix();
-		glColor3f(0, 0, 1);
-		glPointSize(20);
-		glBegin(GL_POINTS);
-		glVertex3f(real.x, real.y, real.z);
-		glEnd();
-		shift();
-		glPopMatrix();
-	}
-
-	bool isOutOfBoundaries(const Skybox &skybox) {
-		return real.z < -skybox.length;
-	}
-
 	static Bullet* createBullet(const Camera &camera, float speed = 6.0f) {
 		Bullet * bullet = new Bullet;
-
 		bullet->position = camera.Position;
 		bullet->view = camera.View;
 		bullet->real = Vector3dCreate(
@@ -40,6 +24,30 @@ public:
 		bullet->speed = speed;
 
 		return bullet;
+	}
+
+	void draw() {
+		glPushMatrix();
+		glColor3f(0, 0, 1);
+		glPointSize(20);
+		glBegin(GL_POINTS);
+		glVertex3f(real.x, real.y, real.z);
+		glEnd();
+		shift();
+		glPopMatrix();
+	}
+	
+	/*
+		Returns whether the bullet has exceeded
+		the limits (faces) of the skybox. 
+	*/
+	bool isOutOfBoundaries(const Skybox &skybox) {
+		return (
+			real.z < -skybox.length || // Back face
+			real.z > 0 || // Front face
+			real.x > skybox.width || // Right face
+			real.x < -skybox.width // Left face
+		);
 	}
 
 private:
