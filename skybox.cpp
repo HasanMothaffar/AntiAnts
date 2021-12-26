@@ -13,30 +13,30 @@ void Skybox::draw(int texture) const {
 	// X Coordinates: [-width, width]
 	// Y Coordinates: [0, length]
 	// Z Coordinates: [0, height]
-	//glColor3f(1.0, 1.0, 1.0);
 	glPushMatrix();
 
 	// Bottom
-	//glBindTexture(GL_TEXTURE_2D, texture);
-	// rgb(155, 150, 150)
+	glDisable(GL_TEXTURE_2D);
 	Color color = toRGB(155.0f, 150.0f, 150.0f);
-	glColor3f(color.red, color.green, color.blue);
-
-		glBegin(GL_QUADS);
-		glTexCoord2d(0, 0);
+	glBegin(GL_QUADS);
+		glColor3f(color.red, color.green, color.blue);
 		glVertex3f(-width, 0, 0);
 
-		glTexCoord2d(1, 0);
+		glColor3f(color.red + 0.1, color.green + 0.1, color.blue + 0.1);
 		glVertex3f(width, 0, 0);
 
-		glTexCoord2d(1, 1);
+		glColor3f(color.red + 0.2, color.green + 0.2, color.blue + 0.2);
 		glVertex3f(width, 0, -length);
 
-		glTexCoord2d(0, 1);
+		glColor3f(color.red + 0.3, color.green + 0.3, color.blue + 0.3);
 		glVertex3f(-width, 0, -length);
+	glEnd();
 
+	glEnable(GL_TEXTURE_2D);
+
+	glColor3f(1, 1, 1);
+	glBegin(GL_QUADS);
 		// Back
-		glColor3f(1, 1, 1);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexCoord2d(0, 0);
 		glVertex3f(-width, 0, -length);
@@ -91,7 +91,7 @@ void Skybox::draw(int texture) const {
 
 		glTexCoord2d(0, 1);
 		glVertex3f(-width, height, 0);
-		glEnd();
+	glEnd();
 
-		glPopMatrix();
+	glPopMatrix();
 }
