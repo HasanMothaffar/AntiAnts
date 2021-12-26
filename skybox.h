@@ -7,10 +7,10 @@ public:
 	float height;
 	float length;
 
-	Skybox(float w = 50.0f, float h = 50.0f, float l = 200.0f) {
-		width = w;
-		height = h;
-		length = l;
+	Skybox(float width = 50.0f, float height = 50.0f, float length = 200.0f) {
+		this->width = width;
+		this->height = height;
+		this->length = length;
 	}
 
 	void draw(int texture) const
