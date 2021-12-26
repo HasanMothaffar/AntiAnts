@@ -3,6 +3,7 @@
 
 #include "utility.h"
 #include "camera.h"
+#include "skybox.h"
 
 class Bullet {
 public:
@@ -12,14 +13,14 @@ public:
 
 	float speed;
 
-	static Bullet* createBullet(const Camera &camera, float speed = 6.0f) {
+	static Bullet* createBullet(const Camera *camera, float speed = 6.0f) {
 		Bullet * bullet = new Bullet;
-		bullet->position = camera.Position;
-		bullet->view = camera.View;
+		bullet->position = camera->Position;
+		bullet->view = camera->View;
 		bullet->real = Vector3dCreate(
-			camera.Position.x + camera.View.x,
-			camera.Position.y + camera.View.y,
-			camera.Position.z + camera.View.z
+			camera->Position.x + camera->View.x,
+			camera->Position.y + camera->View.y,
+			camera->Position.z + camera->View.z
 		);
 		bullet->speed = speed;
 

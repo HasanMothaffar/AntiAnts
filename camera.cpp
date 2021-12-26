@@ -1,12 +1,8 @@
 #include <windows.h>		// Header File For Windows
 #include <gl/GL.h>				// Header File For The OpenGL32 Library
 #include <gl/glu.h>			// Header File For The GLu32 Library
-#include <glut.h>			// Header File For The GLut32 Library
-#include <fstream>
 #include <math.h>
 #include "camera.h"
-
-#include <stdlib.h>   /* for exit */
 
 Vector3dStruct operator+(Vector3dStruct v, Vector3dStruct u)
 {

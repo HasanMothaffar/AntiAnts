@@ -1,3 +1,6 @@
+#ifndef SKYBOX_H
+#define SKYBOX_H
+
 #include <gl.h> // Header File For The OpenGL32 Library
 #include "utility.h"
 
@@ -12,3 +15,5 @@ public:
 
 	void draw(int texture) const;
 };
+
+#endif // !SKYBOX_H
