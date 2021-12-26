@@ -1,8 +1,7 @@
+#include "utility.h"
+
 #ifndef CAMERA_H
 #define CAMERA_H
-
-#include <glut.h>		
-#include "utility.h"
 #define PI 3.141592653589
 #define PIdiv180 (PI/180.0)
 
