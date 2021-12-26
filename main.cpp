@@ -7,9 +7,9 @@
 #include "texture.h"
 #include "camera.h"
 #include "utility.h"
-#include "skybox.h"
 #include "bullet.h"
 #include "ant.h"
+#include "game.h"
 
 using namespace std;
 
@@ -29,7 +29,8 @@ bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 
 Camera camera;
-Skybox skybox;
+Skybox skybox = Skybox(50, 50, 200);
+Game *game;
 
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The GL Window
 {
@@ -53,24 +54,6 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 }
 
 int circuit_texture;
-vector<Bullet *> bullets;
-
-// A vector of iterators that work on vectors of the type: vector<Bullet *>
-vector<vector<Bullet *>::iterator> toDeleteBullets;
-
-vector<Ant *> ants;
-
-void loadAnts()
-{
-	for (float x = -skybox.width + 20; x <= skybox.width - 20; x += 20)
-	{
-		for (float z = -50; z >= -150; z -= 50)
-		{
-			Ant *ant = new Ant(x, 0, z);
-			ants.push_back(ant);
-		}
-	}
-}
 
 int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 {
@@ -84,8 +67,7 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 	glEnable(GL_TEXTURE_2D);
 
 	circuit_texture = LoadTexture("assets/circuit.bmp");
-	skybox = Skybox(50, 50, 200);
-	loadAnts();
+	game = new Game(&camera, &skybox);
 	return TRUE; // Initialization Went OK
 }
 
@@ -134,57 +116,13 @@ void moveCamera()
 }
 
 
-void drawBullets() {
-	for (auto bullet: bullets) bullet->draw();
-}
-
-void drawAnts() {
-	for (auto ant: ants) ant->draw();
-}
-
-void removeOutOfBoundariesBullets()
-{
-	for (auto it = bullets.begin(); it != bullets.end(); it++)
-	{
-		if (
-			(*it)->isOutOfBoundaries(skybox)
-		)
-		{
-			toDeleteBullets.push_back(it);
-		}
-	}
-
-	for (auto it = toDeleteBullets.begin(); it != toDeleteBullets.end(); it++) {
-		bullets.erase(*it);
-	}
-
-	toDeleteBullets.clear();
-}
-
-void removeShotAnts() {
-
-}
-
-void handleBullets()
-{
-	removeOutOfBoundariesBullets();
-	drawBullets();
-	removeShotAnts();
-}
-
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	moveCamera();			// Should be the first function call because it may contain rotations!
 	glTranslatef(0, -1, 0); // Shift the scene below a bit for a better view
-	skybox.draw(circuit_texture);
-
-	glDisable(GL_TEXTURE_2D);
-	drawAnts();
-	handleBullets();
-	glEnable(GL_TEXTURE_2D);
-
+	game->drawScene(circuit_texture);
 	glFlush();
 	SwapBuffers(hDC);
 	return TRUE;
@@ -464,7 +402,7 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 		keys[wParam] = FALSE; // If So, Mark It As FALSE
 		if (wParam == VK_SPACE)
 		{
-			bullets.push_back(Bullet::createBullet(camera));
+			game->shootBullet();
 		}
 		return 0; // Jump Back
 	}
