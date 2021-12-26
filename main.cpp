@@ -9,6 +9,7 @@
 #include "utility.h"
 #include "skybox.h"
 #include "bullet.h"
+#include "ant.h"
 
 using namespace std;
 
@@ -57,6 +58,20 @@ vector<Bullet *> bullets;
 // A vector of iterators that work on vectors of the type: vector<Bullet *>
 vector<vector<Bullet *>::iterator> toDeleteBullets;
 
+vector<Ant *> ants;
+
+void loadAnts()
+{
+	for (float x = -skybox.width + 20; x <= skybox.width - 20; x += 20)
+	{
+		for (float z = -50; z >= -150; z -= 50)
+		{
+			Ant *ant = new Ant(x, 0, z);
+			ants.push_back(ant);
+		}
+	}
+}
+
 int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 {
 	glShadeModel(GL_SMOOTH);						   // Enable Smooth Shading
@@ -67,9 +82,10 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
 
 	glEnable(GL_TEXTURE_2D);
-	circuit_texture = LoadTexture("assets/circuit.bmp");
-	skybox = Skybox();
 
+	circuit_texture = LoadTexture("assets/circuit.bmp");
+	skybox = Skybox(50, 50, 200);
+	loadAnts();
 	return TRUE; // Initialization Went OK
 }
 
@@ -117,67 +133,13 @@ void moveCamera()
 	camera.Render();
 }
 
-void drawColumn(float x, float y, float z)
-{
-	const float width = 1;
-	const float length = 2;
-	const float height = 2;
-	const Color color = {
-		1,
-		0,
-		0};
 
-	glColor3f(color.red, color.green, color.blue);
-	glPushMatrix();
-	glTranslatef(x, y, z);
-	glBegin(GL_QUADS);
-	// Bottom
-	glVertex3f(-width, 0, 0);
-	glVertex3f(-width, 0, -length);
-	glVertex3f(width, 0, -length);
-	glVertex3f(width, 0, 0);
-
-	// Front
-	glVertex3f(width, 0, 0);
-	glVertex3f(width, height, 0);
-	glVertex3f(-width, height, 0);
-	glVertex3f(-width, 0, 0);
-
-	// Back
-	glVertex3f(-width, 0, -length);
-	glVertex3f(width, 0, -length);
-	glVertex3f(width, height, -length);
-	glVertex3f(-width, height, -length);
-
-	// Left
-	glVertex3f(-width, 0, 0);
-	glVertex3f(-width, 0, -length);
-	glVertex3f(-width, height, -length);
-	glVertex3f(-width, height, 0);
-
-	// Right
-	glVertex3f(width, 0, 0);
-	glVertex3f(width, 0, -length);
-	glVertex3f(width, height, -length);
-	glVertex3f(width, height, 0);
-	glEnd();
-	glPopMatrix();
-}
-
-void spawnAnts()
-{
-	for (float x = -skybox.width + 20; x <= skybox.width - 20; x += 20)
-	{
-		for (float z = -50; z >= -150; z -= 50)
-		{
-			drawColumn(x, 0, z);
-		}
-	}
-}
-
-void drawBullets()
-{
+void drawBullets() {
 	for (auto bullet: bullets) bullet->draw();
+}
+
+void drawAnts() {
+	for (auto ant: ants) ant->draw();
 }
 
 void removeOutOfBoundariesBullets()
@@ -199,10 +161,15 @@ void removeOutOfBoundariesBullets()
 	toDeleteBullets.clear();
 }
 
+void removeShotAnts() {
+
+}
+
 void handleBullets()
 {
 	removeOutOfBoundariesBullets();
 	drawBullets();
+	removeShotAnts();
 }
 
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
@@ -214,7 +181,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	skybox.draw(circuit_texture);
 
 	glDisable(GL_TEXTURE_2D);
-	spawnAnts();
+	drawAnts();
 	handleBullets();
 	glEnable(GL_TEXTURE_2D);
 
