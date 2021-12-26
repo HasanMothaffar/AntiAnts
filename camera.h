@@ -1,7 +1,7 @@
-#include "utility.h"
-
 #ifndef CAMERA_H
 #define CAMERA_H
+#include "utility.h"
+
 #define PI 3.141592653589
 #define PIdiv180 (PI/180.0)
 
@@ -9,8 +9,6 @@
 //Note: All angles in degrees  //
 /////////////////////////////////
 
-Vector3dStruct Vector3dCreate ( GLfloat x, GLfloat y, GLfloat z );
-Vector3dStruct NormalizeVector3d( Vector3dStruct v);
 class Camera
 {
 public:

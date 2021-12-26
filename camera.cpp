@@ -8,35 +8,6 @@
 
 #include <stdlib.h>   /* for exit */
 
-#define SQR(x) (x*x)
-
-#define NULL_VECTOR Vector3dCreate(0.0f,0.0f,0.0f)
-
-Vector3dStruct Vector3dCreate(GLfloat x, GLfloat y, GLfloat z)
-{
-	Vector3dStruct tmp;
-	tmp.x = x;
-	tmp.y = y;
-	tmp.z = z;
-	return tmp;
-}
-
-GLfloat LengthVector3d(Vector3dStruct* v)
-{
-	return (GLfloat)(sqrt(SQR(v->x) + SQR(v->y) + SQR(v->z)));
-}
-
-Vector3dStruct NormalizeVector3d(Vector3dStruct v)
-{
-	Vector3dStruct res;
-	float L = LengthVector3d(&v);
-	if (L == 0.0f) return NULL_VECTOR;
-	res.x = v.x / L;
-	res.y = v.y / L;
-	res.z = v.z / L;
-	return res;
-}
-
 Vector3dStruct operator+(Vector3dStruct v, Vector3dStruct u)
 {
 	Vector3dStruct res;
