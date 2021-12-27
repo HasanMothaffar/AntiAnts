@@ -16,7 +16,7 @@ public:
 
 	float speed;
 
-	static Bullet* createBullet(const Camera *camera, float speed = 6.0f);
+	static Bullet* createBullet(const Camera *camera, float speed = 1.0f);
 
 	void draw();
 	
