@@ -72,6 +72,22 @@ void Camera::Render(void)
 	          Up.x, Up.y, Up.z);
 }
 
+void Camera::drawCursor() {
+	const float width = 1;
+	const float height = 0.5;
+
+	glColor3f(0, 0, 1);
+	glLineWidth(10);
+	glBegin(GL_LINES);
+		Vector3dStruct ViewPoint = Position + View * 20;
+		glVertex3f(ViewPoint.x - width, ViewPoint.y, ViewPoint.z);
+		glVertex3f(ViewPoint.x + width, ViewPoint.y, ViewPoint.z);
+
+		glVertex3f(ViewPoint.x, ViewPoint.y - height, ViewPoint.z);
+		glVertex3f(ViewPoint.x, ViewPoint.y + height, ViewPoint.z);
+	glEnd();
+}
+
 void Camera::Move(Vector3dStruct Direction)
 {
 	Position = Position + Direction;

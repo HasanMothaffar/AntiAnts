@@ -34,6 +34,8 @@ public:
 	/* Resets that camera's vectors */
 	void Reset();
 
+	void drawCursor();
+
 	void Move ( Vector3dStruct Direction );
 	void RotateX( GLfloat Angle );
 	void RotateY( GLfloat Angle );
