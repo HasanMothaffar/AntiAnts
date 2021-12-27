@@ -14,16 +14,21 @@ private:
 
 	std::vector<Ant *> ants;
 	std::vector<Bullet *> bullets;
-	std::vector<std::vector<Bullet *>::iterator> toDeleteBullets;
+
+	std::vector<std::vector<Ant *>::iterator> toRemoveAnts;
+	std::vector<std::vector<Bullet *>::iterator> toRemoveBullets;
 
 	void loadAnts();
-	void drawBullets() const;
 	void drawAnts() const;
+	void drawBullets() const;
+
+	void removeOutOfBoundariesBullets();
+	void removeShotAnts();
 
 public:
 	Game(Camera *, Skybox *);
-	void init();
 	void drawScene(int texture);
+	void cleanScene();
 	void shootBullet();
 };
 

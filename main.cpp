@@ -121,6 +121,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	moveCamera();			// Should be the first function call because it may contain rotations!
 	glTranslatef(0, -1, 0); // Shift the scene below a bit for a better view
 	game->drawScene(circuit_texture);
+	game->cleanScene();
 	glFlush();
 	SwapBuffers(hDC);
 	return TRUE;

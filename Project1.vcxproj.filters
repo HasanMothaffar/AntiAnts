@@ -55,26 +55,26 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="texture.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="utility.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="skybox.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="ant.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="bullet.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ant.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utility.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
