@@ -18,6 +18,7 @@
     <Image Include="D:\my-projects\OpenGL-Lab\CameraSkybox\camera-skybox\top.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ant.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="game.cpp" />
