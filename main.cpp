@@ -5,10 +5,8 @@
 #include <cmath>
 #include <vector>
 #include "texture.h"
+#include "skybox.h"
 #include "camera.h"
-#include "utility.h"
-#include "bullet.h"
-#include "ant.h"
 #include "game.h"
 
 using namespace std;
@@ -50,7 +48,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 	glMatrixMode(GL_MODELVIEW); // Select The Modelview Matrix
 	glLoadIdentity();			// Reset The Modelview Matrix
 
-	camera = Camera();
+	camera.Reset();
 }
 
 int circuit_texture;

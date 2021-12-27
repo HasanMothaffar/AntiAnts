@@ -52,11 +52,24 @@ float operator*(Vector3dStruct v, Vector3dStruct u) //dot product
 
 Camera::Camera()
 {
+	this->Reset();
+}
+
+void Camera::Reset() {
 	Position = Vector3dCreate(0.0, 0.0, 0.0);
 	Up = Vector3dCreate(0.0, 1.0, 0.0);
 	View = Vector3dCreate(0.0, 0.0, -1.0);
 	RightVector = Vector3dCreate(1.0, 0.0, 0.0);
 	RotatedX = RotatedY = RotatedZ = 0.0;
+}
+
+void Camera::Render(void)
+{
+	//calculate view point
+	Vector3dStruct ViewPoint = Position + View;
+	gluLookAt(Position.x, Position.y, Position.z,
+	          ViewPoint.x, ViewPoint.y, ViewPoint.z,
+	          Up.x, Up.y, Up.z);
 }
 
 void Camera::Move(Vector3dStruct Direction)
@@ -89,15 +102,6 @@ void Camera::RotateZ(GLfloat Angle)
 	RightVector = NormalizeVector3d(RightVector * cosf(Angle * PIdiv180) + Up * sinf(Angle * PIdiv180));
 	//now compute the new UpVector (by cross product)
 	Up = CrossProduct(&View, &RightVector) * -1;
-}
-
-void Camera::Render(void)
-{
-	//calculate view point
-	Vector3dStruct ViewPoint = Position + View;
-	gluLookAt(Position.x, Position.y, Position.z,
-	          ViewPoint.x, ViewPoint.y, ViewPoint.z,
-	          Up.x, Up.y, Up.z);
 }
 
 void Camera::MoveForward(GLfloat Distance)

@@ -22,9 +22,17 @@ public:
 	GLfloat RotatedX, RotatedY, RotatedZ;	
 	
 public:
-	Camera();				//inits the values (Position: (0|0|0) Target: (0|0|-1) )
-	void Render ( void );	//executes some glRotates and a glTranslate command
-							//Note: You should call glLoadIdentity before using Render
+	/* Inits the values (Position: (0|0|0) Target: (0|0|-1) ) */
+	Camera();	
+
+	/*
+		Executes some glRotates and a glTranslate command
+		Note: You should call glLoadIdentity before using Render
+	*/
+	void Render ( );	
+
+	/* Resets that camera's vectors */
+	void Reset();
 
 	void Move ( Vector3dStruct Direction );
 	void RotateX( GLfloat Angle );
