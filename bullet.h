@@ -24,7 +24,7 @@ public:
 		Returns whether the bullet has exceeded
 		the limits (faces) of the skybox. 
 	*/
-	bool isOutOfBoundaries(const Skybox &skybox);
+	bool isOutOfBoundaries(const Skybox *skybox);
 };
 
 #endif
