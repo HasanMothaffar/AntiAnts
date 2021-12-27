@@ -30,6 +30,8 @@ public:
 	void drawScene(int texture);
 	void cleanScene();
 	void shootBullet();
+
+	bool hasEnded();
 };
 
 #endif // !GAME_H

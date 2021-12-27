@@ -19,6 +19,9 @@ void Game::drawAnts() const {
 }
 
 void Game::drawBullets() const {
+	if (this->bullets.size() != 0) {
+		int x = 0;
+	}
 	for (auto bullet: this->bullets) bullet->draw();
 }
 
@@ -30,16 +33,17 @@ void Game::removeOutOfBoundariesBullets() {
 			this->toRemoveBullets.push_back(it);
 		}
 	}
-
-	for (auto it = this->toRemoveBullets.begin(); it != this->toRemoveBullets.end(); it++) {
-		this->bullets.erase(*it);
-	}
-
-	this->toRemoveBullets.clear();
 }
 
 void Game::removeShotAnts() {
-
+	for (auto antIterator = this->ants.begin(); antIterator != this->ants.end(); antIterator++) {
+		for (auto bulletIterator = this->bullets.begin(); bulletIterator != this->bullets.end(); bulletIterator++) {
+			if ((*(*antIterator)).collidesWithBullet(*bulletIterator)) {
+				this->toRemoveAnts.push_back(antIterator);
+				this->toRemoveBullets.push_back(bulletIterator);
+			}
+		}
+	}
 }
 
 /* -- PUBLIC -- */
@@ -61,8 +65,24 @@ void Game::drawScene(int texture) {
 void Game::cleanScene() {
 	this->removeOutOfBoundariesBullets();
 	this->removeShotAnts();
+
+	for (auto it = this->toRemoveBullets.begin(); it != this->toRemoveBullets.end(); it++) {
+		this->bullets.erase(*it);
+	}
+
+	this->toRemoveBullets.clear();
+
+	for (auto it = this->toRemoveAnts.begin(); it != this->toRemoveAnts.end(); it++) {
+		this->ants.erase(*it);
+	}
+
+	this->toRemoveAnts.clear();
 }
 
 void Game::shootBullet() {
 	this->bullets.push_back(Bullet::createBullet(this->camera));
+}
+
+bool Game::hasEnded() {
+	return this->ants.size() == 0;
 }
