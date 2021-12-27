@@ -110,6 +110,8 @@ void moveCamera()
 	if (keys['K'])
 		camera.RotateZ(step);
 
+	if (keys['R']) 
+		camera.Reset();
 	camera.Render();
 }
 
@@ -119,9 +121,15 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	moveCamera();			// Should be the first function call because it may contain rotations!
-	glTranslatef(0, -1, 0); // Shift the scene below a bit for a better view
-	game->drawScene(circuit_texture);
-	game->cleanScene();
+	camera.drawCursor();
+
+	if (!game->hasEnded()) {
+		game->drawScene(circuit_texture);
+		game->cleanScene();
+	} else {
+		glColor3f(1, 0, 1);
+		glRectf(-2, -2, 2, 2);
+	}
 	glFlush();
 	SwapBuffers(hDC);
 	return TRUE;
