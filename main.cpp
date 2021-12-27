@@ -437,7 +437,7 @@ int WINAPI WinMain(HINSTANCE hInstance,		// Instance
 	}
 
 	//Set drawing timer to 20 frame per second
-	UINT timer = SetTimer(hWnd, 0, 20, (TIMERPROC)NULL);
+	UINT timer = SetTimer(hWnd, 0, 0, (TIMERPROC)NULL);
 
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
