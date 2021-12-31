@@ -1,5 +1,4 @@
-#ifndef ANT_H
-#define ANT_H
+#pragma once
 
 #include "bullet.h"
 
@@ -19,5 +18,3 @@ public:
 	void draw() const;
 	bool collidesWithBullet(const Bullet *bullet);
 };
-
-#endif // !ANT_H

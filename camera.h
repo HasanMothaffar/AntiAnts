@@ -1,5 +1,5 @@
-#ifndef CAMERA_H
-#define CAMERA_H
+#pragma once
+
 #include "utility.h"
 #include "skybox.h"
 
@@ -50,6 +50,5 @@ public:
 	void MoveDownward(GLfloat Distance);
 
 	void SetRotateX(GLfloat Angle);
-};
 
-#endif // !CAMERA_H
+	bool collidesWithSkybox(const Skybox *skybox);

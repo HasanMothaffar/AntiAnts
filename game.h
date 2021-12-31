@@ -1,5 +1,4 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
 #include <vector>
 #include <map>
@@ -38,5 +37,3 @@ public:
 
 	bool hasEnded();
 };
-
-#endif // !GAME_H

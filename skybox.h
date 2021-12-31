@@ -1,5 +1,4 @@
-#ifndef SKYBOX_H
-#define SKYBOX_H
+#pragma once
 
 #include <gl.h> // Header File For The OpenGL32 Library
 #include "utility.h"
@@ -15,5 +14,3 @@ public:
 
 	void draw() const;
 };
-
-#endif // !SKYBOX_H

@@ -1,5 +1,4 @@
-#ifndef BULLET_H
-#define BULLET_H
+#pragma once
 
 #include "utility.h"
 #include "camera.h"
@@ -26,5 +25,3 @@ public:
 	*/
 	bool isOutOfBoundaries(const Skybox *skybox);
 };
-
-#endif
