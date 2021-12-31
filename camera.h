@@ -1,6 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 #include "utility.h"
+#include "skybox.h"
 
 #define PI 3.141592653589
 #define PIdiv180 (PI/180.0)

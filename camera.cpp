@@ -3,6 +3,7 @@
 #include <gl/glu.h>			// Header File For The GLu32 Library
 #include <math.h>
 #include "camera.h"
+#include "skybox.h"
 
 Vector3dStruct operator+(Vector3dStruct v, Vector3dStruct u)
 {
@@ -65,27 +66,30 @@ void Camera::Reset() {
 
 void Camera::Render(void)
 {
-	//calculate view point
+	this->drawCursor();
 	Vector3dStruct ViewPoint = Position + View;
-	gluLookAt(Position.x, Position.y, Position.z,
-	          ViewPoint.x, ViewPoint.y, ViewPoint.z,
-	          Up.x, Up.y, Up.z);
+	gluLookAt(
+		Position.x, Position.y, Position.z,
+	    ViewPoint.x, ViewPoint.y, ViewPoint.z,
+	    Up.x, Up.y, Up.z
+	);
 }
 
 void Camera::drawCursor() {
-	const float width = 1;
-	const float height = 0.5;
+	const float width = 0.7;
+	const float height = 0.7;
+	const float depth = -20;
 
-	glColor3f(0, 0, 1);
-	glLineWidth(10);
+	glDisable(GL_TEXTURE_2D);
+	glColor3f(0, 1, 0);
+	glLineWidth(5);
 	glBegin(GL_LINES);
-		Vector3dStruct ViewPoint = Position + View * 20;
-		glVertex3f(ViewPoint.x - width, ViewPoint.y, ViewPoint.z);
-		glVertex3f(ViewPoint.x + width, ViewPoint.y, ViewPoint.z);
-
-		glVertex3f(ViewPoint.x, ViewPoint.y - height, ViewPoint.z);
-		glVertex3f(ViewPoint.x, ViewPoint.y + height, ViewPoint.z);
+		glVertex3f(0, -height, depth);
+		glVertex3f(0, height, depth);
+		glVertex3f(width, 0, depth);
+		glVertex3f(-width, 0, depth);
 	glEnd();
+	glEnable(GL_TEXTURE_2D);
 }
 
 void Camera::Move(Vector3dStruct Direction)

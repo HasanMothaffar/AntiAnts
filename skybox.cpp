@@ -14,7 +14,6 @@ void Skybox::draw(int texture) const {
 	// Y Coordinates: [0, length]
 	// Z Coordinates: [0, height]
 	glPushMatrix();
-
 	// Bottom
 	glDisable(GL_TEXTURE_2D);
 	Color color = toRGB(155.0f, 150.0f, 150.0f);
