@@ -133,7 +133,6 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 		glRectf(-2, -2, 2, 2);
 	}
 
-
 	glFlush();
 	SwapBuffers(hDC);
 	return TRUE;

@@ -89,6 +89,8 @@ int LoadTexture(const char *filename,int alpha)
 void loadGameTextures() {
 	for (auto name: textureNames) {
 		std::string filepath = "assets/" + name + ".bmp";
-		textures.insert(std::pair<std::string, int>(name + "Texture", LoadTexture(filepath.c_str(), 255)));
+		std::pair<std::string, int> texture (name, LoadTexture(filepath.c_str(), 255));
+
+		textures.insert(texture);
 	}
 }

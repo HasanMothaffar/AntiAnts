@@ -15,7 +15,7 @@ void Skybox::draw() const {
 	// Y Coordinates: [0, length]
 	// Z Coordinates: [0, height]
 	
-	int texture = textures["circuit"];
+	int texture = textures["windows"];
 
 	glPushMatrix();
 	// Bottom
