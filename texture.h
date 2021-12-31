@@ -1,3 +1,5 @@
+#include <map>
+#include <string>
 
 /**********************************************************
  *
@@ -8,7 +10,7 @@
 // Counter to keep track of the last loaded texture
 extern int num_texture;
 
-
+extern std::map<std::string, int> textures;
 
 /**********************************************************
  *
@@ -18,4 +20,5 @@ extern int num_texture;
  *
  *********************************************************/
 
-extern int LoadTexture(char *filename,int alpha=255);
+extern int LoadTexture(const char *filename,int alpha=255);
+void loadGameTextures();

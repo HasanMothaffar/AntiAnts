@@ -1,5 +1,6 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
+
 #include "game.h"
 #include "bullet.h"
 
@@ -53,8 +54,9 @@ Game::Game(Camera *camera, Skybox *skybox) {
 	this->loadAnts();
 }
 
-void Game::drawScene(int texture) {
-	this->skybox->draw(texture);
+void Game::drawScene() {
+	glTranslatef(0, -1, 0);
+	this->skybox->draw();
 
 	glDisable(GL_TEXTURE_2D);
 	this->drawAnts();

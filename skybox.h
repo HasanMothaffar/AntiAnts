@@ -13,7 +13,7 @@ public:
 
 	Skybox(float width = 50.0f, float height = 50.0f, float length = 200.0f);
 
-	void draw(int texture) const;
+	void draw() const;
 };
 
 #endif // !SKYBOX_H

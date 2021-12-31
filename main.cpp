@@ -4,6 +4,9 @@
 #include <glaux.h>	 // Header File For The Glaux Library
 #include <cmath>
 #include <vector>
+#include <map>
+#include <string>
+
 #include "texture.h"
 #include "skybox.h"
 #include "camera.h"
@@ -28,7 +31,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 
 Camera camera;
 Skybox skybox = Skybox(50, 50, 200);
-Game *game;
+Game *game = new Game(&camera, &skybox);
 
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The GL Window
 {
@@ -43,15 +46,13 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 	glLoadIdentity();			 // Reset The Projection Matrix
 
 	// Calculate The Aspect Ratio Of The Window
-	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 2.0f, 200.0f);
+	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 2.0f, 300.0f);
 
 	glMatrixMode(GL_MODELVIEW); // Select The Modelview Matrix
 	glLoadIdentity();			// Reset The Modelview Matrix
 
 	camera.Reset();
 }
-
-int circuit_texture;
 
 int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 {
@@ -61,19 +62,21 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 	glEnable(GL_DEPTH_TEST);						   // Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);							   // The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
-
 	glEnable(GL_TEXTURE_2D);
-
-	circuit_texture = LoadTexture("assets/circuit.bmp");
-	game = new Game(&camera, &skybox);
+	loadGameTextures();
 	return TRUE; // Initialization Went OK
 }
 
-GLfloat step = 1;
-GLfloat angle = 1;
+GLfloat step = 0.3;
+GLfloat angle = 0.7;
 
 void moveCamera()
 {
+	if (keys['F']) {
+		glColor3f(1, 1, 1);
+		// Press F to debug;
+	}
+
 	if (keys['D'])
 		camera.MoveRight(step);
 	if (keys['A'])
@@ -121,15 +124,16 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	moveCamera();			// Should be the first function call because it may contain rotations!
-	camera.drawCursor();
 
 	if (!game->hasEnded()) {
-		game->drawScene(circuit_texture);
+		game->drawScene();
 		game->cleanScene();
 	} else {
 		glColor3f(1, 0, 1);
 		glRectf(-2, -2, 2, 2);
 	}
+
+
 	glFlush();
 	SwapBuffers(hDC);
 	return TRUE;

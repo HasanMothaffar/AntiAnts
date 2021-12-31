@@ -1,4 +1,7 @@
+#pragma once
 
+#include <map>
+#include <string>
 #include <stdio.h>
 #include <windows.h>
 #include <gl.h>			// Header File For The OpenGL32 Library
@@ -14,7 +17,14 @@ int num_texture = -1; //Counter to keep track of the last loaded texture
  *
  *********************************************************/
 
-int LoadTexture(char *filename,int alpha) 
+std::string textureNames[] = {
+	"circuit",
+	"windows"
+};
+
+std::map<std::string, int> textures;
+
+int LoadTexture(const char *filename,int alpha) 
 {
     int i, j=0; //Index variables
     FILE *l_file; //File pointer
@@ -76,3 +86,9 @@ int LoadTexture(char *filename,int alpha)
     return (num_texture); // Returns the current texture OpenGL ID
 }
 
+void loadGameTextures() {
+	for (auto name: textureNames) {
+		std::string filepath = "assets/" + name + ".bmp";
+		textures.insert(std::pair<std::string, int>(name + "Texture", LoadTexture(filepath.c_str(), 255)));
+	}
+}

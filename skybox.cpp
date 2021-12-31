@@ -1,6 +1,7 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
 #include "utility.h"
+#include "texture.h"
 #include "skybox.h"
 
 Skybox::Skybox(float width , float height, float length) {
@@ -9,10 +10,13 @@ Skybox::Skybox(float width , float height, float length) {
 	this->length = length;
 }
 
-void Skybox::draw(int texture) const {
+void Skybox::draw() const {
 	// X Coordinates: [-width, width]
 	// Y Coordinates: [0, length]
 	// Z Coordinates: [0, height]
+	
+	int texture = textures["circuit"];
+
 	glPushMatrix();
 	// Bottom
 	glDisable(GL_TEXTURE_2D);
@@ -32,11 +36,10 @@ void Skybox::draw(int texture) const {
 	glEnd();
 
 	glEnable(GL_TEXTURE_2D);
-
 	glColor3f(1, 1, 1);
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glBegin(GL_QUADS);
 		// Back
-		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexCoord2d(0, 0);
 		glVertex3f(-width, 0, -length);
 
@@ -50,7 +53,6 @@ void Skybox::draw(int texture) const {
 		glVertex3f(-width, height, -length);
 
 		// Right
-		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexCoord2d(0, 0);
 		glVertex3f(width, 0, 0);
 
@@ -64,7 +66,6 @@ void Skybox::draw(int texture) const {
 		glVertex3f(width, height, 0);
 
 		// Front
-		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexCoord2d(0, 0);
 		glVertex3f(width, 0, 0);
 
@@ -78,7 +79,6 @@ void Skybox::draw(int texture) const {
 		glVertex3f(-width, 0, 0);
 
 		// Left
-		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexCoord2d(0, 0);
 		glVertex3f(-width, 0, 0);
 

@@ -15,23 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="D:\my-projects\OpenGL-Lab\CameraSkybox\camera-skybox\back.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="D:\my-projects\OpenGL-Lab\CameraSkybox\camera-skybox\front.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="D:\my-projects\OpenGL-Lab\CameraSkybox\camera-skybox\right.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="D:\my-projects\OpenGL-Lab\CameraSkybox\camera-skybox\left.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="D:\my-projects\OpenGL-Lab\CameraSkybox\camera-skybox\top.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

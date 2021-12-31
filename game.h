@@ -2,6 +2,9 @@
 #define GAME_H
 
 #include <vector>
+#include <map>
+#include <string>
+
 #include "camera.h"
 #include "skybox.h"
 #include "ant.h"
@@ -27,7 +30,9 @@ private:
 
 public:
 	Game(Camera *, Skybox *);
-	void drawScene(int texture);
+
+	/* -- Drawing -- */
+	void drawScene();
 	void cleanScene();
 	void shootBullet();
 

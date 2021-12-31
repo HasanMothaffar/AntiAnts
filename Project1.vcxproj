@@ -11,13 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="D:\my-projects\OpenGL-Lab\CameraSkybox\camera-skybox\back.bmp" />
-    <Image Include="D:\my-projects\OpenGL-Lab\CameraSkybox\camera-skybox\front.bmp" />
-    <Image Include="D:\my-projects\OpenGL-Lab\CameraSkybox\camera-skybox\left.bmp" />
-    <Image Include="D:\my-projects\OpenGL-Lab\CameraSkybox\camera-skybox\right.bmp" />
-    <Image Include="D:\my-projects\OpenGL-Lab\CameraSkybox\camera-skybox\top.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="ant.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
