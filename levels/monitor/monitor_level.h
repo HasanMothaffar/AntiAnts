@@ -6,6 +6,6 @@
 
 class Monitor: public Level {
 public:
-	Monitor(Camera *, Skybox *);
+	Monitor();
 	virtual void drawScene();
 };

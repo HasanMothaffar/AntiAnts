@@ -6,8 +6,10 @@
 #include "monitor_camera.h"
 #include "monitor_skybox.h"
 
-Monitor::Monitor(Camera *camera, Skybox *skybox): Level(camera, skybox) {
-
+Monitor::Monitor(): Level() {
+	this->skybox = new MonitorSkybox(50, 50, 200);
+	this->camera = new MonitorCamera();
+	this->loadAnts();
 }
 
 void Monitor::drawScene() {

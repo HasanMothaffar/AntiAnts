@@ -45,11 +45,7 @@ void Level::removeShotAnts() {
 }
 
 /* -- PUBLIC -- */
-Level::Level(Camera *camera, Skybox *skybox) {
-	this->camera = camera;
-	this->skybox = skybox;
-	this->loadAnts();
-}
+Level::Level() { }
 
 void Level::drawScene() {
 	glTranslatef(0, -1, 0);

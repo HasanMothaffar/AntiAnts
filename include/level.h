@@ -28,7 +28,7 @@ protected:
 	void removeShotAnts();
 
 public:
-	Level(Camera *, Skybox *);
+	Level();
 
 	/* -- Drawing -- */
 	virtual void drawScene();

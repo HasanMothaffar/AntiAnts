@@ -32,9 +32,8 @@ bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 
-MonitorCamera *camera = new MonitorCamera();
-MonitorSkybox *skybox = new MonitorSkybox(50, 50, 170);
-Level *level = new Monitor(camera, skybox);
+
+Level *level = new Monitor();
 
 Model_3DS circuit;
 Model_3DS ant;
