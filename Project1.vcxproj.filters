@@ -39,13 +39,19 @@
     <ClCompile Include="utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="levels\motherboard\motherboard_level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="levels\monitor\monitor_level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="levels\monitor\skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="levels\monitor\camera.cpp">
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levels\monitor\monitor_camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,13 +77,22 @@
     <ClInclude Include="include\utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="levels\monitor\camera.h">
+    <ClInclude Include="levels\motherboard\motherboard_level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="levels\monitor\monitor_level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="levels\monitor\skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levels\monitor\monitor_camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

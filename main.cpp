@@ -7,12 +7,13 @@
 #include <map>
 #include <string>
 
-#include "include\Model_3DS.h"
-#include "include\3DTexture.h"
-#include "include\texture.h"
-#include "levels\monitor\skybox.h"
-#include "levels\monitor\camera.h"
-#include "include\level.h"
+#include "include/Model_3DS.h"
+#include "include/3DTexture.h"
+#include "include/texture.h"
+#include "levels/monitor/skybox.h"
+#include "levels/monitor/monitor_camera.h"
+#include "levels/monitor/monitor_level.h"
+#include "include/level.h"
 
 using namespace std;
 
@@ -31,9 +32,9 @@ bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 
-Camera camera;
-Skybox skybox = Skybox(50, 50, 170);
-Level *level = new Level(&camera, &skybox);
+MonitorCamera *camera = new MonitorCamera();
+MonitorSkybox *skybox = new MonitorSkybox(50, 50, 170);
+Level *level = new Monitor(camera, skybox);
 
 Model_3DS circuit;
 Model_3DS ant;
@@ -56,7 +57,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 	glMatrixMode(GL_MODELVIEW); // Select The Modelview Matrix
 	glLoadIdentity();			// Reset The Modelview Matrix
 
-	camera.Reset();
+	// TODO: level->resetCamera();
 }
 
 int InitGL(GLvoid) // All Setup For OpenGL Goes Here
@@ -86,62 +87,12 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 	return TRUE; // Initialization Went OK
 }
 
-GLfloat step = 0.7;
-GLfloat angle = 0.7;
-
-void moveCamera()
-{
-	if (keys['F']) {
-		glColor3f(1, 1, 1);
-		// Press F to debug;
-	}
-
-	if (keys['D'])
-		camera.MoveRight(step);
-	if (keys['A'])
-		camera.MoveLeft(step);
-	if (keys['W'])
-		camera.MoveForward(step);
-	if (keys['S'])
-		camera.MoveBackward(step);
-	if (keys['Z'])
-	{
-		camera.MoveUpward(step);
-	}
-	if (keys['X'])
-	{
-		if (!(camera.Position.y <= 0))
-		{
-			camera.MoveDownward(step);
-		}
-	}
-	if (keys[VK_LEFT])
-	{
-		camera.RotateY(angle);
-	}
-	if (keys[VK_RIGHT])
-	{
-		camera.RotateY(-angle);
-	}
-	if (keys[VK_UP])
-		camera.RotateX(-angle);
-	if (keys[VK_DOWN])
-		camera.RotateX(angle);
-	if (keys['L'])
-		camera.RotateZ(-step);
-	if (keys['K'])
-		camera.RotateZ(step);
-
-	if (keys['R']) 
-		camera.Reset();
-	camera.Render();
-}
 
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	moveCamera();			// Should be the first function call because it may contain rotations!
+	level->respondToKeyboard(keys);			// Should be the first function call because it may contain rotations!
 
 	if (!level->hasEnded()) {
 		level->drawScene();

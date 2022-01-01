@@ -4,10 +4,14 @@
 
 #include "../../include/texture.h"
 #include "../../include/Model_3DS.h"
+#include "../../include/skybox.h"
 #include "skybox.h"
 
+MonitorSkybox::MonitorSkybox(float width , float height, float length): Skybox(width, height, length) {
+	this->loadCircuits();
+}
 
-void Skybox::loadCircuits() {
+void MonitorSkybox::loadCircuits() {
 	for (int i = 0; i < 10; i++) {
 		Model_3DS *circuit = new Model_3DS();
 		circuit->Load((char *) "assets/22v10.3ds");
@@ -22,15 +26,7 @@ void Skybox::loadCircuits() {
 	}
 }
 
-Skybox::Skybox(float width , float height, float length) {
-	this->width = width;
-	this->height = height;
-	this->length = length;
-
-	this->loadCircuits();
-}
-
-void Skybox::draw() const {
+void MonitorSkybox::draw() const {
 	// X Coordinates: [-width, width]
 	// Y Coordinates: [0, length]
 	// Z Coordinates: [0, height]
@@ -118,7 +114,7 @@ void Skybox::draw() const {
 	glPopMatrix();
 }
 
-void Skybox::drawCircuits() const {
+void MonitorSkybox::drawCircuits() const {
 	
 	glPushMatrix();
 	glTranslatef(0, 0.1, -0.1);

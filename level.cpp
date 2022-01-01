@@ -78,6 +78,10 @@ void Level::cleanScene() {
 	this->toRemoveAnts.clear();
 }
 
+void Level::respondToKeyboard(bool *keys) {
+	this->camera->respondToKeyboard(keys);
+}
+
 void Level::shootBullet() {
 	this->bullets.push_back(Bullet::createBullet(this->camera));
 }

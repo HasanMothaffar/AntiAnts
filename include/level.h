@@ -4,10 +4,10 @@
 #include <map>
 #include <string>
 
-#include "../levels/monitor/camera.h"
-#include "../levels/monitor/skybox.h"
 #include "ant.h"
 #include "bullet.h"
+#include "camera.h"
+#include "skybox.h"
 
 class Level {
 protected:
@@ -33,6 +33,7 @@ public:
 	/* -- Drawing -- */
 	virtual void drawScene();
 	virtual void cleanScene();
+	virtual void respondToKeyboard(bool *);
 	void shootBullet();
 
 	bool hasEnded();

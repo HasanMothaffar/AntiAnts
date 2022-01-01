@@ -1,6 +1,9 @@
 #pragma once
 
-#include "../../include/utility.h"
+#include <Windows.h>
+#include <gl.h>
+
+#include "utility.h"
 #include "skybox.h"
 
 #define PI 3.141592653589
@@ -51,6 +54,7 @@ public:
 
 	void SetRotateX(GLfloat Angle);
 	void invertView();
+	virtual void respondToKeyboard(bool *) = 0;
 
-	bool collidesWithSkybox(const Skybox *skybox);
+	bool exceedsSkybox(const Skybox *skybox);
 };

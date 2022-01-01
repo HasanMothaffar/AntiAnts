@@ -3,10 +3,9 @@
 #include <gl/glu.h>			// Header File For The GLu32 Library
 #include <math.h>
 
-
-#include "camera.h"
-#include "skybox.h"
-#include "../../include/utility.h"
+#include "include/camera.h"
+#include "include/skybox.h"
+#include "include/utility.h"
 
 Vector3dStruct operator+(Vector3dStruct v, Vector3dStruct u)
 {
@@ -169,7 +168,7 @@ void Camera::invertView() {
 	this->View = this->View * -1;
 }
 
-bool Camera::collidesWithSkybox(const Skybox *skybox) {
+bool Camera::exceedsSkybox(const Skybox *skybox) {
 	const Vector3dStruct position = this->Position;
 
 	/*return (
