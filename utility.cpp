@@ -4,8 +4,8 @@
 #include <map>
 #include <string>
 
-#include "include\texture.h"
-#include "include\utility.h"
+#include "include/texture.h"
+#include "include/utility.h"
 
 #define SQR(x) (x*x)
 #define NULL_VECTOR Vector3dCreate(0.0f,0.0f,0.0f)

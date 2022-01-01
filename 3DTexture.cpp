@@ -36,7 +36,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "include\3DTexture.h"
+#include "include/3DTexture.h"
 
 #include <stdio.h>
 #include <string.h>

@@ -1,10 +1,11 @@
 #pragma once
 
-#include "include\utility.h"
-#include "levels\monitor\camera.h"
-#include "levels\monitor\skybox.h"
+#include "utility.h"
+#include "../levels/monitor/camera.h"
+#include "../levels/monitor/skybox.h"
 
-class Bullet {
+class Bullet
+{
 private:
 	void shift();
 
@@ -15,10 +16,10 @@ public:
 
 	float speed;
 
-	static Bullet* createBullet(const Camera *camera, float speed = 1.0f);
+	static Bullet *createBullet(const Camera *camera, float speed = 1.0f);
 
 	void draw();
-	
+
 	/*
 		Returns whether the bullet has exceeded
 		the limits (faces) of the skybox. 

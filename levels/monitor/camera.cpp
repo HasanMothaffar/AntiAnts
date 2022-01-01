@@ -3,9 +3,10 @@
 #include <gl/glu.h>			// Header File For The GLu32 Library
 #include <math.h>
 
-#include "levels\monitor\camera.h"
-#include "levels\monitor\skybox.h"
-#include "include\utility.h"
+
+#include "camera.h"
+#include "skybox.h"
+#include "../../include/utility.h"
 
 Vector3dStruct operator+(Vector3dStruct v, Vector3dStruct u)
 {

@@ -3,8 +3,8 @@
 #include <vector>
 
 #include <gl.h> // Header File For The OpenGL32 Library
-#include "include\utility.h"
-#include "include\Model_3DS.h"
+#include "../../include/utility.h"
+#include "../../include/Model_3DS.h"
 
 class Skybox
 {

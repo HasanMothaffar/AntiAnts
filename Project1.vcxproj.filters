@@ -27,22 +27,25 @@
     <ClCompile Include="bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model_3DS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="skybox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levels\monitor\monitor_level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levels\monitor\skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levels\monitor\camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,9 +71,20 @@
     <ClInclude Include="include\utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="levels\monitor\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levels\monitor\monitor_level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levels\monitor\skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="readme.md" />
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

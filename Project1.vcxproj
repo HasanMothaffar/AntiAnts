@@ -14,11 +14,12 @@
     <ClCompile Include="3DTexture.cpp" />
     <ClCompile Include="ant.cpp" />
     <ClCompile Include="bullet.cpp" />
-    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="levels\monitor\camera.cpp" />
     <ClCompile Include="level.cpp" />
+    <ClCompile Include="levels\monitor\monitor_level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model_3DS.cpp" />
-    <ClCompile Include="skybox.cpp" />
+    <ClCompile Include="levels\monitor\skybox.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="utility.cpp" />
   </ItemGroup>
@@ -30,9 +31,14 @@
     <ClInclude Include="include\Model_3DS.h" />
     <ClInclude Include="include\texture.h" />
     <ClInclude Include="include\utility.h" />
+    <ClInclude Include="levels\monitor\camera.h" />
+    <ClInclude Include="levels\monitor\monitor_level.h" />
+    <ClInclude Include="levels\monitor\skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="readme.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,8 +1,8 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
 
-#include "include\level.h"
-#include "include\bullet.h"
+#include "include/level.h"
+#include "include/bullet.h"
 
 /* -- PRIVATE -- */
 void Level::loadAnts() {

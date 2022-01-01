@@ -1,7 +1,7 @@
 #pragma once
 
-#include "include\utility.h"
-#include "levels\monitor\skybox.h"
+#include "../../include/utility.h"
+#include "skybox.h"
 
 #define PI 3.141592653589
 #define PIdiv180 (PI/180.0)

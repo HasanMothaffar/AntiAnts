@@ -1,6 +1,6 @@
 #pragma once
 
-#include "include\bullet.h"
+#include "bullet.h"
 
 class Ant
 {

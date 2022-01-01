@@ -4,13 +4,13 @@
 #include <map>
 #include <string>
 
-#include "levels\monitor\camera.h"
-#include "levels\monitor\skybox.h"
-#include "include\ant.h"
-#include "include\bullet.h"
+#include "../levels/monitor/camera.h"
+#include "../levels/monitor/skybox.h"
+#include "ant.h"
+#include "bullet.h"
 
 class Level {
-private:
+protected:
 	Camera *camera;
 	Skybox *skybox;
 
