@@ -2,8 +2,10 @@
 #include <gl/GL.h>				// Header File For The OpenGL32 Library
 #include <gl/glu.h>			// Header File For The GLu32 Library
 #include <math.h>
-#include "camera.h"
-#include "skybox.h"
+
+#include "levels\monitor\camera.h"
+#include "levels\monitor\skybox.h"
+#include "include\utility.h"
 
 Vector3dStruct operator+(Vector3dStruct v, Vector3dStruct u)
 {
@@ -160,4 +162,22 @@ void Camera::SetRotateX(GLfloat Angle)
 	RightVector = Vector3dCreate(1.0, 0.0, 0.0);
 	Up = Vector3dCreate(0.0, 1.0, 0.0);
 	RotatedX = Angle;
+}
+
+void Camera::invertView() {
+	this->View = this->View * -1;
+}
+
+bool Camera::collidesWithSkybox(const Skybox *skybox) {
+	const Vector3dStruct position = this->Position;
+
+	/*return (
+		(position.x <= -skybox->width) ||
+		(position.x >= skybox->width) ||
+
+		(position.y < 0) ||
+		(position.y >= skybox->height)
+	);*/
+	
+	return false;
 }

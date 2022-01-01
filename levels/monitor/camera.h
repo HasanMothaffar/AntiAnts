@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utility.h"
-#include "skybox.h"
+#include "include\utility.h"
+#include "levels\monitor\skybox.h"
 
 #define PI 3.141592653589
 #define PIdiv180 (PI/180.0)
@@ -50,5 +50,7 @@ public:
 	void MoveDownward(GLfloat Distance);
 
 	void SetRotateX(GLfloat Angle);
+	void invertView();
 
 	bool collidesWithSkybox(const Skybox *skybox);
+};

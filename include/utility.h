@@ -1,7 +1,11 @@
 #pragma once
 
 #include <windows.h>		// Header File For Windows
-#include <gl/GL.h>				// Header File For The OpenGL32 Library
+#include <gl.h>				// Header File For The OpenGL32 Library
+#include <string>
+#include <map>
+
+extern std::map<std::string, int> textures;
 
 struct Color {
 	float red, green, blue;
@@ -19,3 +23,5 @@ Vector3dStruct NormalizeVector3d( Vector3dStruct v);
 	dividing each rgb component by 255. 
 */
 Color toRGB(float r, float g, float b);
+
+void loadGameTextures();

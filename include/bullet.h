@@ -1,8 +1,8 @@
 #pragma once
 
-#include "utility.h"
-#include "camera.h"
-#include "skybox.h"
+#include "include\utility.h"
+#include "levels\monitor\camera.h"
+#include "levels\monitor\skybox.h"
 
 class Bullet {
 private:

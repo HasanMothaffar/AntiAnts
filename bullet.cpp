@@ -1,5 +1,5 @@
-#include "bullet.h"
-#include "camera.h"
+#include "include\ant.h"
+#include "levels\monitor\camera.h"
 
 /* -- STATIC -- */
 Bullet* Bullet::createBullet(const Camera *camera, float speed) {

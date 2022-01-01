@@ -1,11 +1,11 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
 
-#include "game.h"
-#include "bullet.h"
+#include "include\level.h"
+#include "include\bullet.h"
 
 /* -- PRIVATE -- */
-void Game::loadAnts() {
+void Level::loadAnts() {
 	for (float x = -this->skybox->width + 20; x <= this->skybox->width - 20; x += 20)
 	{
 		for (float z = -50; z >= -150; z -= 50)
@@ -15,18 +15,15 @@ void Game::loadAnts() {
 	}
 }
 
-void Game::drawAnts() const {
+void Level::drawAnts() const {
 	for (auto ant: this->ants) ant->draw();
 }
 
-void Game::drawBullets() const {
-	if (this->bullets.size() != 0) {
-		int x = 0;
-	}
+void Level::drawBullets() const {
 	for (auto bullet: this->bullets) bullet->draw();
 }
 
-void Game::removeOutOfBoundariesBullets() {
+void Level::removeOutOfBoundariesBullets() {
 	for (auto it = this->bullets.begin(); it != this->bullets.end(); it++)
 	{
 		if ((*it)->isOutOfBoundaries(this->skybox))
@@ -36,7 +33,7 @@ void Game::removeOutOfBoundariesBullets() {
 	}
 }
 
-void Game::removeShotAnts() {
+void Level::removeShotAnts() {
 	for (auto antIterator = this->ants.begin(); antIterator != this->ants.end(); antIterator++) {
 		for (auto bulletIterator = this->bullets.begin(); bulletIterator != this->bullets.end(); bulletIterator++) {
 			if ((*(*antIterator)).collidesWithBullet(*bulletIterator)) {
@@ -48,23 +45,23 @@ void Game::removeShotAnts() {
 }
 
 /* -- PUBLIC -- */
-Game::Game(Camera *camera, Skybox *skybox) {
+Level::Level(Camera *camera, Skybox *skybox) {
 	this->camera = camera;
 	this->skybox = skybox;
 	this->loadAnts();
 }
 
-void Game::drawScene() {
+void Level::drawScene() {
 	glTranslatef(0, -1, 0);
 	this->skybox->draw();
 
 	glDisable(GL_TEXTURE_2D);
-	this->drawAnts();
+	//this->drawAnts();
 	this->drawBullets();
 	glEnable(GL_TEXTURE_2D);
 }
 
-void Game::cleanScene() {
+void Level::cleanScene() {
 	this->removeOutOfBoundariesBullets();
 	this->removeShotAnts();
 
@@ -81,10 +78,10 @@ void Game::cleanScene() {
 	this->toRemoveAnts.clear();
 }
 
-void Game::shootBullet() {
+void Level::shootBullet() {
 	this->bullets.push_back(Bullet::createBullet(this->camera));
 }
 
-bool Game::hasEnded() {
+bool Level::hasEnded() {
 	return this->ants.size() == 0;
 }

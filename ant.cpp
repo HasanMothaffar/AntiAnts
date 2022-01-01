@@ -1,6 +1,6 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
-#include "ant.h"
+#include "include\ant.h"
 
 Ant::Ant(float x, float y, float z) {
 	this->x = x;

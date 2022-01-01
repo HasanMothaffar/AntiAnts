@@ -1,16 +1,18 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
 #include <glu.h>	 // Header File For The GLu32 Library
-#include <glaux.h>	 // Header File For The Glaux Library
+
 #include <cmath>
 #include <vector>
 #include <map>
 #include <string>
 
-#include "texture.h"
-#include "skybox.h"
-#include "camera.h"
-#include "game.h"
+#include "include\Model_3DS.h"
+#include "include\3DTexture.h"
+#include "include\texture.h"
+#include "levels\monitor\skybox.h"
+#include "levels\monitor\camera.h"
+#include "include\level.h"
 
 using namespace std;
 
@@ -30,8 +32,11 @@ bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 
 Camera camera;
-Skybox skybox = Skybox(50, 50, 200);
-Game *game = new Game(&camera, &skybox);
+Skybox skybox = Skybox(50, 50, 170);
+Level *level = new Level(&camera, &skybox);
+
+Model_3DS circuit;
+Model_3DS ant;
 
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The GL Window
 {
@@ -64,10 +69,24 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
 	glEnable(GL_TEXTURE_2D);
 	loadGameTextures();
+
+	ant = Model_3DS();
+	ant.Load((char *) "assets/Ant_3ds.3ds");
+	ant.pos.x = 0;
+	ant.pos.y = 1;
+	ant.pos.z = -20;
+
+	//circuit.Materials[0].tex.LoadBMP("assets/Ant_color.bmp");
+	ant.Materials[1].tex.LoadBMP("assets/Ant_color.bmp");
+	ant.scale = 0.001;
+
+	//circuit.Materials[1].tex.BuildColorTexture(125, 125, 125);
+	//circuit.Materials[2].tex.BuildColorTexture(125, 125, 125);
+
 	return TRUE; // Initialization Went OK
 }
 
-GLfloat step = 0.3;
+GLfloat step = 0.7;
 GLfloat angle = 0.7;
 
 void moveCamera()
@@ -118,16 +137,17 @@ void moveCamera()
 	camera.Render();
 }
 
-
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	moveCamera();			// Should be the first function call because it may contain rotations!
 
-	if (!game->hasEnded()) {
-		game->drawScene();
-		game->cleanScene();
+	if (!level->hasEnded()) {
+		level->drawScene();
+		glColor3f(1, 1, 1);
+		ant.Draw();
+		level->cleanScene();
 	} else {
 		glColor3f(1, 0, 1);
 		glRectf(-2, -2, 2, 2);
@@ -412,7 +432,7 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 		keys[wParam] = FALSE; // If So, Mark It As FALSE
 		if (wParam == VK_SPACE)
 		{
-			game->shootBullet();
+			level->shootBullet();
 		}
 		return 0; // Jump Back
 	}

@@ -4,12 +4,12 @@
 #include <map>
 #include <string>
 
-#include "camera.h"
-#include "skybox.h"
-#include "ant.h"
-#include "bullet.h"
+#include "levels\monitor\camera.h"
+#include "levels\monitor\skybox.h"
+#include "include\ant.h"
+#include "include\bullet.h"
 
-class Game {
+class Level {
 private:
 	Camera *camera;
 	Skybox *skybox;
@@ -28,11 +28,11 @@ private:
 	void removeShotAnts();
 
 public:
-	Game(Camera *, Skybox *);
+	Level(Camera *, Skybox *);
 
 	/* -- Drawing -- */
-	void drawScene();
-	void cleanScene();
+	virtual void drawScene();
+	virtual void cleanScene();
 	void shootBullet();
 
 	bool hasEnded();

@@ -1,9 +1,21 @@
-#include "utility.h"
+#include <Windows.h>
 #include <math.h>
 #include <gl.h>			// Header File For The OpenGL32 Library
+#include <map>
+#include <string>
+
+#include "include\texture.h"
+#include "include\utility.h"
 
 #define SQR(x) (x*x)
 #define NULL_VECTOR Vector3dCreate(0.0f,0.0f,0.0f)
+
+std::string textureNames[] = {
+	"circuit",
+	"windows"
+};
+
+std::map<std::string, int> textures;
 
 Vector3dStruct Vector3dCreate(GLfloat x, GLfloat y, GLfloat z)
 {
@@ -38,4 +50,13 @@ Color toRGB(float r, float g, float b) {
 	};
 
 	return color;
+}
+
+void loadGameTextures() {
+	for (auto name: textureNames) {
+		std::string filepath = "assets/" + name + ".bmp";
+		std::pair<std::string, int> texture (name, LoadTexture(filepath.c_str(), 255));
+
+		textures.insert(texture);
+	}
 }

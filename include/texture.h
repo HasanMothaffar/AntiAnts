@@ -1,8 +1,5 @@
 #pragma once
 
-#include <map>
-#include <string>
-
 /**********************************************************
  *
  * VARIABLES DECLARATION
@@ -12,7 +9,6 @@
 // Counter to keep track of the last loaded texture
 extern int num_texture;
 
-extern std::map<std::string, int> textures;
 
 /**********************************************************
  *
