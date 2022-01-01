@@ -80,16 +80,25 @@ void Camera::Render(void)
 void Camera::drawCursor() {
 	const float width = 0.7;
 	const float height = 0.7;
+	const float offset = 0.3;
+
 	const float depth = -20;
 
 	glDisable(GL_TEXTURE_2D);
 	glColor3f(0, 1, 0);
-	glLineWidth(5);
+	glLineWidth(4);
 	glBegin(GL_LINES);
 		glVertex3f(0, -height, depth);
+		glVertex3f(0, -offset, depth);
+
+		glVertex3f(0, offset, depth);
 		glVertex3f(0, height, depth);
+
 		glVertex3f(width, 0, depth);
+		glVertex3f(offset, 0, depth);
+
 		glVertex3f(-width, 0, depth);
+		glVertex3f(-offset, 0, depth);
 	glEnd();
 	glEnable(GL_TEXTURE_2D);
 }
@@ -166,6 +175,56 @@ void Camera::SetRotateX(GLfloat Angle)
 
 void Camera::invertView() {
 	this->View = this->View * -1;
+}
+
+void Camera::respondToKeyboard(bool *keys) {
+	float step = 0.7f;
+	float angle = 0.4f;
+
+	if (keys['F']) {
+		glColor3f(1, 1, 1);
+		// Press F to debug;
+	}
+
+	if (keys['D'])
+		MoveRight(step);
+	if (keys['A'])
+		MoveLeft(step);
+	if (keys['W'])
+		MoveForward(step);
+	if (keys['S'])
+		MoveBackward(step);
+	if (keys['Z'])
+	{
+		MoveUpward(step);
+	}
+	if (keys['X'])
+	{
+		if (!(Position.y <= 0))
+		{
+			MoveDownward(step);
+		}
+	}
+	if (keys[VK_LEFT])
+	{
+		RotateY(angle);
+	}
+	if (keys[VK_RIGHT])
+	{
+		RotateY(-angle);
+	}
+	if (keys[VK_UP])
+		RotateX(-angle);
+	if (keys[VK_DOWN])
+		RotateX(angle);
+	if (keys['L'])
+		RotateZ(-step);
+	if (keys['K'])
+		RotateZ(step);
+
+	if (keys['R']) 
+		Reset();
+	Render();
 }
 
 bool Camera::exceedsSkybox(const Skybox *skybox) {
