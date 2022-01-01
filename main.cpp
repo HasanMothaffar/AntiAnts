@@ -10,7 +10,7 @@
 #include "include/Model_3DS.h"
 #include "include/3DTexture.h"
 #include "include/texture.h"
-#include "levels/monitor/skybox.h"
+#include "levels/monitor/monitor_skybox.h"
 #include "levels/monitor/monitor_camera.h"
 #include "levels/monitor/monitor_level.h"
 #include "include/level.h"

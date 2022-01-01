@@ -45,13 +45,13 @@
     <ClCompile Include="levels\monitor\monitor_level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="levels\monitor\skybox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="levels\monitor\monitor_camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levels\monitor\monitor_skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,9 +83,6 @@
     <ClInclude Include="levels\monitor\monitor_level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="levels\monitor\skybox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -93,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="levels\monitor\monitor_camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levels\monitor\monitor_skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

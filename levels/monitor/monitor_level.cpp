@@ -4,7 +4,7 @@
 #include "../../include/level.h"
 #include "monitor_level.h"
 #include "monitor_camera.h"
-#include "skybox.h"
+#include "monitor_skybox.h"
 
 Monitor::Monitor(Camera *camera, Skybox *skybox): Level(camera, skybox) {
 

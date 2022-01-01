@@ -5,7 +5,7 @@
 #include "../../include/texture.h"
 #include "../../include/Model_3DS.h"
 #include "../../include/skybox.h"
-#include "skybox.h"
+#include "monitor_skybox.h"
 
 MonitorSkybox::MonitorSkybox(float width , float height, float length): Skybox(width, height, length) {
 	this->loadCircuits();
