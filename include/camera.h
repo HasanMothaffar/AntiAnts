@@ -54,7 +54,7 @@ public:
 
 	void SetRotateX(GLfloat Angle);
 	void invertView();
-	virtual void respondToKeyboard(bool *) = 0;
+	virtual void respondToKeyboard(bool *);
 
 	bool exceedsSkybox(const Skybox *skybox);
 };

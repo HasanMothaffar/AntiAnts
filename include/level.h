@@ -30,7 +30,6 @@ protected:
 public:
 	Level();
 
-	/* -- Drawing -- */
 	virtual void drawScene();
 	virtual void cleanScene();
 	virtual void respondToKeyboard(bool *);

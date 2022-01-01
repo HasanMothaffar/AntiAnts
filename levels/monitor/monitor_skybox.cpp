@@ -2,8 +2,6 @@
 #include <gl.h>		 // Header File For The OpenGL32 Library
 #include <GLU.H>
 
-#include "../../include/texture.h"
-#include "../../include/Model_3DS.h"
 #include "../../include/skybox.h"
 #include "../../include/utility.h"
 #include "monitor_skybox.h"
