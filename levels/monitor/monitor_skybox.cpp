@@ -5,26 +5,11 @@
 #include "../../include/texture.h"
 #include "../../include/Model_3DS.h"
 #include "../../include/skybox.h"
+#include "../../include/utility.h"
 #include "monitor_skybox.h"
 
-MonitorSkybox::MonitorSkybox(float width , float height, float length): Skybox(width, height, length) {
-	this->loadCircuits();
-}
+MonitorSkybox::MonitorSkybox(float width , float height, float length): Skybox(width, height, length) { }
 
-void MonitorSkybox::loadCircuits() {
-	for (int i = 0; i < 10; i++) {
-		Model_3DS *circuit = new Model_3DS();
-		circuit->Load((char *) "assets/22v10.3ds");
-		circuit->pos.x = 0;
-		circuit->pos.y = 2;
-		circuit->pos.z = - i * 10;
-		circuit->Materials[0].tex.LoadBMP("assets/22v10.bmp");
-		circuit->Materials[1].tex.BuildColorTexture(125, 125, 125);
-		circuit->Materials[2].tex.BuildColorTexture(125, 125, 125);
-
-		circuits.push_back(circuit);
-	}
-}
 
 void MonitorSkybox::draw() const {
 	// X Coordinates: [-width, width]
@@ -32,7 +17,6 @@ void MonitorSkybox::draw() const {
 	// Z Coordinates: [0, height]
 	
 	Color color = toRGB(155.0f, 150.0f, 150.0f);
-	this->drawCircuits();
 	glPushMatrix();
 	glDisable(GL_TEXTURE_2D);
 	glBegin(GL_QUADS);
@@ -111,24 +95,5 @@ void MonitorSkybox::draw() const {
 		glVertex3f(-width, height, -length);
 	glEnd();
 
-	glPopMatrix();
-}
-
-void MonitorSkybox::drawCircuits() const {
-	
-	glPushMatrix();
-	glTranslatef(0, 0.1, -0.1);
-	glColor3f(1, 1, 1);
-	glBegin(GL_QUADS);
-		glVertex3f(-width, 0, 0);
-		glVertex3f(width, 0, 0);
-		glVertex3f(width, 0, -20);
-		glVertex3f(-width, 0, -20);
-	glEnd();
-
-	for (auto circuit: this->circuits) {
-		circuit->Draw();
-	}
-	
 	glPopMatrix();
 }
