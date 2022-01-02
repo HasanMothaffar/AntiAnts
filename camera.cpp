@@ -78,11 +78,11 @@ void Camera::Render(void)
 }
 
 void Camera::drawCursor() {
-	const float width = 0.7;
-	const float height = 0.7;
-	const float offset = 0.3;
+	const float width = 0.2;
+	const float height = 0.2;
+	const float offset = 0.1;
 
-	const float depth = -20;
+	const float depth = -5;
 
 	glDisable(GL_TEXTURE_2D);
 	glColor3f(0, 1, 0);
