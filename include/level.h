@@ -29,6 +29,7 @@ protected:
 
 public:
 	Level();
+	~Level();
 
 	virtual void drawScene();
 	virtual void cleanScene();

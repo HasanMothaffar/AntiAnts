@@ -1,5 +1,6 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
+#include <iostream>
 
 #include "include/level.h"
 #include "include/bullet.h"
@@ -29,6 +30,7 @@ void Level::removeOutOfBoundariesBullets() {
 	{
 		if (it->isOutOfBoundaries(this->skybox))
 		{
+			std::cout << "Bullet: " << it->real.x << " " << it->real.y << " " << it->real.z << " out of boundaries\n\n";
 			this->toRemoveBullets.push_back(it);
 		}
 	}
@@ -38,6 +40,8 @@ void Level::removeShotAnts() {
 	for (auto antIterator = this->ants.begin(); antIterator != this->ants.end(); antIterator++) {
 		for (auto bulletIterator = this->bullets.begin(); bulletIterator != this->bullets.end(); bulletIterator++) {
 			if (antIterator->collidesWithBullet(&(*bulletIterator))) {
+				std::cout << "Ant: " << antIterator->x << " " << antIterator->y << " " << antIterator->z << " dead\n";
+				std::cout << "Bullet: " << bulletIterator->real.x << " " << bulletIterator->real.y << " " << bulletIterator->real.z << " removed\n\n";
 				this->toRemoveAnts.push_back(antIterator);
 				this->toRemoveBullets.push_back(bulletIterator);
 			}
@@ -46,7 +50,13 @@ void Level::removeShotAnts() {
 }
 
 /* -- PUBLIC -- */
-Level::Level() { }
+Level::Level() { 
+	std::cout << "Inside Level constructor. " << this->ants.size() << "\n";
+}
+
+Level::~Level() { 
+	std::cout << "Inside Level destructor.\n";
+}
 
 void Level::drawScene() {
 	glTranslatef(0, -1, 0);
