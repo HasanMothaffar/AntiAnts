@@ -11,10 +11,13 @@ class Monitor: public Level {
 
 private:
 	std::vector<Model_3DS *> circuits;
+	GLUquadric *quadric;
+
 	void loadCircuits();
 
 public:
 	Monitor();
 	virtual void drawScene();
 	void drawCircuits() const;
+	void drawBatteries() const;
 };
