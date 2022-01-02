@@ -14,15 +14,15 @@ protected:
 	Camera *camera;
 	Skybox *skybox;
 
-	std::vector<Ant *> ants;
-	std::vector<Bullet *> bullets;
+	std::vector<Ant> ants;
+	std::vector<Bullet> bullets;
 
-	std::vector<std::vector<Ant *>::iterator> toRemoveAnts;
-	std::vector<std::vector<Bullet *>::iterator> toRemoveBullets;
+	std::vector<std::vector<Ant>::iterator> toRemoveAnts;
+	std::vector<std::vector<Bullet>::iterator> toRemoveBullets;
 
 	void loadAnts();
-	void drawAnts() const;
-	void drawBullets() const;
+	void drawAnts();
+	void drawBullets();
 
 	void removeOutOfBoundariesBullets();
 	void removeShotAnts();

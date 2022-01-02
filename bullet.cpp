@@ -2,16 +2,16 @@
 #include "include/camera.h"
 
 /* -- STATIC -- */
-Bullet* Bullet::createBullet(const Camera *camera, float speed) {
-	Bullet * bullet = new Bullet;
-	bullet->position = camera->Position;
-	bullet->view = camera->View;
-	bullet->real = Vector3dCreate(
+Bullet Bullet::createBullet(const Camera *camera, float speed) {
+	Bullet bullet;
+	bullet.position = camera->Position;
+	bullet.view = camera->View;
+	bullet.real = Vector3dCreate(
 		camera->Position.x + camera->View.x,
 		camera->Position.y + camera->View.y,
 		camera->Position.z + camera->View.z
 	);
-	bullet->speed = speed;
+	bullet.speed = speed;
 
 	return bullet;
 }

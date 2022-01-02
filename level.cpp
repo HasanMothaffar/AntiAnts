@@ -11,23 +11,23 @@ void Level::loadAnts() {
 	{
 		for (float z = -50; z >= -150; z -= 50)
 		{
-			this->ants.push_back(new Ant(x, 0, z));
+			this->ants.push_back(Ant(x, 0, z));
 		}
 	}
 }
 
-void Level::drawAnts() const {
-	for (auto ant: this->ants) ant->draw();
+void Level::drawAnts() {
+	for (auto ant: this->ants) ant.draw();
 }
 
-void Level::drawBullets() const {
-	for (auto bullet: this->bullets) bullet->draw();
+void Level::drawBullets() {
+	for (auto &bullet: this->bullets) bullet.draw();
 }
 
 void Level::removeOutOfBoundariesBullets() {
 	for (auto it = this->bullets.begin(); it != this->bullets.end(); it++)
 	{
-		if ((*it)->isOutOfBoundaries(this->skybox))
+		if (it->isOutOfBoundaries(this->skybox))
 		{
 			this->toRemoveBullets.push_back(it);
 		}
@@ -37,7 +37,7 @@ void Level::removeOutOfBoundariesBullets() {
 void Level::removeShotAnts() {
 	for (auto antIterator = this->ants.begin(); antIterator != this->ants.end(); antIterator++) {
 		for (auto bulletIterator = this->bullets.begin(); bulletIterator != this->bullets.end(); bulletIterator++) {
-			if ((*(*antIterator)).collidesWithBullet(*bulletIterator)) {
+			if (antIterator->collidesWithBullet(&(*bulletIterator))) {
 				this->toRemoveAnts.push_back(antIterator);
 				this->toRemoveBullets.push_back(bulletIterator);
 			}
