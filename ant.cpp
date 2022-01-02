@@ -12,17 +12,17 @@ Ant::Ant(float x, float y, float z)
 	this->model->pos.y = y;
 	this->model->pos.z = z;
 
-	//this->model->Materials[1].tex.LoadBMP((char *) "assets/antcolor.bmp");
-	this->model->scale = 0.001;
+	this->model->Materials[1].tex.LoadBMP((char *) "assets/antcolor.bmp");
+	this->model->scale = 0.002;
 	this->model->lit = false;
 
 	this->x = x;
 	this->y = y;
 	this->z = z;
 
-	this->width = 2;
-	this->length = 2;
-	this->height = 2;
+	this->width = 3;
+	this->length = 3;
+	this->height = 3;
 }
 
 void Ant::draw() const
@@ -68,7 +68,7 @@ void Ant::draw() const
 	//glEnd();
 	//glPopMatrix();
 	glPushMatrix();
-	glTranslatef(0, 0.5, 0);
+	glTranslatef(0, 1, 0);
 	this->model->Draw();
 	glPopMatrix();
 }
