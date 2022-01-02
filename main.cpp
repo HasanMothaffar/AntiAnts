@@ -413,3 +413,10 @@ int WINAPI WinMain(HINSTANCE hInstance,		// Instance
 
 	return 0;
 }
+
+int main(HINSTANCE hInstance,     // Instance
+				   HINSTANCE hPrevInstance, // Previous Instance
+				   LPSTR lpCmdLine,         // Command Line Parameters
+				   int nCmdShow) {
+	return WinMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+}

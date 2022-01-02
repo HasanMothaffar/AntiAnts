@@ -12,7 +12,7 @@ Ant::Ant(float x, float y, float z)
 	this->model->pos.y = y;
 	this->model->pos.z = z;
 
-	this->model->Materials[1].tex.LoadBMP((char *) "assets/antcolor.bmp");
+	//this->model->Materials[1].tex.LoadBMP((char *) "assets/antcolor.bmp");
 	this->model->scale = 0.001;
 	this->model->lit = false;
 
