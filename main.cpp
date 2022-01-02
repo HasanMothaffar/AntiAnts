@@ -10,9 +10,8 @@
 #include "include/Model_3DS.h"
 #include "include/3DTexture.h"
 #include "include/texture.h"
-#include "levels/monitor/monitor_skybox.h"
-#include "levels/monitor/monitor_camera.h"
 #include "levels/monitor/monitor_level.h"
+#include "levels/motherboard/motherboard_level.h"
 #include "include/level.h"
 
 using namespace std;
@@ -31,12 +30,7 @@ bool active = TRUE;		 // Window Active Flag Set To TRUE By Default
 bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
-
-
-Level *level = new Monitor();
-
-Model_3DS circuit;
-Model_3DS ant;
+Level *level;
 
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The GL Window
 {
@@ -55,7 +49,6 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 
 	glMatrixMode(GL_MODELVIEW); // Select The Modelview Matrix
 	glLoadIdentity();			// Reset The Modelview Matrix
-
 	// TODO: level->resetCamera();
 }
 
@@ -69,20 +62,7 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
 	glEnable(GL_TEXTURE_2D);
 	loadGameTextures();
-
-	ant = Model_3DS();
-	ant.Load((char *) "assets/Ant_3ds.3ds");
-	ant.pos.x = 0;
-	ant.pos.y = 1;
-	ant.pos.z = -20;
-
-	//circuit.Materials[0].tex.LoadBMP("assets/Ant_color.bmp");
-	ant.Materials[1].tex.LoadBMP("assets/Ant_color.bmp");
-	ant.scale = 0.001;
-
-	//circuit.Materials[1].tex.BuildColorTexture(125, 125, 125);
-	//circuit.Materials[2].tex.BuildColorTexture(125, 125, 125);
-
+	level = new Monitor();
 	return TRUE; // Initialization Went OK
 }
 
@@ -91,12 +71,16 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	level->respondToKeyboard(keys);			// Should be the first function call because it may contain rotations!
 
+	if (keys['O']) {
+		delete level;
+		level = new Motherboard();
+	}
+
+	level->respondToKeyboard(keys);			// Should be the first function call because it may contain rotations!
 	if (!level->hasEnded()) {
 		level->drawScene();
 		glColor3f(1, 1, 1);
-		ant.Draw();
 		level->cleanScene();
 	} else {
 		glColor3f(1, 0, 1);

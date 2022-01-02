@@ -3,6 +3,7 @@
 
 #include "include/level.h"
 #include "include/bullet.h"
+#include "include/Model_3DS.h"
 
 /* -- PRIVATE -- */
 void Level::loadAnts() {
@@ -49,10 +50,11 @@ Level::Level() { }
 
 void Level::drawScene() {
 	glTranslatef(0, -1, 0);
+	glEnable(GL_TEXTURE_2D);
 	this->skybox->draw();
+	this->drawAnts();
 
-	glDisable(GL_TEXTURE_2D);
-	//this->drawAnts();
+	// glDisable(GL_TEXTURE_2D);
 	this->drawBullets();
 	glEnable(GL_TEXTURE_2D);
 }

@@ -8,7 +8,7 @@ MonitorCamera::MonitorCamera() : Camera() { }
 
 void MonitorCamera::respondToKeyboard(bool *keys) {
 	float step = 0.7f;
-	float angle = 0.4f;
+	float angle = 0.7f;
 
 	if (keys['F']) {
 		glColor3f(1, 1, 1);
@@ -23,7 +23,7 @@ void MonitorCamera::respondToKeyboard(bool *keys) {
 		MoveForward(step);
 	if (keys['S'])
 		MoveBackward(step);
-	if (keys['Z'])
+	/*if (keys['Z'])
 	{
 		MoveUpward(step);
 	}
@@ -33,7 +33,7 @@ void MonitorCamera::respondToKeyboard(bool *keys) {
 		{
 			MoveDownward(step);
 		}
-	}
+	}*/
 	if (keys[VK_LEFT])
 	{
 		RotateY(angle);
@@ -42,14 +42,14 @@ void MonitorCamera::respondToKeyboard(bool *keys) {
 	{
 		RotateY(-angle);
 	}
-	if (keys[VK_UP])
+	/*if (keys[VK_UP])
 		RotateX(-angle);
 	if (keys[VK_DOWN])
-		RotateX(angle);
-	if (keys['L'])
+		RotateX(angle);*/
+	/*if (keys['L'])
 		RotateZ(-step);
 	if (keys['K'])
-		RotateZ(step);
+		RotateZ(step);*/
 
 	if (keys['R']) 
 		Reset();

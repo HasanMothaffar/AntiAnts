@@ -54,6 +54,12 @@
     <ClCompile Include="levels\monitor\monitor_skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="levels\motherboard\motherboard_camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levels\motherboard\motherboard_skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\3DTexture.h">
@@ -95,11 +101,22 @@
     <ClInclude Include="levels\monitor\monitor_skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="levels\motherboard\motherboard_skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levels\motherboard\motherboard_camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="readme.md" />
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\Ant_color.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

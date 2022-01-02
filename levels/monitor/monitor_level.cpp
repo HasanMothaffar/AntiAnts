@@ -29,15 +29,16 @@ Monitor::Monitor(): Level() {
 	this->skybox = new MonitorSkybox(50, 50, 200);
 	this->camera = new MonitorCamera();
 	this->loadAnts();
+	this->loadCircuits();
 }
 
 void Monitor::drawScene() {
 	glTranslatef(0, -1, 0);
 	this->skybox->draw();
 	this->drawCircuits();
+	this->drawAnts();
 
 	glDisable(GL_TEXTURE_2D);
-	//this->drawAnts();
 	this->drawBullets();
 	glEnable(GL_TEXTURE_2D);
 }

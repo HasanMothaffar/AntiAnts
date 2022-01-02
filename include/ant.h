@@ -1,9 +1,13 @@
 #pragma once
 
 #include "bullet.h"
+#include "Model_3DS.h"
 
 class Ant
 {
+private:
+	Model_3DS *model;
+
 public:
 	float width;
 	float length;
