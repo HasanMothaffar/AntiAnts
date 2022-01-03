@@ -13,6 +13,10 @@ Keyboard::Keyboard() {
 	this->loadAnts();
 }
 
+void Keyboard::loadAnts() {
+
+}
+
 void Keyboard::drawScene() {
 	this->drawBullets();
 	glEnable(GL_TEXTURE_2D);

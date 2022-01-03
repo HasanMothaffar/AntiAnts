@@ -31,6 +31,10 @@ std::string textureNames[] = {
 	"motherboard/copperCable3",
 	"motherboard/black",
 	"motherboard/black2",
+	"ups/batteryMinus",
+	"ups/batteryPlus",
+	"ups/digitalNumber",
+	"ups/UPSBoard",
 };
 
 std::map<std::string, int> textures;

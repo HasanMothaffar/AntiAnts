@@ -72,6 +72,12 @@
     <ClCompile Include="levels\motherboard\motherboard_piece.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="levels\ups\ups_level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levels\ups\ups_skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="levels\motherboard\motherboard_camera.h">
@@ -129,6 +135,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="levels\motherboard\motherboard_piece.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levels\ups\ups_level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levels\ups\ups_skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

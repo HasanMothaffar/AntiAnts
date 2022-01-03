@@ -9,6 +9,7 @@
 class Keyboard: public Level {
 private:
 	KeyboardPiece keyboard;
+	virtual void loadAnts();
 public:
 	Keyboard();
 	virtual void drawScene();

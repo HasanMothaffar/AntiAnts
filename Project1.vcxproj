@@ -26,6 +26,8 @@
     <ClCompile Include="levels\motherboard\motherboard_level.cpp" />
     <ClCompile Include="levels\motherboard\motherboard_piece.cpp" />
     <ClCompile Include="levels\motherboard\motherboard_skybox.cpp" />
+    <ClCompile Include="levels\ups\ups_level.cpp" />
+    <ClCompile Include="levels\ups\ups_skybox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model_3DS.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -51,6 +53,8 @@
     <ClInclude Include="levels\motherboard\motherboard_level.h" />
     <ClInclude Include="levels\motherboard\motherboard_piece.h" />
     <ClInclude Include="levels\motherboard\motherboard_skybox.h" />
+    <ClInclude Include="levels\ups\ups_level.h" />
+    <ClInclude Include="levels\ups\ups_skybox.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{371B5E9E-00B9-44E2-B933-1231C419016A}</ProjectGuid>

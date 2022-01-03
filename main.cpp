@@ -16,6 +16,7 @@
 #include "levels/monitor/monitor_level.h"
 #include "levels/motherboard/motherboard_level.h"
 #include "levels/keyboard/keyboard_level.h"
+#include "levels/ups/ups_level.h"
 
 using namespace std;
 
@@ -94,6 +95,12 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	if (keys['3']) {
 		delete level;
 		level = new Keyboard();
+		init = true;
+	}
+
+	if (keys['4']) {
+		delete level;
+		level = new UPS();
 		init = true;
 	}
 
