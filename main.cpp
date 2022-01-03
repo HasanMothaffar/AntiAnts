@@ -2,6 +2,7 @@
 #include <gl.h>		 // Header File For The OpenGL32 Library
 #include <glu.h>	 // Header File For The GLu32 Library
 
+#include <iostream>
 #include <cmath>
 #include <vector>
 #include <map>
@@ -21,13 +22,17 @@ HGLRC hRC = NULL;	 // Permanent Rendering Cntext
 HWND hWnd = NULL;	 // Holds Our Window Handle
 HINSTANCE hInstance; // Holds The Instance Of The Application
 
-int windowWidth = 1920;
-int windowHeight = 1080;
+int mouseX = 0, prevMouseX = 0,
+	mouseY = 0, prevMouseY = 0;
+
+int windowWidth = 800;
+int windowHeight = 600;
 char *windowTitle = "Computer Screen";
 
 bool keys[256];			 // Array Used For The Keyboard Routine
 bool active = TRUE;		 // Window Active Flag Set To TRUE By Default
 bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
+bool isLClicked, isRClicked;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 Level *level;
@@ -51,7 +56,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 	glLoadIdentity();			// Reset The Modelview Matrix
 	// TODO: level->resetCamera();
 }
-
+bool init = false;
 int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 {
 	glShadeModel(GL_SMOOTH);						   // Enable Smooth Shading
@@ -63,28 +68,38 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 	glEnable(GL_TEXTURE_2D);
 	loadGameTextures();
 	level = new Monitor();
+	init = true;
 	return TRUE; // Initialization Went OK
 }
-
 
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-
-	if (keys['O']) {
+	
+	if (keys['1']) {
 		delete level;
-		level = new Motherboard();
+		level = new Monitor();
+		init = true;
 	}
 
-	level->respondToKeyboard(keys);			// Should be the first function call because it may contain rotations!
-	if (!level->hasEnded()) {
-		level->drawScene();
-		glColor3f(1, 1, 1);
-		level->cleanScene();
-	} else {
-		glColor3f(1, 0, 1);
-		glRectf(-2, -2, 2, 2);
+	if (keys['2']) {
+		delete level;
+		level = new Motherboard();
+		init = true;
+	}
+
+	if (init) {
+		level->respondToKeyboard(keys);
+
+		if (!level->hasEnded()) {
+			level->drawScene();
+			glColor3f(1, 1, 1);
+			level->cleanScene();
+		} else {
+			glColor3f(1, 0, 1);
+			glRectf(-2, -2, 2, 2);
+		}
 	}
 
 	glFlush();
@@ -369,6 +384,23 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 			level->shootBullet();
 		}
 		return 0; // Jump Back
+	}
+
+	case WM_MOUSEMOVE: {
+			prevMouseX = mouseX;
+			prevMouseY = mouseY;
+
+			mouseX = (int) LOWORD(lParam);
+			mouseY = (int) HIWORD(lParam);
+
+			std::cout << mouseX << " " << mouseY << "\n";
+
+			isLClicked = (LOWORD(wParam) & MK_LBUTTON) ? true : false;
+			isRClicked = (LOWORD(wParam) & MK_RBUTTON) ? true : false;
+
+			level->respondToMouse(mouseX - prevMouseX, mouseY); // Should be the first function call because it may contain rotations!
+
+			break;
 	}
 
 	case WM_SIZE: // Resize The OpenGL Window

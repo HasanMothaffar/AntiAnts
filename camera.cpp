@@ -2,6 +2,7 @@
 #include <gl/GL.h>				// Header File For The OpenGL32 Library
 #include <gl/glu.h>			// Header File For The GLu32 Library
 #include <math.h>
+#include <iostream>
 
 #include "include/camera.h"
 #include "include/skybox.h"
@@ -225,6 +226,18 @@ void Camera::respondToKeyboard(bool *keys) {
 	if (keys['R']) 
 		Reset();
 	Render();
+}
+
+
+//void Camera::rotateXWithMouse(bool rotateRight) {
+//	//mouseX = mouseX < 960 ? -mouseX: mouseX;
+//	float angle = 0.4;
+//	float finalAngle = mouseX < 0 ? angle: -angle;
+//	this->RotateY(finalAngle);
+//}
+
+void Camera::respondToMouse(int mouseX, int mouseY) {
+
 }
 
 bool Camera::exceedsSkybox(const Skybox *skybox) {

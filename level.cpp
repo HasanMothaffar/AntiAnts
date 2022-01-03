@@ -90,6 +90,10 @@ void Level::respondToKeyboard(bool *keys) {
 	this->camera->respondToKeyboard(keys);
 }
 
+void Level::respondToMouse(int mouseX, int mouseY) {
+	this->camera->respondToMouse(mouseX, mouseY);
+}
+
 void Level::shootBullet() {
 	this->bullets.push_back(Bullet::createBullet(this->camera));
 }

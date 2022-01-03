@@ -34,6 +34,7 @@ public:
 	virtual void drawScene();
 	virtual void cleanScene();
 	virtual void respondToKeyboard(bool *);
+	virtual void respondToMouse(int, int);
 	void shootBullet();
 
 	bool hasEnded();
