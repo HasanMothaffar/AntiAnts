@@ -15,6 +15,9 @@
     <ClCompile Include="ant.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="levels\keyboard\keyboard_piece.cpp" />
+    <ClCompile Include="levels\keyboard\keyboard_level.cpp" />
+    <ClCompile Include="levels\keyboard\keyboard_skybox.cpp" />
     <ClCompile Include="levels\monitor\monitor_camera.cpp" />
     <ClCompile Include="levels\monitor\monitor_level.cpp" />
     <ClCompile Include="levels\monitor\monitor_skybox.cpp" />
@@ -37,6 +40,9 @@
     <ClInclude Include="include\skybox.h" />
     <ClInclude Include="include\texture.h" />
     <ClInclude Include="include\utility.h" />
+    <ClInclude Include="levels\keyboard\keyboard_piece.h" />
+    <ClInclude Include="levels\keyboard\keyboard_level.h" />
+    <ClInclude Include="levels\keyboard\keyboard_skybox.h" />
     <ClInclude Include="levels\monitor\monitor_camera.h" />
     <ClInclude Include="levels\monitor\monitor_level.h" />
     <ClInclude Include="levels\monitor\monitor_skybox.h" />
@@ -90,7 +96,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>GLAUX.lib;GLU32.lib;glut.lib;OPENGL32.lib;glut32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>NotSet</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

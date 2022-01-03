@@ -11,9 +11,11 @@
 #include "include/Model_3DS.h"
 #include "include/3DTexture.h"
 #include "include/texture.h"
+#include "include/level.h"
+
 #include "levels/monitor/monitor_level.h"
 #include "levels/motherboard/motherboard_level.h"
-#include "include/level.h"
+#include "levels/keyboard/keyboard_level.h"
 
 using namespace std;
 
@@ -67,7 +69,7 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
 	glEnable(GL_TEXTURE_2D);
 	loadGameTextures();
-	level = new Monitor();
+	level = new Keyboard();
 	init = true;
 	return TRUE; // Initialization Went OK
 }
@@ -89,13 +91,20 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 		init = true;
 	}
 
+	if (keys['3']) {
+		delete level;
+		level = new Keyboard();
+		init = true;
+	}
+
 	if (init) {
 		level->respondToKeyboard(keys);
+		level->drawScene();
+		glColor3f(1, 1, 1);
+		level->cleanScene();
 
 		if (!level->hasEnded()) {
-			level->drawScene();
-			glColor3f(1, 1, 1);
-			level->cleanScene();
+			
 		} else {
 			glColor3f(1, 0, 1);
 			glRectf(-2, -2, 2, 2);

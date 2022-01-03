@@ -27,6 +27,7 @@ void Bullet::shift() {
 /* -- PUBLIC -- */
 void Bullet::draw() {
 		glPushMatrix();
+		glTranslatef(0, -1, 0);
 		glColor3f(0, 0, 1);
 		glPointSize(10);
 		glBegin(GL_POINTS);

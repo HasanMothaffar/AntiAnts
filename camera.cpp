@@ -203,8 +203,10 @@ void Camera::respondToKeyboard(bool *keys) {
 	{
 		if (!(Position.y <= 0))
 		{
-			MoveDownward(step);
+			
 		}
+
+		MoveDownward(step);
 	}
 	if (keys[VK_LEFT])
 	{
