@@ -1,3 +1,5 @@
+#pragma once
+
 #include <gl.h> // Header File For The OpenGL32 Library
 
 class KeyboardPiece

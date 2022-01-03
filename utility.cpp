@@ -15,7 +15,22 @@ std::string textureNames[] = {
 	"windows",
 	"pc1",
 	"motherboard/case",
-	"motherboard/m2"
+	"motherboard/m2",
+	"motherboard/cpu2",
+	"motherboard/grey",
+	"motherboard/whiteSlot",
+	"motherboard/blueSlot",
+	"motherboard/gold_metal2",
+	"motherboard/heat_sink",
+	"motherboard/BIOS2",
+	"motherboard/ram",
+	"motherboard/red",
+	"motherboard/cmos",
+	"motherboard/copperCable2",
+	"motherboard/white_black",
+	"motherboard/copperCable3",
+	"motherboard/black",
+	"motherboard/black2",
 };
 
 std::map<std::string, int> textures;

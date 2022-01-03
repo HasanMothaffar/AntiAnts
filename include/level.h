@@ -20,7 +20,7 @@ protected:
 	std::vector<std::vector<Ant>::iterator> toRemoveAnts;
 	std::vector<std::vector<Bullet>::iterator> toRemoveBullets;
 
-	void loadAnts();
+	virtual void loadAnts();
 	void drawAnts();
 	void drawBullets();
 

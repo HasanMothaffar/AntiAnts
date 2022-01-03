@@ -15,7 +15,7 @@
     <ClCompile Include="ant.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
-    <ClCompile Include="game.cpp" />
+    <ClCompile Include="level.cpp" />
     <ClCompile Include="levels\keyboard\keyboard_level.cpp" />
     <ClCompile Include="levels\keyboard\keyboard_piece.cpp" />
     <ClCompile Include="levels\keyboard\keyboard_skybox.cpp" />
@@ -24,17 +24,14 @@
     <ClCompile Include="levels\monitor\monitor_skybox.cpp" />
     <ClCompile Include="levels\motherboard\motherboard_camera.cpp" />
     <ClCompile Include="levels\motherboard\motherboard_level.cpp" />
+    <ClCompile Include="levels\motherboard\motherboard_piece.cpp" />
     <ClCompile Include="levels\motherboard\motherboard_skybox.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="skybox.cpp" />
+    <ClCompile Include="Model_3DS.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ant.h" />
-    <ClInclude Include="bullet.h" />
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="game.h" />
     <ClInclude Include="include\3DTexture.h" />
     <ClInclude Include="include\ant.h" />
     <ClInclude Include="include\bullet.h" />
@@ -52,10 +49,8 @@
     <ClInclude Include="levels\monitor\monitor_skybox.h" />
     <ClInclude Include="levels\motherboard\motherboard_camera.h" />
     <ClInclude Include="levels\motherboard\motherboard_level.h" />
+    <ClInclude Include="levels\motherboard\motherboard_piece.h" />
     <ClInclude Include="levels\motherboard\motherboard_skybox.h" />
-    <ClInclude Include="skybox.h" />
-    <ClInclude Include="texture.h" />
-    <ClInclude Include="utility.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{371B5E9E-00B9-44E2-B933-1231C419016A}</ProjectGuid>
