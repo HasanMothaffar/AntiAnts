@@ -13,7 +13,9 @@
 std::string textureNames[] = {
 	"circuit",
 	"windows",
-	"pc1"
+	"pc1",
+	"motherboard/case",
+	"motherboard/m2"
 };
 
 std::map<std::string, int> textures;
