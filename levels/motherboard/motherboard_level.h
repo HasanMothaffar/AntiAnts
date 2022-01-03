@@ -1,11 +1,11 @@
-//#pragma once
-//
-//#include "../../include/level.h"
-//#include "skybox.h"
-//#include "camera.h"
-//
-//class Motherboard: public Level {
-//public:
-//	Motherboard(Camera *, Skybox *);
-//	virtual void drawScene();
-//};
+#pragma once
+
+#include "../../include/level.h"
+#include "motherboard_camera.h"
+#include "motherboard_skybox.h"
+
+class Motherboard: public Level {
+public:
+	Motherboard();
+	virtual void drawScene();
+};
