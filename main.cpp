@@ -128,8 +128,8 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 		drawLevelManager();
 	} else {
 		if (level->hasEnded()) {
+			PlaySound("assets/sounds/win.wav", NULL, SND_ASYNC);
 			isUserChoosingLevel = true;
-			std::cout << "game has ended\n";
 		} else {
 			// Actual drawing of the game
 			level->respondToKeyboard(keys);
