@@ -44,7 +44,7 @@ void Bullet::draw() {
 bool Bullet::isOutOfBoundaries(const Skybox *skybox) {
 	return (
 		this->real.z < -skybox->length || // Back face
-		this->real.z > 0 || // Front face
+		this->real.z > skybox->length || // Front face
 		this->real.x > skybox->width || // Right face
 		this->real.x < -skybox->width // Left face
 	);
