@@ -21,7 +21,7 @@ void Level::loadAnts() {
 void Level::loadSounds() { }
 
 void Level::drawAnts() {
-	for (auto ant: this->ants) ant.draw();
+	for (auto &ant: this->ants) ant.draw();
 }
 
 void Level::drawBullets() {

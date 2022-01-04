@@ -10,23 +10,14 @@
 bool Ant::hasReachedLimit() {
 	
 	const float modelPositionX = this->model->pos.x;
-
 	const float limitRight = this->x + 10;
 	const float limitLeft = this->x - 10;
 
-	/*bool hasExceededLimit = false;
-
-	bool left = false;
-	bool right = false;
-
-	if (limitLeft*/
-
-	bool left = (modelPositionX >= limitRight);
-	bool right = (modelPositionX <= limitLeft);
-	bool a = (left || right);
-	return a;
-
-	/*return left || right;*/
+	return (
+		(modelPositionX >= limitRight) || 
+		(modelPositionX <= limitLeft)
+	);  
+   
 }
 
 /* -- PUBLIC -- */
@@ -51,12 +42,19 @@ Ant::Ant(float x, float y, float z)
 	this->length = 3;
 	this->height = 3;
 
-	this->step = 2;
+	this->step = -0.1;
 	this->limitX = 10;
 }
 
 void Ant::draw()
 {
+	if (this->hasReachedLimit()) {
+		this->step *= -1.0f;
+		this->model->rot.y += 180;
+	}
+
+	this->model->pos.x += this->step;
+
 	glPushMatrix();
 	glTranslatef(0, 1, 0);
 	this->model->Draw();
