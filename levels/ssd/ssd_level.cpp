@@ -12,7 +12,7 @@
 /* -- PRIVATE -- */
 
 void SSD::loadAnts() {
-	this->ants.push_back(Ant(0, 2, -100));
+	this->ants.push_back(Ant(0, 0, -100));
 }
 
 /* -- PUBLIC -- */
@@ -27,7 +27,7 @@ SSD::SSD(): Level() {
 }
 
 void SSD::drawScene() {
-	glTranslated(0, -6, 0);
+	glTranslated(0, -2, 0);
 	this->skybox->draw();
 	//*************************** Drawing the TRANSISTORS *************************
 	//glEnable(GL_TEXTURE_2D);
