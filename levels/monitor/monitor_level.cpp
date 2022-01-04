@@ -4,8 +4,8 @@
 #include "../../include/level.h"
 #include "../../include/Model_3DS.h"
 #include "../../include/utility.h"
+#include "../../include/camera.h"
 #include "monitor_level.h"
-#include "monitor_camera.h"
 #include "monitor_skybox.h"
 
 /* -- PRIVATE -- */
@@ -35,7 +35,7 @@ void Monitor::loadSounds() {
 /* -- PUBLIC -- */
 Monitor::Monitor(): Level() {
 	this->skybox = new MonitorSkybox(50, 50, 200);
-	this->camera = new MonitorCamera();
+	this->camera = new Camera();
 	this->quadric = gluNewQuadric();
 
 	this->loadAnts();

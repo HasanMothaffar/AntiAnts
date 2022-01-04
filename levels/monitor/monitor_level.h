@@ -5,7 +5,6 @@
 #include "../../include/level.h"
 #include "../../include/Model_3DS.h"
 #include "monitor_skybox.h"
-#include "monitor_camera.h"
 
 class Monitor: public Level {
 
