@@ -195,7 +195,7 @@ void Camera::respondToKeyboard(bool *keys) {
 		MoveForward(step);
 	if (keys['S'])
 		MoveBackward(step);
-	if (keys['Z'])
+	/*if (keys['Z'])
 	{
 		MoveUpward(step);
 	}
@@ -207,7 +207,7 @@ void Camera::respondToKeyboard(bool *keys) {
 		}
 
 		MoveDownward(step);
-	}
+	}*/
 	if (keys[VK_LEFT])
 	{
 		RotateY(angle);
@@ -230,16 +230,23 @@ void Camera::respondToKeyboard(bool *keys) {
 	Render();
 }
 
+void Camera::respondToMouse(int mouseX, int prevMouseX) {
+	int diff = mouseX - prevMouseX;
+	bool rotateRight = false;
 
-//void Camera::rotateXWithMouse(bool rotateRight) {
-//	//mouseX = mouseX < 960 ? -mouseX: mouseX;
-//	float angle = 0.4;
-//	float finalAngle = mouseX < 0 ? angle: -angle;
-//	this->RotateY(finalAngle);
-//}
+	if (diff < 0) {
+		rotateRight = true;
+	} 
 
-void Camera::respondToMouse(int mouseX, int mouseY) {
+	if (mouseX == 0 && prevMouseX == 0) {
+		rotateRight = true;
+	}
 
+	//mouseX = mouseX < 960 ? -mouseX: mouseX;
+	float angle = 0.4;
+	float finalAngle = rotateRight ? angle: -angle;
+
+	this->RotateY(finalAngle);
 }
 
 bool Camera::exceedsSkybox(const Skybox *skybox) {

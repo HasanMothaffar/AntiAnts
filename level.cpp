@@ -1,6 +1,7 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
 #include <iostream>
+#include <Sound.h>
 
 #include "include/level.h"
 #include "include/bullet.h"
@@ -59,14 +60,9 @@ Level::~Level() {
 }
 
 void Level::drawScene() {
-	glTranslatef(0, -1, 0);
-	glEnable(GL_TEXTURE_2D);
 	this->skybox->draw();
 	this->drawAnts();
-
-	// glDisable(GL_TEXTURE_2D);
 	this->drawBullets();
-	glEnable(GL_TEXTURE_2D);
 }
 
 void Level::cleanScene() {
@@ -90,8 +86,8 @@ void Level::respondToKeyboard(bool *keys) {
 	this->camera->respondToKeyboard(keys);
 }
 
-void Level::respondToMouse(int mouseX, int mouseY) {
-	this->camera->respondToMouse(mouseX, mouseY);
+void Level::respondToMouse(int mouseX, int prevMouseX) {
+	this->camera->respondToMouse(mouseX, prevMouseX);
 }
 
 void Level::shootBullet() {

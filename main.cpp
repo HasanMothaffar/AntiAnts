@@ -403,21 +403,39 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 	}
 
 	case WM_MOUSEMOVE: {
-			prevMouseX = mouseX;
-			prevMouseY = mouseY;
+		prevMouseX = mouseX;
+		prevMouseY = mouseY;
 
-			mouseX = (int) LOWORD(lParam);
-			mouseY = (int) HIWORD(lParam);
+		mouseX = (int) LOWORD(lParam);
+		mouseY = (int) HIWORD(lParam);
 
-			std::cout << mouseX << " " << mouseY << "\n";
+		std::cout << mouseX << " " << mouseY << "\n";
 
-			isLClicked = (LOWORD(wParam) & MK_LBUTTON) ? true : false;
-			isRClicked = (LOWORD(wParam) & MK_RBUTTON) ? true : false;
+		isLClicked = (LOWORD(wParam) & MK_LBUTTON) ? true : false;
+		isRClicked = (LOWORD(wParam) & MK_RBUTTON) ? true : false;
 
-			level->respondToMouse(mouseX - prevMouseX, mouseY); // Should be the first function call because it may contain rotations!
+		level->respondToMouse(mouseX, prevMouseX); // Should be the first function call because it may contain rotations!
 
-			break;
+		break;
 	}
+
+	case WM_LBUTTONUP:
+		{
+			isLClicked = false;
+			break;
+		}
+	case WM_RBUTTONUP:
+		isRClicked = false;
+		break;
+	case WM_LBUTTONDOWN:
+		{
+			level->shootBullet();
+			isLClicked = true;
+			break;
+		}
+	case WM_RBUTTONDOWN:
+		isRClicked = true;
+		break;
 
 	case WM_SIZE: // Resize The OpenGL Window
 	{
