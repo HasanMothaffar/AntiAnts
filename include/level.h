@@ -41,6 +41,7 @@ public:
 	virtual void respondToKeyboard(bool *);
 	virtual void respondToMouse(int, int);
 	void shootBullet();
+	void stopSounds();
 
 	bool hasEnded();
 };

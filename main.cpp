@@ -78,7 +78,7 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 	INIT initialize = INIT();
 	initialize.InitOpenAL();
 
-	level = new SSD();
+	level = new Motherboard();
 
 	loadGameTextures();
 	return TRUE; // Initialization Went OK
@@ -120,23 +120,24 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	}
 
 	if (keys['0']) {
+		level->stopSounds();
 		isUserChoosingLevel = true;
 	}
 
-	/*if (!isUserChoosingLevel) {
-		if (level->hasEnded()) {
-			drawLevelManager();
-		} else {
-			
-		}
-	} else {
+	if (isUserChoosingLevel) {
 		drawLevelManager();
-	}*/
-
-	level->respondToKeyboard(keys);
-	level->drawScene();
-	glColor3f(1, 1, 1);
-	level->cleanScene();
+	} else {
+		if (level->hasEnded()) {
+			isUserChoosingLevel = true;
+			std::cout << "game has ended\n";
+		} else {
+			// Actual drawing of the game
+			level->respondToKeyboard(keys);
+			level->drawScene();
+			glColor3f(1, 1, 1);
+			level->cleanScene();
+		}
+	}
 
 	glFlush();
 	SwapBuffers(hDC);

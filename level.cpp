@@ -59,10 +59,12 @@ Level::Level() {
 
 Level::~Level() { 
 	std::cout << "Inside Level destructor.\n";
+	delete this->camera;
+	delete this->skybox;
 
 	for (auto sound: this->sounds) {
 		sound.second.Stop();
-	}
+	}	
 
 	this->sounds.clear();
 }
@@ -87,7 +89,13 @@ void Level::cleanScene() {
 		this->ants.erase(*it);
 	}
 
-	this->toRemoveAnts.clear();
+	this->toRemoveAnts.clear();	
+}
+
+void Level::stopSounds() {
+	for (auto sound: this->sounds) {
+		sound.second.Stop();
+	}
 }
 
 void Level::respondToKeyboard(bool *keys) {
