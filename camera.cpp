@@ -68,7 +68,7 @@ void Camera::Reset() {
 }
 
 void Camera::Render(void)
-{
+{	
 	this->drawCursor();
 	Vector3dStruct ViewPoint = Position + View;
 	gluLookAt(
@@ -156,6 +156,24 @@ void Camera::MoveLeft(GLfloat Distance)
 	Position = Position - (RightVector * Distance);
 }
 
+
+Vector3dStruct Camera::testMoveForward(GLfloat Distance) {
+	return Position + (View * Distance);
+}
+
+Vector3dStruct Camera::testMoveBackward(GLfloat Distance) {
+	return Position - (View * Distance);
+}
+
+Vector3dStruct Camera::testMoveRight(GLfloat Distance) {
+	return Position + (RightVector * Distance);
+}
+
+Vector3dStruct Camera::testMoveLeft(GLfloat Distance) {
+	return Position - (RightVector * Distance);
+}
+
+
 void Camera::MoveUpward(GLfloat Distance)
 {
 	Position = Position + (Up * Distance);
@@ -178,7 +196,7 @@ void Camera::invertView() {
 	this->View = this->View * -1;
 }
 
-void Camera::respondToKeyboard(bool *keys) {
+void Camera::respondToKeyboard(bool *keys, Skybox *skybox) {
 	float step = 0.7f;
 	float angle = 0.4f;
 
@@ -188,24 +206,30 @@ void Camera::respondToKeyboard(bool *keys) {
 	}
 
 	if (keys['D'])
-		MoveRight(step);
+	{
+		if (!this->exceedsSkybox(this->testMoveRight(step), skybox)) MoveRight(step);
+		
+	}
 	if (keys['A'])
-		MoveLeft(step);
+	{
+		if (!this->exceedsSkybox(this->testMoveLeft(step), skybox)) MoveLeft(step);
+
+	}
 	if (keys['W'])
-		MoveForward(step);
-	if (keys['S'])
-		MoveBackward(step);
+	{
+		if (!this->exceedsSkybox(this->testMoveForward(step), skybox)) MoveForward(step);
+	}
+		
+	if (keys['S']) {
+		if (!this->exceedsSkybox(this->testMoveBackward(step), skybox)) MoveBackward(step);
+	}
+		
 	if (keys['Z'])
 	{
 		MoveUpward(step);
 	}
 	if (keys['X'])
 	{
-		if (!(Position.y <= 0))
-		{
-			
-		}	
-
 		MoveDownward(step);
 	}
 	if (keys[VK_LEFT])
@@ -242,23 +266,18 @@ void Camera::respondToMouse(int mouseX, int prevMouseX) {
 		rotateRight = true;
 	}
 
-	//mouseX = mouseX < 960 ? -mouseX: mouseX;
 	float angle = 0.4;
 	float finalAngle = rotateRight ? angle: -angle;
 
 	this->RotateY(finalAngle);
 }
 
-bool Camera::exceedsSkybox(const Skybox *skybox) {
-	const Vector3dStruct position = this->Position;
+bool Camera::exceedsSkybox(Vector3dStruct futurePosition, Skybox *skybox) {
+	return (
+		(futurePosition.x >= skybox->width) ||
+		(futurePosition.x <= -skybox->width) ||
 
-	/*return (
-		(position.x <= -skybox->width) ||
-		(position.x >= skybox->width) ||
-
-		(position.y < 0) ||
-		(position.y >= skybox->height)
-	);*/
-	
-	return false;
+		(futurePosition.z <= -skybox->length) ||
+		(futurePosition.z >= 0)
+	);
 }

@@ -52,10 +52,18 @@ public:
 	void MoveLeft(GLfloat Distance);
 	void MoveDownward(GLfloat Distance);
 
+	
+	Vector3dStruct testMoveForward ( GLfloat Distance );
+	Vector3dStruct testMoveBackward(GLfloat Distance);
+	Vector3dStruct testMoveUpward ( GLfloat Distance );
+	Vector3dStruct testMoveRight ( GLfloat Distance );
+	Vector3dStruct testMoveLeft(GLfloat Distance);
+	Vector3dStruct testMoveDownward(GLfloat Distance);
+
 	void SetRotateX(GLfloat Angle);
 	void invertView();
-	virtual void respondToKeyboard(bool *);
+	virtual void respondToKeyboard(bool *, Skybox *);
 	virtual void respondToMouse(int, int);
+	bool exceedsSkybox(Vector3dStruct, Skybox *);
 
-	bool exceedsSkybox(const Skybox *skybox);
 };

@@ -99,7 +99,7 @@ void Level::stopSounds() {
 }
 
 void Level::respondToKeyboard(bool *keys) {
-	this->camera->respondToKeyboard(keys);
+	this->camera->respondToKeyboard(keys, this->skybox);
 }
 
 void Level::respondToMouse(int mouseX, int prevMouseX) {
