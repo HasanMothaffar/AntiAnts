@@ -4,27 +4,22 @@
 
 #include "../../include/level.h"
 #include "../../include/camera.h"
+#include "../../include/ant.h"
 
 #include "ssd_level.h"
 #include "ssd_skybox.h"
 
+/* -- PRIVATE -- */
+
+void SSD::loadAnts() {
+	this->ants.push_back(Ant(0, 2, -100));
+}
+
+/* -- PUBLIC -- */
 SSD::SSD(): Level() {
 	this->skybox = new SSDSkybox(55.0f, 50.0f, 200.0f); 
 	this->camera = new Camera();
-
-	this->X1 = X1;
-	this->X2 = X2;
-	this->Y1 = Y1;
-	this->Y2 = Y2;
-	this->Z1 = Z1;
-	this->Z2 = Z2;
-
-	this->q1 = q1;
-	this->q2 = q2;
-	this->w1 = w1;
-	this->w2 = w2;
-	this->r1 = r1;
-	this->r2 = r2;
+	this->loadAnts();
 
     lineX=0; lineY=1; lineZ=20;
     TransistorX1=-0.5; TransistorX2=1.5;
@@ -173,6 +168,11 @@ void SSD::drawScene() {
 	glTranslated(-25, 0, -105);
 	this->cube2(0, 10, 0, 2, 0, -6);
 	glPopMatrix();
+
+	this->drawAnts();
+
+	glTranslatef(0, 2, 0);
+	this->drawBullets();
 }
 
 void SSD::cube(float X1, float X2, float Y1, float Y2, float Z1, float Z2){
