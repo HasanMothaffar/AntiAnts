@@ -25,6 +25,9 @@ void Motherboard::loadAnts() {
 }
 
 void Motherboard::drawScene() {
+	glPushMatrix();
+	glTranslatef(0, -2, 0);
+
 	this->skybox->draw();
 	this->motherboard.StartMotherboardLevel(1, textures["motherboard/cpu2"], textures["motherboard/grey"],
 		textures["motherboard/whiteSlot"], textures["motherboard/blueSlot"],
@@ -33,8 +36,9 @@ void Motherboard::drawScene() {
 		0, 1, textures["motherboard/copperCable2"], 1, textures["motherboard/white_black"],
 		textures["motherboard/copperCable3"], textures["motherboard/black"], textures["motherboard/black2"]);
 
-	// glDisable(GL_TEXTURE_2D);
 	this->drawAnts();
+	glPopMatrix();
+
 	this->drawBullets();
 	glEnable(GL_TEXTURE_2D);
 }

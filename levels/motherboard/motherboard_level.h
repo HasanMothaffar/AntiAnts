@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../include/level.h"
-#include "motherboard_camera.h"
 #include "motherboard_skybox.h"
 #include "motherboard_piece.h"
 
