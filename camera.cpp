@@ -195,7 +195,7 @@ void Camera::respondToKeyboard(bool *keys) {
 		MoveForward(step);
 	if (keys['S'])
 		MoveBackward(step);
-	/*if (keys['Z'])
+	if (keys['Z'])
 	{
 		MoveUpward(step);
 	}
@@ -204,10 +204,10 @@ void Camera::respondToKeyboard(bool *keys) {
 		if (!(Position.y <= 0))
 		{
 			
-		}
+		}	
 
 		MoveDownward(step);
-	}*/
+	}
 	if (keys[VK_LEFT])
 	{
 		RotateY(angle);

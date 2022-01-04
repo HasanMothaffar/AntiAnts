@@ -18,6 +18,8 @@ void Level::loadAnts() {
 	}
 }
 
+void Level::loadSounds() { }
+
 void Level::drawAnts() {
 	for (auto ant: this->ants) ant.draw();
 }
@@ -57,6 +59,12 @@ Level::Level() {
 
 Level::~Level() { 
 	std::cout << "Inside Level destructor.\n";
+
+	for (auto sound: this->sounds) {
+		sound.second.Stop();
+	}
+
+	this->sounds.clear();
 }
 
 void Level::drawScene() {
@@ -92,6 +100,7 @@ void Level::respondToMouse(int mouseX, int prevMouseX) {
 
 void Level::shootBullet() {
 	this->bullets.push_back(Bullet::createBullet(this->camera));
+	PlaySound("assets/sounds/shot.wav", NULL, SND_ASYNC);
 }
 
 bool Level::hasEnded() {

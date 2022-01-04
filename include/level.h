@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <Sound.h>
 
 #include "ant.h"
 #include "bullet.h"
@@ -20,7 +21,11 @@ protected:
 	std::vector<std::vector<Ant>::iterator> toRemoveAnts;
 	std::vector<std::vector<Bullet>::iterator> toRemoveBullets;
 
+	std::map<std::string, Sound> sounds;
+
 	virtual void loadAnts();
+	virtual void loadSounds();
+
 	void drawAnts();
 	void drawBullets();
 

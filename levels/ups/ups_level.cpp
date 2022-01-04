@@ -5,12 +5,14 @@
 #include <texture.h>
 #include <math.h>
 
-#include "ups_level.h"
 #include "../../include/camera.h"
 #include "../../include/utility.h"
+#include "ups_skybox.h"
+#include "ups_level.h"
 
 UPS::UPS() { 
 	this->camera = new Camera();
+	this->skybox = new UPSSkybox(300, 200, 200);
 	this->loadAnts();
 }
 
@@ -19,6 +21,8 @@ void UPS::loadAnts() {
 }
 
 void UPS::drawScene() {
+	glTranslatef(0, -2, 0);
+	this->skybox->draw();
 	this-> drawUPSBoard();
 	this-> drawBattery(-140,-80,0,15,-95,-55);
 	this-> drawBattery(-140,-80,0,15,-40,0);
@@ -87,6 +91,8 @@ auxSolidTorus(5,12);
 	//this-> ;
 
 	this->fanrotate += 70;
+
+	glTranslatef(0, -2, 0);
 	this->drawAnts();
 }
 

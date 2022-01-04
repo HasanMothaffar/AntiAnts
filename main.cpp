@@ -1,6 +1,7 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
 #include <glu.h>	 // Header File For The GLu32 Library
+#include "Sound.h"
 
 #include <iostream>
 #include <cmath>
@@ -12,11 +13,13 @@
 #include "include/3DTexture.h"
 #include "include/texture.h"
 #include "include/level.h"
+#include "include/utility.h"
 
 #include "levels/monitor/monitor_level.h"
 #include "levels/motherboard/motherboard_level.h"
 #include "levels/keyboard/keyboard_level.h"
 #include "levels/ups/ups_level.h"
+#include "levels/ssd/ssd_level.h"
 
 using namespace std;
 
@@ -36,9 +39,11 @@ bool keys[256];			 // Array Used For The Keyboard Routine
 bool active = TRUE;		 // Window Active Flag Set To TRUE By Default
 bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
 bool isLClicked, isRClicked;
+bool isUserChoosingLevel = true;
+
+Level *level;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
-Level *level;
 
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The GL Window
 {
@@ -57,9 +62,9 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 
 	glMatrixMode(GL_MODELVIEW); // Select The Modelview Matrix
 	glLoadIdentity();			// Reset The Modelview Matrix
-	// TODO: level->resetCamera();
 }
-bool init = false;
+
+
 int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 {
 	glShadeModel(GL_SMOOTH);						   // Enable Smooth Shading
@@ -69,9 +74,13 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 	glDepthFunc(GL_LEQUAL);							   // The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
 	glEnable(GL_TEXTURE_2D);
+
+	INIT initialize = INIT();
+	initialize.InitOpenAL();
+
+	level = new SSD();
+
 	loadGameTextures();
-	level = new Keyboard();
-	init = true;
 	return TRUE; // Initialization Went OK
 }
 
@@ -83,40 +92,51 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	if (keys['1']) {
 		delete level;
 		level = new Monitor();
-		init = true;
+		isUserChoosingLevel = false;
 	}
 
 	if (keys['2']) {
 		delete level;
 		level = new Motherboard();
-		init = true;
+		isUserChoosingLevel = false;
 	}
 
 	if (keys['3']) {
 		delete level;
 		level = new Keyboard();
-		init = true;
+		isUserChoosingLevel = false;
 	}
 
 	if (keys['4']) {
 		delete level;
 		level = new UPS();
-		init = true;
+		isUserChoosingLevel = false;
 	}
 
-	if (init) {
-		level->respondToKeyboard(keys);
-		level->drawScene();
-		glColor3f(1, 1, 1);
-		level->cleanScene();
+	if (keys['5']) {
+		delete level;
+		level = new SSD();
+		isUserChoosingLevel = false;
+	}
 
-		if (!level->hasEnded()) {
-			
+	if (keys['0']) {
+		isUserChoosingLevel = true;
+	}
+
+	/*if (!isUserChoosingLevel) {
+		if (level->hasEnded()) {
+			drawLevelManager();
 		} else {
-			glColor3f(1, 0, 1);
-			glRectf(-2, -2, 2, 2);
+			
 		}
-	}
+	} else {
+		drawLevelManager();
+	}*/
+
+	level->respondToKeyboard(keys);
+	level->drawScene();
+	glColor3f(1, 1, 1);
+	level->cleanScene();
 
 	glFlush();
 	SwapBuffers(hDC);
@@ -397,7 +417,9 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 		keys[wParam] = FALSE; // If So, Mark It As FALSE
 		if (wParam == VK_SPACE)
 		{
-			level->shootBullet();
+			if (!isUserChoosingLevel) {
+				level->shootBullet();
+			}
 		}
 		return 0; // Jump Back
 	}
@@ -414,7 +436,9 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 		isLClicked = (LOWORD(wParam) & MK_LBUTTON) ? true : false;
 		isRClicked = (LOWORD(wParam) & MK_RBUTTON) ? true : false;
 
-		level->respondToMouse(mouseX, prevMouseX); // Should be the first function call because it may contain rotations!
+		if (!isUserChoosingLevel) {
+			level->respondToMouse(mouseX, prevMouseX); // Should be the first function call because it may contain rotations!
+		}
 
 		break;
 	}
@@ -429,7 +453,9 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 		break;
 	case WM_LBUTTONDOWN:
 		{
-			level->shootBullet();
+			if (!isUserChoosingLevel) {
+				level->shootBullet();
+			}
 			isLClicked = true;
 			break;
 		}

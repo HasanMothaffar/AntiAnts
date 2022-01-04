@@ -78,6 +78,15 @@
     <ClCompile Include="levels\ups\ups_skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levels\ssd\ssd_level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levels\ssd\ssd_skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="levels\motherboard\motherboard_camera.h">
@@ -141,6 +150,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="levels\ups\ups_skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levels\ssd\ssd_level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levels\ssd\ssd_skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

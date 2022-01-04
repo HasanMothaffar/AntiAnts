@@ -1,9 +1,35 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
+#include <iostream>
 
 #include "include/ant.h"
 #include "include/Model_3DS.h"
 
+/* -- PRIVATE -- */
+
+bool Ant::hasReachedLimit() {
+	
+	const float modelPositionX = this->model->pos.x;
+
+	const float limitRight = this->x + 10;
+	const float limitLeft = this->x - 10;
+
+	/*bool hasExceededLimit = false;
+
+	bool left = false;
+	bool right = false;
+
+	if (limitLeft*/
+
+	bool left = (modelPositionX >= limitRight);
+	bool right = (modelPositionX <= limitLeft);
+	bool a = (left || right);
+	return a;
+
+	/*return left || right;*/
+}
+
+/* -- PUBLIC -- */
 Ant::Ant(float x, float y, float z)
 {
 	this->model = new Model_3DS();
@@ -20,53 +46,17 @@ Ant::Ant(float x, float y, float z)
 	this->y = y;
 	this->z = z;
 
+
 	this->width = 3;
 	this->length = 3;
 	this->height = 3;
+
+	this->step = 2;
+	this->limitX = 10;
 }
 
-void Ant::draw() const
+void Ant::draw()
 {
-	// X Coordinates: [-width, width]
-	// Y Coordinates: [0, length]
-	// Z Coordinates: [0, height]
-
-	//glColor3f(1, 0, 0);
-	//glPushMatrix();
-	//glTranslatef(x, y, z);
-	//glBegin(GL_QUADS);
-	//// Bottom
-	//glVertex3f(-width, 0, 0);
-	//glVertex3f(-width, 0, -length);
-	//glVertex3f(width, 0, -length);
-	//glVertex3f(width, 0, 0);
-
-	//// Front
-	//glVertex3f(width, 0, 0);
-	//glVertex3f(width, height, 0);
-	//glVertex3f(-width, height, 0);
-	//glVertex3f(-width, 0, 0);
-
-	//// Back
-	//glVertex3f(-width, 0, -length);
-	//glVertex3f(width, 0, -length);
-	//glVertex3f(width, height, -length);
-	//glVertex3f(-width, height, -length);
-
-	//// Left
-	//glVertex3f(-width, 0, 0);
-	//glVertex3f(-width, 0, -length);
-	//glVertex3f(-width, height, -length);
-	//glVertex3f(-width, height, 0);
-
-	//// Right
-	//glVertex3f(width, 0, 0);
-	//glVertex3f(width, 0, -length);
-	//glVertex3f(width, height, -length);
-	//glVertex3f(width, height, 0);
-
-	//glEnd();
-	//glPopMatrix();
 	glPushMatrix();
 	glTranslatef(0, 1, 0);
 	this->model->Draw();
@@ -76,13 +66,13 @@ void Ant::draw() const
 bool Ant::collidesWithBullet(const Bullet *bullet)
 {
 	return (
-		(bullet->real.x >= (this->x - this->width)) &&
-		(bullet->real.x <= (this->x + this->width)) &&
+		(bullet->real.x >= (this->model->pos.x - this->width)) &&
+		(bullet->real.x <= (this->model->pos.x + this->width)) &&
 
-		(bullet->real.y >= (this->y)) &&
-		(bullet->real.y <= (this->y + this->height)) &&
+		(bullet->real.y >= (this->model->pos.y)) &&
+		(bullet->real.y <= (this->model->pos.y + this->height)) &&
 
-		(bullet->real.z <= (this->z)) &&
-		(bullet->real.z >= (this->z - this->length))
+		(bullet->real.z <= (this->model->pos.z)) &&
+		(bullet->real.z >= (this->model->pos.z - this->length))
 	);
 }

@@ -26,15 +26,19 @@ void Bullet::shift() {
 
 /* -- PUBLIC -- */
 void Bullet::draw() {
+		glDisable(GL_TEXTURE_2D);
+
 		glPushMatrix();
-		glTranslatef(0, -1, 0);
-		glColor3f(0, 0, 1);
-		glPointSize(10);
+		glTranslatef(0, -0.5, 0);
+		glColor3f(1, 0, 0);
+		glPointSize(15);
 		glBegin(GL_POINTS);
 		glVertex3f(this->real.x, this->real.y, this->real.z);
 		glEnd();
 		this->shift();
 		glPopMatrix();
+
+		glEnable(GL_TEXTURE_2D);
 	}
 
 bool Bullet::isOutOfBoundaries(const Skybox *skybox) {

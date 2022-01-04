@@ -27,6 +27,11 @@ void Monitor::loadCircuits() {
 	}
 }
 
+void Monitor::loadSounds() {
+	std::pair<std::string, Sound> sound ("scene", Sound("assets/sounds/sound.wav"));
+	this->sounds.insert(sound);
+}
+
 /* -- PUBLIC -- */
 Monitor::Monitor(): Level() {
 	this->skybox = new MonitorSkybox(50, 50, 200);
@@ -34,19 +39,23 @@ Monitor::Monitor(): Level() {
 	this->quadric = gluNewQuadric();
 
 	this->loadAnts();
+	this->loadSounds();
 	this->loadCircuits();
+
+	this->sounds["scene"].Play();
 }
 
 void Monitor::drawScene() {
+	glPushMatrix();
+	this->drawBullets();
+
 	glTranslatef(0, -1, 0);
 	this->skybox->draw();
 	this->drawCircuits();
 	this->drawAnts();
 
-	glDisable(GL_TEXTURE_2D);
-	this->drawBullets();
 	this->drawBatteries();
-	glEnable(GL_TEXTURE_2D);
+	glPopMatrix();
 }
 
 void Monitor::drawCircuits() const {
@@ -58,6 +67,7 @@ void Monitor::drawCircuits() const {
 void Monitor::drawBatteries() const {
 	float positions[] = { -this->skybox->width + 5, this->skybox->width - 5 };
 	
+	glDisable(GL_TEXTURE_2D);
 	for (float z = -50; z >= -150; z -= 50) {
 		for (auto position : positions) {
 			glPushMatrix();
@@ -69,7 +79,6 @@ void Monitor::drawBatteries() const {
 			glColor3f(1, 0, 0);
 			gluCylinder(this->quadric, 3, 3, 10, 30, 30);
 
-			//glTranslatef(0, -1, 0);
 			glColor3f(1, 1, 0);
 			gluCylinder(this->quadric, 2, 2, 10, 30, 30);
 
@@ -79,4 +88,5 @@ void Monitor::drawBatteries() const {
 			glPopMatrix();
 		}
 	}
+	glEnable(GL_TEXTURE_2D);
 }

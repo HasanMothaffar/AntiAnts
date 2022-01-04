@@ -1,0 +1,365 @@
+﻿#include <windows.h>		// Header File For Windows
+#include <gl\gl.h>			// Header File For The OpenGL32 Library
+#include <gl\glu.h>			// Header File For The GLu32 Library
+
+#include "../../include/level.h"
+#include "../../include/camera.h"
+
+#include "ssd_level.h"
+#include "ssd_skybox.h"
+
+SSD::SSD(): Level() {
+	this->skybox = new SSDSkybox(55.0f, 50.0f, 200.0f); 
+	this->camera = new Camera();
+
+	this->X1 = X1;
+	this->X2 = X2;
+	this->Y1 = Y1;
+	this->Y2 = Y2;
+	this->Z1 = Z1;
+	this->Z2 = Z2;
+
+	this->q1 = q1;
+	this->q2 = q2;
+	this->w1 = w1;
+	this->w2 = w2;
+	this->r1 = r1;
+	this->r2 = r2;
+
+    lineX=0; lineY=1; lineZ=20;
+    TransistorX1=-0.5; TransistorX2=1.5;
+	TransistorZ1=20.5; TransistorZ2=19.5;
+}
+
+void SSD::drawScene() {
+	glTranslated(0, -6, 0);
+	this->skybox->draw();
+	//*************************** Drawing the TRANSISTORS *************************
+	//glEnable(GL_TEXTURE_2D);
+	glPushMatrix();
+	glTranslated(-50.5, 0, -40);
+	this->trans();
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(-30.5, 0, -40);
+	this->trans();
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(30.5, 0, -40);
+	this->trans();
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(-50.5, 0, -100);
+	this->trans();
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(-28.5, 0, -150);
+	this->trans();
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(28.5, 0, -80);
+	this->trans();
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(0, 0, -100);
+	this->trans();
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(-10, 0, -170);
+	this->trans();
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(20, 0, -160);
+	this->trans();
+	glPopMatrix();
+
+	//*************************** Drawing the first line for the FLASH MEMORY *************************
+	glDisable(GL_TEXTURE_2D);
+	glPushMatrix();
+	glTranslated(-45.5, 0, -40);
+	this->cube(0, 15, 0, 2.5, 0, -25);
+	//flashMemory();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-26.5, 0, -30);
+	this->cube(0, 15, 0, 2.5, 0, -25);
+	//flashMemory();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-7.5, 0, -30);
+	this->cube(0, 15, 0, 2.5, 0, -25);
+	//flashMemory();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(11.5, 0, -30);
+	this->cube(0, 15, 0, 2.5, 0, -25);
+	//flashMemory();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(30.5, 0, -40);
+	this->cube(0, 15, 0, 2.5, 0, -25);
+	//flashMemory();
+	glPopMatrix();
+
+	//*************************** Drawing the secund line for the FLASH MEMORY *************************
+	glPushMatrix();
+	glTranslated(-45.5, 0, -75);
+	this->cube(0, 15, 0, 2.5, 0, -25);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-26.5, 0, -65);
+	this->cube(0, 15, 0, 2.5, 0, -25);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-7.5, 0, -65);
+	this->cube(0, 15, 0, 2.5, 0, -25);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(11.5, 0, -65);
+	this->cube(0, 15, 0, 2.5, 0, -25);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(30.5, 0, -75);
+	this->cube(0, 15, 0, 2.5, 0, -25);
+	glPopMatrix();
+
+	//*************************** Drawing the CONTROLLER *************************
+	glPushMatrix();
+	glTranslated(-3, 0, -165);
+	this->cube(0, 15 ,0 , 4, 0, -25);
+	glPopMatrix();
+
+	//*************************** Drawing the CACHE MEMORY *************************
+	glPushMatrix();
+	glTranslated(-26, 0, -170);
+	this->cube(0, 15, 0, 3.5, 0, -15);
+	glPopMatrix();
+
+	//*************************** Drawing more memoris *************************
+	glPushMatrix();
+	glTranslated(-45.5, 0, -110);
+	this->cube2(0, 6, 0, 2, 0, -10);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-37.5, 0, -110);
+	this->cube2(0, 6, 0, 2, 0, -10);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-45.5, 0, -125);
+	this->cube2(0, 6, 0, 2, 0, -10);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-37.5, 0, -125);
+	this->cube2(0, 6, 0, 2, 0, -10);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-25, 0, -95);
+	this->cube2(0, 10, 0, 2, 0, -6);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-25, 0, -105);
+	this->cube2(0, 10, 0, 2, 0, -6);
+	glPopMatrix();
+}
+
+void SSD::cube(float X1, float X2, float Y1, float Y2, float Z1, float Z2){
+
+	glPushMatrix();
+	//Draw The Cube Using quads
+    glBegin(GL_QUADS); 
+
+	glColor3f(0.2,0.2,0.2);
+	//TOP of the cube
+	glVertex3f(X1, Y2, Z1);
+	glColor3f(0.3,0.3,0.3);
+	glVertex3f(X2, Y2, Z1);
+	glVertex3f(X2, Y2, Z2);
+	glVertex3f(X1, Y2, Z2);    
+
+	glColor3f(0.2,0.2,0.2);
+	//BOTTEM of the cube
+	glVertex3f(X1, Y1, Z1);  
+	glVertex3f(X2, Y1, Z1);   
+	glVertex3f(X2, Y1, Z2);   
+	glVertex3f(X1, Y1, Z2);
+
+	glColor3f(0.2,0.2,0.2);
+	//BACK of the cube
+	glVertex3f(X1, Y1, Z2);  
+	glVertex3f(X2, Y1, Z2);   
+	glVertex3f(X2, Y2, Z2);   
+	glVertex3f(X1, Y2, Z2);    
+
+	glColor3f(0.2,0.2,0.2);
+	//FRONT of the cube
+	glVertex3f(X1, Y1, Z1);   
+	glVertex3f(X2, Y1, Z1);   
+	glVertex3f(X2, Y2, Z1);    
+	glVertex3f(X1, Y2, Z1);    
+
+	glColor3f(0.2,0.2,0.2);
+	//LEFT of the cube
+	glVertex3f(X1, Y1, Z1);  
+	glVertex3f(X1, Y1, Z2);   
+	glVertex3f(X1, Y2, Z2);   
+	glVertex3f(X1, Y2, Z1);  
+	
+	glColor3f(0.2,0.2,0.2);
+	//RIGHT of the cube
+	glVertex3f(X2, Y1, Z1);  
+	glVertex3f(X2, Y1, Z2);   
+	glVertex3f(X2, Y2, Z2);   
+	glVertex3f(X2, Y2, Z1); 
+
+	// End Drawing The Cube
+	glEnd();           
+	glPopMatrix();
+}
+
+void SSD::cube2(float q1, float q2, float w1, float w2, float r1, float r2){
+
+	glPushMatrix();
+	//Draw The Cube Using quads
+    glBegin(GL_QUADS); 
+
+	glColor3ub(220,196,80);
+	//TOP of the cube
+	glVertex3f(q1, w2, r1);
+	glColor3ub(217,190,64);
+	glVertex3f(q2, w2, r1);
+	glVertex3f(q2, w2, r2);
+	glVertex3f(q1, w2, r2);    
+
+	glColor3ub(220,196,80);
+	//BOTTEM of the cube
+	glVertex3f(q1, w1, r1);  
+	glVertex3f(q2, w1, r1);   
+	glVertex3f(q2, w1, r2);   
+	glVertex3f(q1, w1, r2);
+
+	//BACK of the cube
+	glVertex3f(q1, w1, r2);  
+	glVertex3f(q2, w1, r2);   
+	glVertex3f(q2, w2, r2);   
+	glVertex3f(q1, w2, r2);    
+
+	//FRONT of the cube
+	glVertex3f(q1, w1, r1);   
+	glVertex3f(q2, w1, r1);   
+	glVertex3f(q2, w2, r1);    
+	glVertex3f(q1, w2, r1);    
+
+	//LEFT of the cube
+	glVertex3f(q1, w1, r1);  
+	glVertex3f(q1, w1, r2);   
+	glVertex3f(q1, w2, r2);   
+	glVertex3f(q1, w2, r1);  
+	
+	//RIGHT of the cube
+	glVertex3f(q2, w1, r1);  
+	glVertex3f(q2, w1, r2);   
+	glVertex3f(q2, w2, r2);   
+	glVertex3f(q2, w2, r1); 
+
+	// End Drawing The Cube
+	glEnd();           
+	glPopMatrix();
+}
+
+void SSD::trans(){
+
+        glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, textures["motherboard/gold_metal2"]);
+		//drawSticks
+		glLineWidth(10);
+	
+		glBegin(GL_LINES);
+		glTexCoord2f(0,0);
+		glVertex3f(lineX,0,lineZ);
+		glTexCoord2f(1,1);
+		glVertex3f(lineX,lineY,lineZ);
+		glEnd();
+
+		glPushMatrix();
+		glTranslatef(lineX+0.5,0,0);
+		glBegin(GL_LINES);
+		glTexCoord2f(0,0);
+		glVertex3f(lineX,0,lineZ);
+		glTexCoord2f(1,1);
+		glVertex3f(lineX,lineY,lineZ);
+		glEnd();
+		glPopMatrix();
+
+		glPushMatrix();
+		glTranslatef(lineX+1,0,0);
+		glBegin(GL_LINES);
+		glTexCoord2f(0,0);
+		glVertex3f(lineX,0,lineZ);
+		glTexCoord2f(1,1);
+		glVertex3f(lineX,lineY,lineZ);
+		glEnd();
+		glPopMatrix();
+
+		glBindTexture(GL_TEXTURE_2D, textures["motherboard/grey"]);
+		//Draw Transistor
+		//back face
+		glBegin(GL_QUADS);
+		glTexCoord2f(0,0);
+		glVertex3d(TransistorX1,lineY,TransistorZ2);
+		glTexCoord2f(1,0);
+		glVertex3d(TransistorX2,lineY,TransistorZ2);
+		glTexCoord2f(1,1);
+		glVertex3d(TransistorX2,lineY+1,TransistorZ2);
+		glTexCoord2f(0,1);
+		glVertex3d(TransistorX1,lineY+1,TransistorZ2);
+		glEnd();
+		//front face
+		glBegin(GL_QUADS);
+		glTexCoord2f(0,0);
+		glVertex3d(TransistorX1,lineY,TransistorZ1);
+		glTexCoord2f(1,0);
+		glVertex3d(TransistorX2,lineY,TransistorZ1);
+		glTexCoord2f(1,1);
+		glVertex3d(TransistorX2,lineY+1,TransistorZ1);
+		glTexCoord2f(0,1);
+		glVertex3d(TransistorX1,lineY+1,TransistorZ1);
+		glEnd();
+		//left face
+		glBegin(GL_QUADS);
+		glTexCoord2f(0,0);
+		glVertex3d(TransistorX1,lineY,TransistorZ2);
+		glTexCoord2f(1,0);
+		glVertex3d(TransistorX1,lineY,TransistorZ1);
+		glTexCoord2f(1,1);
+		glVertex3d(TransistorX1,lineY+1,TransistorZ1);
+		glTexCoord2f(0,1);
+		glVertex3d(TransistorX1,lineY+1,TransistorZ2);
+		glEnd();
+		//right face
+		glBegin(GL_QUADS);
+		glTexCoord2f(0,0);
+		glVertex3d(TransistorX2,lineY,TransistorZ2);
+		glTexCoord2f(1,0);
+		glVertex3d(TransistorX2,lineY,TransistorZ1);
+		glTexCoord2f(1,1);
+		glVertex3d(TransistorX2,lineY+1,TransistorZ1);
+		glTexCoord2f(0,1);
+		glVertex3d(TransistorX2,lineY+1,TransistorZ2);
+		glEnd();
+	
+		glDisable(GL_TEXTURE_2D);
+		glColor3ub(255,255,255);
+}
