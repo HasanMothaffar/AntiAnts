@@ -5,6 +5,7 @@
 #include "keyboard_skybox.h"
 
 #include "../../include/camera.h"
+#include "../../include/ant.h"
 
 Keyboard::Keyboard() {
 	this->skybox = new KeyboardSkybox(125, 75, 150);
@@ -14,13 +15,21 @@ Keyboard::Keyboard() {
 }
 
 void Keyboard::loadAnts() {
-
+	this->ants.push_back(Ant(0, 0, -30));
+	this->ants.push_back(Ant(-30, 0, -30));
+	this->ants.push_back(Ant(30, 0, -30));
 }
 
 void Keyboard::drawScene() {
 	this->drawBullets();
+	glPushMatrix();
+	glTranslatef(0, -2, 0);
 	glEnable(GL_TEXTURE_2D);
-	glTranslated(0, -6, -15);
+	this->drawAnts();
+	glPopMatrix();
+
+	glTranslated(0, -4, -15);
+	
 	this->skybox->draw();
 	glDisable(GL_TEXTURE_2D);
 	
