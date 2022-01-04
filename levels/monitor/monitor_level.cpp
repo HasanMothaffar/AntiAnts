@@ -45,6 +45,12 @@ Monitor::Monitor(): Level() {
 	this->sounds["scene"].Play();
 }
 
+Monitor::~Monitor() {
+	for (auto circuit: circuits) {
+		delete circuit;
+	}
+}
+
 void Monitor::drawScene() {
 	glPushMatrix();
 	this->drawBullets();

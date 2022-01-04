@@ -17,6 +17,7 @@ private:
 	virtual void loadSounds();
 public:
 	Monitor();
+	~Monitor();
 	virtual void drawScene();
 	void drawCircuits() const;
 	void drawBatteries() const;
