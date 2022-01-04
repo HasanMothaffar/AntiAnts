@@ -17,7 +17,7 @@ UPS::UPS() {
 }
 
 void UPS::loadAnts() {
-	this->ants.push_back(Ant(0, 2, -2));
+	this->ants.push_back(Ant(0, 0, -2));
 }
 
 void UPS::drawScene() {
@@ -92,8 +92,10 @@ auxSolidTorus(5,12);
 
 	this->fanrotate += 70;
 
-	glTranslatef(0, -2, 0);
 	this->drawAnts();
+
+	glTranslatef(0, 2, 0);
+	this->drawBullets();
 }
 
 
