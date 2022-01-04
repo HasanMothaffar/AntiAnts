@@ -14,6 +14,21 @@ MotherboardSkybox::MotherboardSkybox(float width, float height, float length): S
 
 void MotherboardSkybox::draw() const {
 	glColor3f(1, 1, 1);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, textures["motherboard/case"]);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,0);
+	glVertex3f(-motherboardX,motherboardY,motherboardZ);
+	glTexCoord2f(1,0);
+	glVertex3f(+motherboardX,motherboardY,motherboardZ);
+	glTexCoord2f(1,1);
+	glVertex3d(+motherboardX,motherboardY,-motherboardZ);
+	glTexCoord2f(0,1);
+	glVertex3f(-motherboardX,motherboardY,-motherboardZ);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, textures["motherboard/case"]);
 	glBegin(GL_QUADS);

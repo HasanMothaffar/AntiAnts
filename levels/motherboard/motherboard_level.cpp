@@ -8,20 +8,24 @@
 #include "motherboard_piece.h"
 
 Motherboard::Motherboard(): Level() { 
-	this->skybox = new MotherboardSkybox(400, 380, 380);
+	this->skybox = new MotherboardSkybox(200, 380, 380);
 	this->camera = new Camera();
 	this->motherboard = MotherboardPiece();
 	this->loadAnts();
 }
 
 void Motherboard::loadAnts() {
-	for (float x = -100; x <= 100; x += 20)
-	{
-		for (float z = -50; z >= -150; z -= 50)
-		{
-			this->ants.push_back(Ant(x, 0, z));
-		}
-	}
+	this->ants.push_back(Ant(0, 0, 10)); //1
+	this->ants.push_back(Ant(10, 0, -40)); //2
+	this->ants.push_back(Ant(30, 0, 30)); //3
+	this->ants.push_back(Ant(30, 0, 90)); //4
+	this->ants.push_back(Ant(50, 0, 120)); //5
+	this->ants.push_back(Ant(100, 0, 150)); //6
+	this->ants.push_back(Ant(130, 0, 0)); //7
+	this->ants.push_back(Ant(150, 0, -20)); //8
+	this->ants.push_back(Ant(0, 0, -120)); //9
+	this->ants.push_back(Ant(40, 0, -130)); //10
+
 }
 
 void Motherboard::drawScene() {
