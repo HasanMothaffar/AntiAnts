@@ -18,8 +18,6 @@ void Level::loadAnts() {
 	}
 }
 
-void Level::loadSounds() { }
-
 void Level::drawAnts() {
 	for (auto &ant: this->ants) ant.draw();
 }
@@ -43,6 +41,7 @@ void Level::removeShotAnts() {
 	for (auto antIterator = this->ants.begin(); antIterator != this->ants.end(); antIterator++) {
 		for (auto bulletIterator = this->bullets.begin(); bulletIterator != this->bullets.end(); bulletIterator++) {
 			if (antIterator->collidesWithBullet(&(*bulletIterator))) {
+				PlaySound("assets/sounds/Explode.wav", NULL, SND_ASYNC);
 				std::cout << "Ant: " << antIterator->x << " " << antIterator->y << " " << antIterator->z << " dead\n";
 				std::cout << "Bullet: " << bulletIterator->real.x << " " << bulletIterator->real.y << " " << bulletIterator->real.z << " removed\n\n";
 				this->toRemoveAnts.push_back(antIterator);
@@ -61,12 +60,6 @@ Level::~Level() {
 	std::cout << "Inside Level destructor.\n";
 	delete this->camera;
 	delete this->skybox;
-
-	for (auto sound: this->sounds) {
-		sound.second.Stop();
-	}	
-
-	this->sounds.clear();
 }
 
 void Level::drawScene() {
@@ -90,12 +83,6 @@ void Level::cleanScene() {
 	}
 
 	this->toRemoveAnts.clear();	
-}
-
-void Level::stopSounds() {
-	for (auto sound: this->sounds) {
-		sound.second.Stop();
-	}
 }
 
 void Level::respondToKeyboard(bool *keys) {

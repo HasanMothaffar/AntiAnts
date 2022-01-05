@@ -55,13 +55,26 @@ void UPSSkybox::draw() const {
 	glTexCoord2f(0,1);
 	glVertex3f(UPSX,UPSY,-UPSZ);
 	glEnd();
-	glDisable(GL_TEXTURE_2D);
+	
 	glColor3ub(255,255,255);
 
+	//above side 
+	
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,0);
+	glVertex3f(-UPSX,UPSY,UPSZ);
+	glTexCoord2f(1,0);
+	glVertex3f(+UPSX,UPSY,UPSZ);
+	glTexCoord2f(1,1);
+	glVertex3d(+UPSX,UPSY,-UPSZ);
+	glTexCoord2f(0,1);
+	glVertex3f(-UPSX,UPSY,-UPSZ);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glColor3f(1,1,1);
 
 	//Surface
 	glEnable(GL_TEXTURE_2D);
-//	glBindTexture(GL_TEXTURE_2D, textures["motherboard/m2"]);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0,0);
 	glVertex3f(-UPSX,0,UPSZ);

@@ -52,6 +52,7 @@ GLfloat MatSpec[] = { 0.33f, 0.33f, 0.52f, 1.0f };
 GLfloat MatShn[] = { 10.0f };
 
 Level *level;
+Sound backgroundMusic;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 
@@ -87,6 +88,8 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 
 	INIT initialize = INIT();
 	initialize.InitOpenAL();
+	backgroundMusic = Sound("assets/sounds/background.wav"); 
+	backgroundMusic.Play();
 
 	glLightfv(GL_LIGHT1, GL_POSITION, LightPos);
 	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmb);
@@ -153,7 +156,6 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	}
 
 	if (keys['0']) {
-		level->stopSounds();
 		isUserChoosingLevel = true;
 	}
 

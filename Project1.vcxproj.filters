@@ -33,9 +33,6 @@
     <ClCompile Include="ant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="levels\motherboard\motherboard_camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="levels\motherboard\motherboard_level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -43,9 +40,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="3DTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="levels\monitor\monitor_camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="levels\monitor\monitor_level.cpp">
@@ -89,9 +83,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="levels\motherboard\motherboard_camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="levels\motherboard\motherboard_level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -123,9 +114,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\utility.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="levels\monitor\monitor_camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="levels\monitor\monitor_level.h">

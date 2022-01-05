@@ -57,6 +57,7 @@ void Ant::draw()
 
 	glPushMatrix();
 	glTranslatef(0, 1, 0);
+	glColor3f(1, 1, 1);
 	this->model->Draw();
 	glPopMatrix();
 }

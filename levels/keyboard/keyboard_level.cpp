@@ -15,9 +15,15 @@ Keyboard::Keyboard() {
 }
 
 void Keyboard::loadAnts() {
-	this->ants.push_back(Ant(0, 0, -30));
-	this->ants.push_back(Ant(-30, 0, -30));
-	this->ants.push_back(Ant(30, 0, -30));
+	this->ants.push_back(Ant(-60, 0, -140));
+	this->ants.push_back(Ant(60, 0, -120));
+	this->ants.push_back(Ant(70, 0, -110));
+	this->ants.push_back(Ant(-80, 0, -100));
+	this->ants.push_back(Ant(-95, 0, -50));
+	this->ants.push_back(Ant(20, 0, -40));
+	this->ants.push_back(Ant(-20, 0, -25));
+	this->ants.push_back(Ant(60, 0, -25));
+	this->ants.push_back(Ant(-100, 0, -7));
 }
 
 void Keyboard::drawScene() {
@@ -28,7 +34,7 @@ void Keyboard::drawScene() {
 	this->drawAnts();
 	glPopMatrix();
 
-	glTranslated(0, -4, -15);
+	glTranslated(0, -4, -5);
 	
 	this->skybox->draw();
 	glDisable(GL_TEXTURE_2D);

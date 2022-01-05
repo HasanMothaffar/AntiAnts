@@ -13,7 +13,6 @@ private:
 	GLUquadric *quadric;
 
 	void loadCircuits();
-	virtual void loadSounds();
 public:
 	Monitor();
 	~Monitor();

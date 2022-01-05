@@ -19,10 +19,8 @@
     <ClCompile Include="levels\keyboard\keyboard_level.cpp" />
     <ClCompile Include="levels\keyboard\keyboard_piece.cpp" />
     <ClCompile Include="levels\keyboard\keyboard_skybox.cpp" />
-    <ClCompile Include="levels\monitor\monitor_camera.cpp" />
     <ClCompile Include="levels\monitor\monitor_level.cpp" />
     <ClCompile Include="levels\monitor\monitor_skybox.cpp" />
-    <ClCompile Include="levels\motherboard\motherboard_camera.cpp" />
     <ClCompile Include="levels\motherboard\motherboard_level.cpp" />
     <ClCompile Include="levels\motherboard\motherboard_piece.cpp" />
     <ClCompile Include="levels\motherboard\motherboard_skybox.cpp" />
@@ -49,10 +47,8 @@
     <ClInclude Include="levels\keyboard\keyboard_level.h" />
     <ClInclude Include="levels\keyboard\keyboard_piece.h" />
     <ClInclude Include="levels\keyboard\keyboard_skybox.h" />
-    <ClInclude Include="levels\monitor\monitor_camera.h" />
     <ClInclude Include="levels\monitor\monitor_level.h" />
     <ClInclude Include="levels\monitor\monitor_skybox.h" />
-    <ClInclude Include="levels\motherboard\motherboard_camera.h" />
     <ClInclude Include="levels\motherboard\motherboard_level.h" />
     <ClInclude Include="levels\motherboard\motherboard_piece.h" />
     <ClInclude Include="levels\motherboard\motherboard_skybox.h" />

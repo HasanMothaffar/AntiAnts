@@ -4,14 +4,20 @@
 #include "../../include/level.h"
 #include "../../include/Model_3DS.h"
 
+#include <vector>
+
 class UPS: public Level {
 private:
 	float fanrotate;
-	
+	std::vector<Model_3DS *> circuits;
+
 	virtual void loadAnts();
 public:
 	UPS();
 	virtual void drawScene();
+	void loadCircuits();
+	void drawCircuits();
+
 	void drawUPSBoard();
 	void drawBattery(GLfloat BatteryX1,GLfloat BatteryX2,GLfloat BatteryY1,GLfloat BatteryY2,GLfloat BatteryZ1,GLfloat BatteryZ2);
 	void drawBatteries();
@@ -22,4 +28,5 @@ public:
 	void  DrawconverterQuad();
 	void  drawconverter();
 	void  convertertriangle();
+	void  trans();
 };

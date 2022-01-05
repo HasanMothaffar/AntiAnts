@@ -27,10 +27,6 @@ void Monitor::loadCircuits() {
 	}
 }
 
-void Monitor::loadSounds() {
-	std::pair<std::string, Sound> sound ("scene", Sound("assets/sounds/sound.wav"));
-	this->sounds.insert(sound);
-}
 
 /* -- PUBLIC -- */
 Monitor::Monitor(): Level() {
@@ -39,10 +35,7 @@ Monitor::Monitor(): Level() {
 	this->quadric = gluNewQuadric();
 
 	this->loadAnts();
-	this->loadSounds();
 	this->loadCircuits();
-
-	this->sounds["scene"].Play();
 }
 
 Monitor::~Monitor() {

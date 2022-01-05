@@ -156,6 +156,17 @@ void Camera::MoveLeft(GLfloat Distance)
 	Position = Position - (RightVector * Distance);
 }
 
+void Camera::MoveUpward(GLfloat Distance)
+{
+	Position = Position + (Up * Distance);
+}
+
+void Camera::MoveDownward(GLfloat Distance)
+{
+	Position = Position - (Up * Distance);
+}
+
+/* -- TESTS -- */
 
 Vector3dStruct Camera::testMoveForward(GLfloat Distance) {
 	return Position + (View * Distance);
@@ -173,15 +184,12 @@ Vector3dStruct Camera::testMoveLeft(GLfloat Distance) {
 	return Position - (RightVector * Distance);
 }
 
-
-void Camera::MoveUpward(GLfloat Distance)
-{
-	Position = Position + (Up * Distance);
+Vector3dStruct Camera::testMoveDownward(GLfloat Distance) {
+	return Position - (Up * Distance);
 }
 
-void Camera::MoveDownward(GLfloat Distance)
-{
-	Position = Position - (Up * Distance);
+Vector3dStruct Camera::testMoveUpward(GLfloat Distance) {
+	return Position + (Up * Distance);
 }
 
 void Camera::SetRotateX(GLfloat Angle)
@@ -226,11 +234,11 @@ void Camera::respondToKeyboard(bool *keys, Skybox *skybox) {
 		
 	if (keys['Z'])
 	{
-		MoveUpward(step);
+		if (!this->exceedsSkybox(this->testMoveUpward(step), skybox)) MoveUpward(step);
 	}
 	if (keys['X'])
 	{
-		MoveDownward(step);
+		if (!this->exceedsSkybox(this->testMoveDownward(step), skybox)) MoveDownward(step);
 	}
 	if (keys[VK_LEFT])
 	{
@@ -278,6 +286,9 @@ bool Camera::exceedsSkybox(Vector3dStruct futurePosition, Skybox *skybox) {
 		(futurePosition.x <= -skybox->width) ||
 
 		(futurePosition.z <= -skybox->length) ||
-		(futurePosition.z >= 0)
+		(futurePosition.z >= 0) ||
+
+		(futurePosition.y <= -1) ||
+		(futurePosition.y >= skybox->height)
 	);
 }

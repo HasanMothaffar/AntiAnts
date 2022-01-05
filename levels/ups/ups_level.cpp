@@ -12,21 +12,46 @@
 
 UPS::UPS() { 
 	this->camera = new Camera();
-	this->skybox = new UPSSkybox(300, 200, 200);
+	this->skybox = new UPSSkybox(140, 200, 190);
+	this->loadCircuits();
 	this->loadAnts();
 }
 
 void UPS::loadAnts() {
-	this->ants.push_back(Ant(0, 0, -2));
+	this->ants.push_back(Ant(7, 0, -10));
+	this->ants.push_back(Ant(30, 0, -50));
+	this->ants.push_back(Ant(0, 0, -90));
+	this->ants.push_back(Ant(20, 0, -70));
+	this->ants.push_back(Ant(70, 0, -45));
+	this->ants.push_back(Ant(90, 0, -90));
+	this->ants.push_back(Ant(70, 0, -19));
+	this->ants.push_back(Ant(-125, 0, -90));
+	this->ants.push_back(Ant(-130, 0, -50));
+	this->ants.push_back(Ant(-40, 0, -10));
 }
 
 void UPS::drawScene() {
+	glDisable(GL_TEXTURE_2D);
+	this->drawBullets();
+	glEnable(GL_TEXTURE_2D);
+
+	
+	glPushMatrix();
+	glTranslatef(0, -1, 0);
+	this->drawAnts();
+	glPopMatrix();
+
+	glTranslatef(0, 0, -95);
+	glPushMatrix();
 	glTranslatef(0, -2, 0);
 	this->skybox->draw();
+	glPopMatrix();
+
+	glTranslatef(0, -2, 0);
 	this-> drawUPSBoard();
-	this-> drawBattery(-140,-80,0,15,-95,-55);
-	this-> drawBattery(-140,-80,0,15,-40,0);
-	this->drawBattery(-140,-80,0,15,40,80);
+	this-> drawBattery(-120,-60,0,15,-95,-55);
+	this-> drawBattery(-120,-60,0,15,-40,0);
+	this->drawBattery(-120,-60,0,15,40,80);
 	this-> drawMonitor(-150,150,0,100,-100);
 		glPushMatrix();
 	glRotatef(-90,1,0,0);
@@ -41,66 +66,88 @@ this-> 	drawCylinder(5,11);
 
 	glTranslatef(15,-19,0);
 	drawCylinder(5,11);
-	glTranslatef(15,-19,0);
+	glTranslatef(11,-19,0);
 	drawCylinder(5,11);glTranslatef(15,-19,0);
-	//drawCylinder(5,11);
+	
 
 
 	glPopMatrix();
-	/*glPushMatrix();
-	//glRotatef(90,1,0,0);
-	glTranslatef(10,0,0);
-	this-> DrawRing(55,55);
-	glPopMatrix();*/
+	
 	glPushMatrix();
-	glTranslatef(230,0,0);
+	glTranslatef(230,41,0);
 	glRotatef(90,0,1,0);
 	glTranslatef(0,50,-80);
 	glRotatef(-90,1,0,0);
 	glRotatef(-90,1,0,0);
 	glTranslatef(-5,30,0);
-	//glRotatef(180,0,1,0);
-	
+	glScalef(3,3,3);
 	this-> drawCylinder(5,13);
 	glRotatef(90,1,0,0);
-	//drawFan(
+	
 	this-> drawFan(fanrotate,20,3,20,7,20);
 	
 	glPopMatrix();
 	   glPushMatrix();
 
-   glTranslatef(-5,5,40);	
+	glTranslatef(-20,5,25);	
     glColor3ub(148, 82, 31);
-   auxSolidBox(30,10,20);
+	auxSolidBox(30,10,20);
     glTranslated(0,5,0);
-  // glRotatef(90,1,0,0);
-   glColor3ub(230, 237, 12);
-auxSolidTorus(5,12);
+	glColor3ub(230, 237, 12);
+	auxSolidTorus(5,12);
 
-   glColor3f(1,1,1);
-   glPopMatrix();
+	glColor3f(1,1,1);
+	glPopMatrix();
     glPushMatrix();
 	glRotatef(90,0,1,0);
 	glTranslatef(60,1.5,0);
 
    drawconverter();
 
-   glColor3f(1,1,1);
+	glColor3f(1,1,1);
     glPopMatrix();
-	//this-> ;
-	//this-> ;
+
 
 	this->fanrotate += 70;
+	glPushMatrix();
+	glTranslatef(0, -2, 0);
+	this->drawCircuits();
+	glPopMatrix();
+	glPushMatrix();
+	glScalef(8,4,2);
+	this->trans();
+	glTranslatef(5, 0, 0);
+	this->trans();
+	glTranslatef(5, 0, 0);
+	this->trans();
+	
+	glTranslatef(5, 0, 0);
+	//this->trans();
+	glTranslatef(0, 0, -5);
+	//this->trans();
+	glTranslatef(-5, 0, 0);
+	this->trans();
+	glTranslatef(-5, 0, 0);
+	this->trans();
+	glTranslatef(-5, 0, 0);
+	this->trans();
+	glTranslatef(0, 0, 10);
+	this->trans();
+	glTranslatef(5, 0, 0);
+	this->trans();
+	glTranslatef(5, 0, 0);
+	this->trans();
+	
+	
 
-	this->drawAnts();
 
-	glTranslatef(0, 2, 0);
-	this->drawBullets();
+	glPopMatrix();
 }
 
 
 void UPS::drawFan(GLfloat fanAngle , GLfloat x , GLfloat y1 ,GLfloat y2 , GLfloat y3 , GLfloat z)
 {
+	//glScalef(3,3,3);
 	glColor3ub(70, 52, 235);
 	////Fence
 	
@@ -184,6 +231,7 @@ void UPS::drawFan(GLfloat fanAngle , GLfloat x , GLfloat y1 ,GLfloat y2 , GLfloa
 	glEnd();
     }	
 	glColor3f(1,1,1);
+
 }
 void UPS:: DrawRing(int radius,int pointSize  )
 {
@@ -210,6 +258,7 @@ void UPS:: DrawRing(int radius,int pointSize  )
 }
 void UPS:: drawUPSBoard()
 {
+	glColor3f(1, 1, 1);
 	GLfloat  UPSBoardX=150, UPSBoardZ=100;
 	//glColor3f(1, 0, 0);
 	glEnable(GL_TEXTURE_2D);
@@ -337,8 +386,8 @@ void UPS:: drawBattery(GLfloat BatteryX1,GLfloat BatteryX2,GLfloat BatteryY1,GLf
 
 	void UPS::drawMonitor(GLfloat MonitorX1,GLfloat MonitorX2,GLfloat MonitorY1,GLfloat MonitorY2,GLfloat MonitorZ)
 	{
-				glColor3f(1,0,0);
-		
+				
+		glColor3ub(102, 173, 167);
 		glBegin(GL_QUADS);
 	//	glTexCoord2f(0,0);
 	glVertex3f(MonitorX1,MonitorY1,MonitorZ);
@@ -349,18 +398,19 @@ void UPS:: drawBattery(GLfloat BatteryX1,GLfloat BatteryX2,GLfloat BatteryY1,GLf
 	//glTexCoord2f(0,1);
 	glVertex3f(MonitorX1,MonitorY2,MonitorZ);
 	   glEnd();
+	   glColor3f(1,0,0);
 	   glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, textures["ups/digitalNumber"]);
 	
 	   glBegin(GL_QUADS);
 	glTexCoord2f(0,0);
-	glVertex3f(MonitorX1+100,MonitorY1+25,MonitorZ);
+	glVertex3f(MonitorX1+100,MonitorY1+25,MonitorZ+0.5);
 	glTexCoord2f(1,0);
-	glVertex3f(MonitorX2-100,MonitorY1+25,MonitorZ);
+	glVertex3f(MonitorX2-100,MonitorY1+25,MonitorZ+0.5);
 	glTexCoord2f(1,1);
-	glVertex3d(MonitorX2-100,MonitorY2-25,MonitorZ);
+	glVertex3d(MonitorX2-100,MonitorY2-25,MonitorZ+0.5);
 	glTexCoord2f(0,1);
-	glVertex3f(MonitorX1+100,MonitorY2-25,MonitorZ);
+	glVertex3f(MonitorX1+100,MonitorY2-25,MonitorZ+0.5);
 	    glEnd();
 		glDisable(GL_TEXTURE_2D);
 	}
@@ -470,10 +520,19 @@ void UPS:: drawconverter(){
 	this->DrawconverterQuad();
 	glPopMatrix();
 
+	//
+	glPushMatrix();
+	glScaled(9, 2, 7);
+	glTranslated(1.2, 0.25, -1);
+	glRotated(90, 0, 1, 0);
+//	this->DrawconverterQuad();
+	glPopMatrix();
+
+
 	//back(5)
 	glPushMatrix();
-	glScaled(9, 2, 4);
-	glTranslated(1, 0.25, -1);
+	glScaled(9, 2, 7);
+	glTranslated(1.2, 0.25, -1);
 	glRotated(90, 0, 1, 0);
 	this->DrawconverterQuad();
 	glPopMatrix();
@@ -624,4 +683,117 @@ void UPS:: convertertriangle(){
 	glPopMatrix();
 	glEnd();
 	glFlush();
+}
+
+
+void UPS::trans(){
+	float lineX=0, lineY=1, lineZ=20, TransistorX1=-0.5, TransistorX2=1.5,
+	TransistorZ1=20.5, TransistorZ2=19.5;
+        glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, textures["motherboard/gold_metal2"]);
+		//drawSticks
+		glLineWidth(10);
+	
+		glBegin(GL_LINES);
+		glTexCoord2f(0,0);
+		glVertex3f(lineX,0,lineZ);
+		glTexCoord2f(1,1);
+		glVertex3f(lineX,lineY,lineZ);
+		glEnd();
+
+		glPushMatrix();
+		glTranslatef(lineX+0.5,0,0);
+		glBegin(GL_LINES);
+		glTexCoord2f(0,0);
+		glVertex3f(lineX,0,lineZ);
+		glTexCoord2f(1,1);
+		glVertex3f(lineX,lineY,lineZ);
+		glEnd();
+		glPopMatrix();
+
+		glPushMatrix();
+		glTranslatef(lineX+1,0,0);
+		glBegin(GL_LINES);
+		glTexCoord2f(0,0);
+		glVertex3f(lineX,0,lineZ);
+		glTexCoord2f(1,1);
+		glVertex3f(lineX,lineY,lineZ);
+		glEnd();
+		glPopMatrix();
+
+		glBindTexture(GL_TEXTURE_2D, textures["motherboard/grey"]);
+		//Draw Transistor
+		//back face
+		glBegin(GL_QUADS);
+		glTexCoord2f(0,0);
+		glVertex3d(TransistorX1,lineY,TransistorZ2);
+		glTexCoord2f(1,0);
+		glVertex3d(TransistorX2,lineY,TransistorZ2);
+		glTexCoord2f(1,1);
+		glVertex3d(TransistorX2,lineY+1,TransistorZ2);
+		glTexCoord2f(0,1);
+		glVertex3d(TransistorX1,lineY+1,TransistorZ2);
+		glEnd();
+		//front face
+		glBegin(GL_QUADS);
+		glTexCoord2f(0,0);
+		glVertex3d(TransistorX1,lineY,TransistorZ1);
+		glTexCoord2f(1,0);
+		glVertex3d(TransistorX2,lineY,TransistorZ1);
+		glTexCoord2f(1,1);
+		glVertex3d(TransistorX2,lineY+1,TransistorZ1);
+		glTexCoord2f(0,1);
+		glVertex3d(TransistorX1,lineY+1,TransistorZ1);
+		glEnd();
+		//left face
+		glBegin(GL_QUADS);
+		glTexCoord2f(0,0);
+		glVertex3d(TransistorX1,lineY,TransistorZ2);
+		glTexCoord2f(1,0);
+		glVertex3d(TransistorX1,lineY,TransistorZ1);
+		glTexCoord2f(1,1);
+		glVertex3d(TransistorX1,lineY+1,TransistorZ1);
+		glTexCoord2f(0,1);
+		glVertex3d(TransistorX1,lineY+1,TransistorZ2);
+		glEnd();
+		//right face
+		glBegin(GL_QUADS);
+		glTexCoord2f(0,0);
+		glVertex3d(TransistorX2,lineY,TransistorZ2);
+		glTexCoord2f(1,0);
+		glVertex3d(TransistorX2,lineY,TransistorZ1);
+		glTexCoord2f(1,1);
+		glVertex3d(TransistorX2,lineY+1,TransistorZ1);
+		glTexCoord2f(0,1);
+		glVertex3d(TransistorX2,lineY+1,TransistorZ2);
+		glEnd();
+	
+		glDisable(GL_TEXTURE_2D);
+		glColor3ub(255,255,255);
+}
+
+void UPS::drawCircuits() {
+	for (auto circuit: this->circuits) {
+		circuit->Draw();
+	}
+}
+
+void UPS::loadCircuits() {
+	for(int i=1;i<2;i++){
+		Model_3DS *circuit = new Model_3DS();
+		circuit->Load((char *) "assets/Microchip.3ds");
+		circuit->pos.x =i* 55;
+		circuit->pos.y = -1;
+		circuit->pos.z = - 60;
+		//circuit->Materials[0].tex.BuildColorTexture(0, 0, 0);
+
+		//unsigned char color = 55;
+		//circuit->Materials[1].tex.BuildColorTexture(240, 240, 15);
+		circuit->Materials[1].tex.LoadBMP("assets/22v10.bmp");
+		circuit->Materials[2].tex.BuildColorTexture(100, 100, 100);
+		circuit->scale = 15;
+		circuits.push_back(circuit);
+		glColor3f(1, 1, 1);
+	}
+	
 }

@@ -12,7 +12,33 @@
 /* -- PRIVATE -- */
 
 void SSD::loadAnts() {
-	this->ants.push_back(Ant(0, 0, -100));
+	this->ants.push_back(Ant(-20, 0, -190));
+	this->ants.push_back(Ant(-35, 0, -140));
+	this->ants.push_back(Ant(0, 0, -130));
+	this->ants.push_back(Ant(-18, 0, -115));
+	this->ants.push_back(Ant(10, 0, -105));
+	this->ants.push_back(Ant(-40, 0, -105));
+	this->ants.push_back(Ant(-40, 0, -70));
+	this->ants.push_back(Ant(15, 0, -60)); 
+	this->ants.push_back(Ant(-20, 0, -25)); 
+	this->ants.push_back(Ant(10, 0, -25)); 
+}
+
+void SSD::loadCircuits() {
+	for (int i = 3; i < 8; i++) {
+		Model_3DS *circuit = new Model_3DS();
+		circuit->Load((char *) "assets/22v10.3ds");
+		circuit->pos.x = 35;
+		circuit->pos.y = 3;
+		circuit->pos.z = - i * 11;
+		circuit->Materials[0].tex.LoadBMP("assets/22v10.bmp");
+
+		unsigned char color = 100;
+		circuit->Materials[1].tex.BuildColorTexture(color, color, color);
+		circuit->Materials[2].tex.BuildColorTexture(color, color, color);
+		circuit->scale = 5;
+		circuits.push_back(circuit);
+	}
 }
 
 /* -- PUBLIC -- */
@@ -20,6 +46,7 @@ SSD::SSD(): Level() {
 	this->skybox = new SSDSkybox(55.0f, 50.0f, 200.0f); 
 	this->camera = new Camera();
 	this->loadAnts();
+	this->loadCircuits();
 
     lineX=0; lineY=1; lineZ=20;
     TransistorX1=-0.5; TransistorX2=1.5;
@@ -29,6 +56,14 @@ SSD::SSD(): Level() {
 void SSD::drawScene() {
 	glTranslated(0, -2, 0);
 	this->skybox->draw();
+
+	glPushMatrix();
+	glTranslatef(0,0,-85);
+	for (auto circuit: this->circuits) {
+		circuit->Draw();
+	}
+	glPopMatrix();
+
 	//*************************** Drawing the TRANSISTORS *************************
 	//glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
