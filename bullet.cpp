@@ -1,17 +1,17 @@
-#include "bullet.h"
-#include "camera.h"
+#include "include/ant.h"
+#include "include/camera.h"
 
 /* -- STATIC -- */
-Bullet* Bullet::createBullet(const Camera *camera, float speed) {
-	Bullet * bullet = new Bullet;
-	bullet->position = camera->Position;
-	bullet->view = camera->View;
-	bullet->real = Vector3dCreate(
+Bullet Bullet::createBullet(const Camera *camera, float speed) {
+	Bullet bullet;
+	bullet.position = camera->Position;
+	bullet.view = camera->View;
+	bullet.real = Vector3dCreate(
 		camera->Position.x + camera->View.x,
 		camera->Position.y + camera->View.y,
 		camera->Position.z + camera->View.z
 	);
-	bullet->speed = speed;
+	bullet.speed = speed;
 
 	return bullet;
 }
@@ -26,20 +26,25 @@ void Bullet::shift() {
 
 /* -- PUBLIC -- */
 void Bullet::draw() {
+		glDisable(GL_TEXTURE_2D);
+
 		glPushMatrix();
-		glColor3f(0, 0, 1);
-		glPointSize(10);
+		glTranslatef(0, -0.5, 0);
+		glColor3f(1, 0, 0);
+		glPointSize(15);
 		glBegin(GL_POINTS);
 		glVertex3f(this->real.x, this->real.y, this->real.z);
 		glEnd();
 		this->shift();
 		glPopMatrix();
+
+		glEnable(GL_TEXTURE_2D);
 	}
 
 bool Bullet::isOutOfBoundaries(const Skybox *skybox) {
 	return (
 		this->real.z < -skybox->length || // Back face
-		this->real.z > 0 || // Front face
+		this->real.z > skybox->length || // Front face
 		this->real.x > skybox->width || // Right face
 		this->real.x < -skybox->width // Left face
 	);

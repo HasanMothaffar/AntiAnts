@@ -2,8 +2,11 @@
 #include <gl/GL.h>				// Header File For The OpenGL32 Library
 #include <gl/glu.h>			// Header File For The GLu32 Library
 #include <math.h>
-#include "camera.h"
-#include "skybox.h"
+#include <iostream>
+
+#include "include/camera.h"
+#include "include/skybox.h"
+#include "include/utility.h"
 
 Vector3dStruct operator+(Vector3dStruct v, Vector3dStruct u)
 {
@@ -65,7 +68,7 @@ void Camera::Reset() {
 }
 
 void Camera::Render(void)
-{
+{	
 	this->drawCursor();
 	Vector3dStruct ViewPoint = Position + View;
 	gluLookAt(
@@ -76,18 +79,27 @@ void Camera::Render(void)
 }
 
 void Camera::drawCursor() {
-	const float width = 0.7;
-	const float height = 0.7;
-	const float depth = -20;
+	const float width = 0.2;
+	const float height = 0.2;
+	const float offset = 0.1;
+
+	const float depth = -5;
 
 	glDisable(GL_TEXTURE_2D);
 	glColor3f(0, 1, 0);
-	glLineWidth(5);
+	glLineWidth(4);
 	glBegin(GL_LINES);
 		glVertex3f(0, -height, depth);
+		glVertex3f(0, -offset, depth);
+
+		glVertex3f(0, offset, depth);
 		glVertex3f(0, height, depth);
+
 		glVertex3f(width, 0, depth);
+		glVertex3f(offset, 0, depth);
+
 		glVertex3f(-width, 0, depth);
+		glVertex3f(-offset, 0, depth);
 	glEnd();
 	glEnable(GL_TEXTURE_2D);
 }
@@ -154,10 +166,129 @@ void Camera::MoveDownward(GLfloat Distance)
 	Position = Position - (Up * Distance);
 }
 
+/* -- TESTS -- */
+
+Vector3dStruct Camera::testMoveForward(GLfloat Distance) {
+	return Position + (View * Distance);
+}
+
+Vector3dStruct Camera::testMoveBackward(GLfloat Distance) {
+	return Position - (View * Distance);
+}
+
+Vector3dStruct Camera::testMoveRight(GLfloat Distance) {
+	return Position + (RightVector * Distance);
+}
+
+Vector3dStruct Camera::testMoveLeft(GLfloat Distance) {
+	return Position - (RightVector * Distance);
+}
+
+Vector3dStruct Camera::testMoveDownward(GLfloat Distance) {
+	return Position - (Up * Distance);
+}
+
+Vector3dStruct Camera::testMoveUpward(GLfloat Distance) {
+	return Position + (Up * Distance);
+}
+
 void Camera::SetRotateX(GLfloat Angle)
 {
 	View = Vector3dCreate(0.0, 0.0, -1.0);
 	RightVector = Vector3dCreate(1.0, 0.0, 0.0);
 	Up = Vector3dCreate(0.0, 1.0, 0.0);
 	RotatedX = Angle;
+}
+
+void Camera::invertView() {
+	this->View = this->View * -1;
+}
+
+void Camera::respondToKeyboard(bool *keys, Skybox *skybox) {
+	float step = 0.7f;
+	float angle = 0.4f;
+
+	if (keys['F']) {
+		glColor3f(1, 1, 1);
+		// Press F to debug;
+	}
+
+	if (keys['D'])
+	{
+		if (!this->exceedsSkybox(this->testMoveRight(step), skybox)) MoveRight(step);
+		
+	}
+	if (keys['A'])
+	{
+		if (!this->exceedsSkybox(this->testMoveLeft(step), skybox)) MoveLeft(step);
+
+	}
+	if (keys['W'])
+	{
+		if (!this->exceedsSkybox(this->testMoveForward(step), skybox)) MoveForward(step);
+	}
+		
+	if (keys['S']) {
+		if (!this->exceedsSkybox(this->testMoveBackward(step), skybox)) MoveBackward(step);
+	}
+		
+	if (keys['Z'])
+	{
+		if (!this->exceedsSkybox(this->testMoveUpward(step), skybox)) MoveUpward(step);
+	}
+	if (keys['X'])
+	{
+		if (!this->exceedsSkybox(this->testMoveDownward(step), skybox)) MoveDownward(step);
+	}
+	if (keys[VK_LEFT])
+	{
+		RotateY(angle);
+	}
+	if (keys[VK_RIGHT])
+	{
+		RotateY(-angle);
+	}
+	if (keys[VK_UP])
+		RotateX(-angle);
+	if (keys[VK_DOWN])
+		RotateX(angle);
+	if (keys['L'])
+		RotateZ(-step);
+	if (keys['K'])
+		RotateZ(step);
+
+	if (keys['R']) 
+		Reset();
+	Render();
+}
+
+void Camera::respondToMouse(int mouseX, int prevMouseX) {
+	int diff = mouseX - prevMouseX;
+	bool rotateRight = false;
+
+	if (diff < 0) {
+		rotateRight = true;
+	} 
+
+	if (mouseX == 0 && prevMouseX == 0) {
+		rotateRight = true;
+	}
+
+	float angle = 0.4;
+	float finalAngle = rotateRight ? angle: -angle;
+
+	this->RotateY(finalAngle);
+}
+
+bool Camera::exceedsSkybox(Vector3dStruct futurePosition, Skybox *skybox) {
+	return (
+		(futurePosition.x >= skybox->width) ||
+		(futurePosition.x <= -skybox->width) ||
+
+		(futurePosition.z <= -skybox->length) ||
+		(futurePosition.z >= 0) ||
+
+		(futurePosition.y <= -1) ||
+		(futurePosition.y >= skybox->height)
+	);
 }

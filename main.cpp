@@ -1,16 +1,25 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
 #include <glu.h>	 // Header File For The GLu32 Library
-#include <glaux.h>	 // Header File For The Glaux Library
+#include "Sound.h"
+
+#include <iostream>
 #include <cmath>
 #include <vector>
 #include <map>
 #include <string>
 
-#include "texture.h"
-#include "skybox.h"
-#include "camera.h"
-#include "game.h"
+#include "include/Model_3DS.h"
+#include "include/3DTexture.h"
+#include "include/texture.h"
+#include "include/level.h"
+#include "include/utility.h"
+
+#include "levels/monitor/monitor_level.h"
+#include "levels/motherboard/motherboard_level.h"
+#include "levels/keyboard/keyboard_level.h"
+#include "levels/ups/ups_level.h"
+#include "levels/ssd/ssd_level.h"
 
 using namespace std;
 
@@ -19,19 +28,33 @@ HGLRC hRC = NULL;	 // Permanent Rendering Cntext
 HWND hWnd = NULL;	 // Holds Our Window Handle
 HINSTANCE hInstance; // Holds The Instance Of The Application
 
-int windowWidth = 1920;
-int windowHeight = 1080;
+int mouseX = 0, prevMouseX = 0,
+	mouseY = 0, prevMouseY = 0;
+
+int windowWidth = 800;
+int windowHeight = 600;
 char *windowTitle = "Computer Screen";
 
 bool keys[256];			 // Array Used For The Keyboard Routine
 bool active = TRUE;		 // Window Active Flag Set To TRUE By Default
 bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
+bool isLClicked, isRClicked;
+bool isUserChoosingLevel = true;
+bool lightSwitch = false;
+
+GLfloat LightPos[] = { 0, 50 ,0, 1.0f };
+GLfloat LightAmb[] = { 0.5f,  0.5f, 0.5f, 1.0f };
+GLfloat LightDiff[] = { 0.6f, 0.6f, 0.6f, 1.0f };
+GLfloat LightSpec[] = { -0.1f, -0.1f, -0.1f, 1.0f };
+GLfloat MatAmb[] = { 0.11f,  0.06f,  0.11f, 1.0f };
+GLfloat MatDif[] = { 0.43f, 0.47f, 0.54f, 1.0f };
+GLfloat MatSpec[] = { 0.33f, 0.33f, 0.52f, 1.0f };
+GLfloat MatShn[] = { 10.0f };
+
+Level *level;
+Sound backgroundMusic;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
-
-Camera camera;
-Skybox skybox = Skybox(50, 50, 200);
-Game *game = new Game(&camera, &skybox);
 
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The GL Window
 {
@@ -46,13 +69,12 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 	glLoadIdentity();			 // Reset The Projection Matrix
 
 	// Calculate The Aspect Ratio Of The Window
-	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 2.0f, 300.0f);
+	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 2.0f, 500.0f);
 
 	glMatrixMode(GL_MODELVIEW); // Select The Modelview Matrix
 	glLoadIdentity();			// Reset The Modelview Matrix
-
-	camera.Reset();
 }
+
 
 int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 {
@@ -63,74 +85,93 @@ int InitGL(GLvoid) // All Setup For OpenGL Goes Here
 	glDepthFunc(GL_LEQUAL);							   // The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
 	glEnable(GL_TEXTURE_2D);
+
+	INIT initialize = INIT();
+	initialize.InitOpenAL();
+	backgroundMusic = Sound("assets/sounds/background.wav"); 
+	backgroundMusic.Play();
+
+	glLightfv(GL_LIGHT1, GL_POSITION, LightPos);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmb);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiff);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, LightSpec);
+
+	glEnable(GL_LIGHT1);
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, MatAmb);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, MatDif);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, MatSpec);
+	glMaterialfv(GL_FRONT, GL_SHININESS, MatShn);
+
+	level = new Motherboard();
+
 	loadGameTextures();
 	return TRUE; // Initialization Went OK
 }
-
-GLfloat step = 0.3;
-GLfloat angle = 0.7;
-
-void moveCamera()
-{
-	if (keys['F']) {
-		glColor3f(1, 1, 1);
-		// Press F to debug;
-	}
-
-	if (keys['D'])
-		camera.MoveRight(step);
-	if (keys['A'])
-		camera.MoveLeft(step);
-	if (keys['W'])
-		camera.MoveForward(step);
-	if (keys['S'])
-		camera.MoveBackward(step);
-	if (keys['Z'])
-	{
-		camera.MoveUpward(step);
-	}
-	if (keys['X'])
-	{
-		if (!(camera.Position.y <= 0))
-		{
-			camera.MoveDownward(step);
-		}
-	}
-	if (keys[VK_LEFT])
-	{
-		camera.RotateY(angle);
-	}
-	if (keys[VK_RIGHT])
-	{
-		camera.RotateY(-angle);
-	}
-	if (keys[VK_UP])
-		camera.RotateX(-angle);
-	if (keys[VK_DOWN])
-		camera.RotateX(angle);
-	if (keys['L'])
-		camera.RotateZ(-step);
-	if (keys['K'])
-		camera.RotateZ(step);
-
-	if (keys['R']) 
-		camera.Reset();
-	camera.Render();
-}
-
 
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	moveCamera();			// Should be the first function call because it may contain rotations!
 
-	if (!game->hasEnded()) {
-		game->drawScene();
-		game->cleanScene();
+	if (keys['T']) {
+		if (lightSwitch) {
+			glDisable(GL_LIGHTING);
+			lightSwitch=false;
+		}
+		else {
+			glEnable(GL_LIGHTING);
+			lightSwitch=true;
+		}
+	}
+	
+	if (keys['1']) {
+		delete level;
+		level = new Monitor();
+		isUserChoosingLevel = false;
+	}
+
+	if (keys['2']) {
+		delete level;
+		level = new Motherboard();
+		isUserChoosingLevel = false;
+	}
+
+	if (keys['3']) {
+		delete level;
+		level = new Keyboard();
+		isUserChoosingLevel = false;
+	}
+
+	if (keys['4']) {
+		delete level;
+		level = new UPS();
+		isUserChoosingLevel = false;
+	}
+
+	if (keys['5']) {
+		delete level;
+		level = new SSD();
+		isUserChoosingLevel = false;
+	}
+
+	if (keys['0']) {
+		isUserChoosingLevel = true;
+	}
+
+	if (isUserChoosingLevel) {
+		drawLevelManager();
 	} else {
-		glColor3f(1, 0, 1);
-		glRectf(-2, -2, 2, 2);
+		if (level->hasEnded()) {
+			PlaySound("assets/sounds/win.wav", NULL, SND_ASYNC);
+			isUserChoosingLevel = true;
+		} else {
+			// Actual drawing of the game
+			level->respondToKeyboard(keys);
+			level->drawScene();
+			glColor3f(1, 1, 1);
+			level->cleanScene();
+		}
 	}
 
 	glFlush();
@@ -412,10 +453,51 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 		keys[wParam] = FALSE; // If So, Mark It As FALSE
 		if (wParam == VK_SPACE)
 		{
-			game->shootBullet();
+			if (!isUserChoosingLevel) {
+				level->shootBullet();
+			}
 		}
 		return 0; // Jump Back
 	}
+
+	case WM_MOUSEMOVE: {
+		prevMouseX = mouseX;
+		prevMouseY = mouseY;
+
+		mouseX = (int) LOWORD(lParam);
+		mouseY = (int) HIWORD(lParam);
+
+		std::cout << mouseX << " " << mouseY << "\n";
+
+		isLClicked = (LOWORD(wParam) & MK_LBUTTON) ? true : false;
+		isRClicked = (LOWORD(wParam) & MK_RBUTTON) ? true : false;
+
+		if (!isUserChoosingLevel) {
+			level->respondToMouse(mouseX, prevMouseX); // Should be the first function call because it may contain rotations!
+		}
+
+		break;
+	}
+
+	case WM_LBUTTONUP:
+		{
+			isLClicked = false;
+			break;
+		}
+	case WM_RBUTTONUP:
+		isRClicked = false;
+		break;
+	case WM_LBUTTONDOWN:
+		{
+			if (!isUserChoosingLevel) {
+				level->shootBullet();
+			}
+			isLClicked = true;
+			break;
+		}
+	case WM_RBUTTONDOWN:
+		isRClicked = true;
+		break;
 
 	case WM_SIZE: // Resize The OpenGL Window
 	{
@@ -458,4 +540,11 @@ int WINAPI WinMain(HINSTANCE hInstance,		// Instance
 	}
 
 	return 0;
+}
+
+int main(HINSTANCE hInstance,     // Instance
+				   HINSTANCE hPrevInstance, // Previous Instance
+				   LPSTR lpCmdLine,         // Command Line Parameters
+				   int nCmdShow) {
+	return WinMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 }

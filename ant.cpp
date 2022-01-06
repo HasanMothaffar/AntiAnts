@@ -1,69 +1,77 @@
 #include <windows.h> // Header File For Windows
 #include <gl.h>		 // Header File For The OpenGL32 Library
-#include "ant.h"
+#include <iostream>
 
-Ant::Ant(float x, float y, float z) {
+#include "include/ant.h"
+#include "include/Model_3DS.h"
+
+/* -- PRIVATE -- */
+
+bool Ant::hasReachedLimit() {
+	
+	const float modelPositionX = this->model->pos.x;
+	const float limitRight = this->x + 10;
+	const float limitLeft = this->x - 10;
+
+	return (
+		(modelPositionX >= limitRight) || 
+		(modelPositionX <= limitLeft)
+	);  
+   
+}
+
+/* -- PUBLIC -- */
+Ant::Ant(float x, float y, float z)
+{
+	this->model = new Model_3DS();
+	this->model->Load((char *) "assets/Ant_3ds.3ds");
+	this->model->pos.x = x;
+	this->model->pos.y = y;
+	this->model->pos.z = z;
+
+	this->model->Materials[1].tex.LoadBMP((char *) "assets/antcolor.bmp");
+	this->model->scale = 0.002;
+	this->model->lit = false;
+
 	this->x = x;
 	this->y = y;
 	this->z = z;
 
-	this->width = 1;
-	this->length = 2;
-	this->height = 2;
+
+	this->width = 3;
+	this->length = 3;
+	this->height = 3;
+
+	this->step = -0.1;
+	this->limitX = 10;
 }
 
-void Ant::draw() const {
-	// X Coordinates: [-width, width]
-	// Y Coordinates: [0, length]
-	// Z Coordinates: [0, height]
+void Ant::draw()
+{
+	if (this->hasReachedLimit()) {
+		this->step *= -1.0f;
+		this->model->rot.y += 180;
+	}
 
-	glColor3f(1, 0, 0);
+	this->model->pos.x += this->step;
+
 	glPushMatrix();
-	glTranslatef(x, y, z);
-	glBegin(GL_QUADS);
-	// Bottom
-	glVertex3f(-width, 0, 0);
-	glVertex3f(-width, 0, -length);
-	glVertex3f(width, 0, -length);
-	glVertex3f(width, 0, 0);
-
-	// Front
-	glVertex3f(width, 0, 0);
-	glVertex3f(width, height, 0);
-	glVertex3f(-width, height, 0);
-	glVertex3f(-width, 0, 0);
-
-	// Back
-	glVertex3f(-width, 0, -length);
-	glVertex3f(width, 0, -length);
-	glVertex3f(width, height, -length);
-	glVertex3f(-width, height, -length);
-
-	// Left
-	glVertex3f(-width, 0, 0);
-	glVertex3f(-width, 0, -length);
-	glVertex3f(-width, height, -length);
-	glVertex3f(-width, height, 0);
-
-	// Right
-	glVertex3f(width, 0, 0);
-	glVertex3f(width, 0, -length);
-	glVertex3f(width, height, -length);
-	glVertex3f(width, height, 0);
-
-	glEnd();
+	glTranslatef(0, 1, 0);
+	glColor3f(1, 1, 1);
+	this->model->Draw();
 	glPopMatrix();
 }
 
-bool Ant::collidesWithBullet(const Bullet *bullet) {
+bool Ant::collidesWithBullet(const Bullet *bullet)
+{
 	return (
-		(bullet->real.x >= (this->x - this->width)) &&
-		(bullet->real.x <= (this->x + this->width)) &&
+		(bullet->real.x >= (this->model->pos.x - this->width)) &&
+		(bullet->real.x <= (this->model->pos.x + this->width)) &&
 
-		(bullet->real.y >= (this->y)) &&
-		(bullet->real.y <= (this->y + this->height)) &&
+		(bullet->real.y >= (this->model->pos.y)) &&
+		(bullet->real.y <= (this->model->pos.y + this->height)) &&
 
-		(bullet->real.z <= (this->z)) &&
-		(bullet->real.z >= (this->z - this->length))
+		(bullet->real.z <= (this->model->pos.z)) &&
+		(bullet->real.z >= (this->model->pos.z - this->length))
 	);
 }

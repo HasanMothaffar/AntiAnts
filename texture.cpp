@@ -17,13 +17,6 @@ int num_texture = -1; //Counter to keep track of the last loaded texture
  *
  *********************************************************/
 
-std::string textureNames[] = {
-	"circuit",
-	"windows"
-};
-
-std::map<std::string, int> textures;
-
 int LoadTexture(const char *filename,int alpha) 
 {
     int i, j=0; //Index variables
@@ -84,13 +77,4 @@ int LoadTexture(const char *filename,int alpha)
     free(l_texture); // Free the memory we used to load the texture
 
     return (num_texture); // Returns the current texture OpenGL ID
-}
-
-void loadGameTextures() {
-	for (auto name: textureNames) {
-		std::string filepath = "assets/" + name + ".bmp";
-		std::pair<std::string, int> texture (name, LoadTexture(filepath.c_str(), 255));
-
-		textures.insert(texture);
-	}
 }

@@ -11,23 +11,51 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3DTexture.cpp" />
     <ClCompile Include="ant.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
-    <ClCompile Include="game.cpp" />
+    <ClCompile Include="level.cpp" />
+    <ClCompile Include="levels\keyboard\keyboard_level.cpp" />
+    <ClCompile Include="levels\keyboard\keyboard_piece.cpp" />
+    <ClCompile Include="levels\keyboard\keyboard_skybox.cpp" />
+    <ClCompile Include="levels\monitor\monitor_level.cpp" />
+    <ClCompile Include="levels\monitor\monitor_skybox.cpp" />
+    <ClCompile Include="levels\motherboard\motherboard_level.cpp" />
+    <ClCompile Include="levels\motherboard\motherboard_piece.cpp" />
+    <ClCompile Include="levels\motherboard\motherboard_skybox.cpp" />
+    <ClCompile Include="levels\ssd\ssd_level.cpp" />
+    <ClCompile Include="levels\ssd\ssd_skybox.cpp" />
+    <ClCompile Include="levels\ups\ups_level.cpp" />
+    <ClCompile Include="levels\ups\ups_skybox.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="skybox.cpp" />
+    <ClCompile Include="Model_3DS.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ant.h" />
-    <ClInclude Include="bullet.h" />
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="game.h" />
-    <ClInclude Include="skybox.h" />
-    <ClInclude Include="texture.h" />
-    <ClInclude Include="utility.h" />
+    <ClInclude Include="include\3DTexture.h" />
+    <ClInclude Include="include\ant.h" />
+    <ClInclude Include="include\bullet.h" />
+    <ClInclude Include="include\camera.h" />
+    <ClInclude Include="include\level.h" />
+    <ClInclude Include="include\Model_3DS.h" />
+    <ClInclude Include="include\skybox.h" />
+    <ClInclude Include="include\texture.h" />
+    <ClInclude Include="include\utility.h" />
+    <ClInclude Include="levels\keyboard\keyboard_level.h" />
+    <ClInclude Include="levels\keyboard\keyboard_piece.h" />
+    <ClInclude Include="levels\keyboard\keyboard_skybox.h" />
+    <ClInclude Include="levels\monitor\monitor_level.h" />
+    <ClInclude Include="levels\monitor\monitor_skybox.h" />
+    <ClInclude Include="levels\motherboard\motherboard_level.h" />
+    <ClInclude Include="levels\motherboard\motherboard_piece.h" />
+    <ClInclude Include="levels\motherboard\motherboard_skybox.h" />
+    <ClInclude Include="levels\ssd\ssd_level.h" />
+    <ClInclude Include="levels\ssd\ssd_skybox.h" />
+    <ClInclude Include="levels\ups\ups_level.h" />
+    <ClInclude Include="levels\ups\ups_skybox.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{371B5E9E-00B9-44E2-B933-1231C419016A}</ProjectGuid>
@@ -65,7 +93,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GLAUX.lib;GLU32.lib;glut.lib;OPENGL32.lib;glut32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;OPENAL32.lib;alut.lib;GLAUX.lib;GLU32.lib;glut.lib;OPENGL32.lib;glut32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -80,6 +108,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>OPENAL32.lib;alut.lib;GLAUX.lib;GLU32.lib;glut.lib;OPENGL32.lib;glut32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
