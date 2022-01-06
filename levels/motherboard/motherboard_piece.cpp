@@ -49,6 +49,7 @@ MotherboardPiece::MotherboardPiece(void)
 	/*Chipset 2*/ chip2X1=-20,chip2X2=20,chip2Y=2,chip2Z1=-50,chip2Z2=-90;
 
 	/*Full Cable*/ cableX1=100;cableX2=102;cableY=2;cableZ1=45;cableZ2=10;
+	fanA=0;
 }
 
 void MotherboardPiece::StartMotherboardLevel(int motherboardSurface,int CPU,int grey,int WhiteSlot,int BlueSlot,
@@ -56,6 +57,8 @@ void MotherboardPiece::StartMotherboardLevel(int motherboardSurface,int CPU,int 
 								   int copperCable,int purple,int white_black,int copperCable2,int black,int black2)
 
 {
+
+	fanA+=100;
 
 	//CPU
 	drawCpu(CPU,grey);
@@ -79,13 +82,13 @@ void MotherboardPiece::StartMotherboardLevel(int motherboardSurface,int CPU,int 
 	glPushMatrix();
 	glTranslatef(48,28,-23);
 	glRotatef(90,0,0,1);
-	drawFan(fanAngle,gpuFX,gpuFY1,gpuFY2,gpuFY3,gpuFZ,black,black2);
+	drawFan(fanA,gpuFX,gpuFY1,gpuFY2,gpuFY3,gpuFZ,black,black2);
 	glPopMatrix();
 	//Fan 2
 	glPushMatrix();
 	glTranslatef(48,28,-91);
 	glRotatef(90,0,0,1);
-	drawFan(fanAngle,gpuFX,gpuFY1,gpuFY2,gpuFY3,gpuFZ,black,black2);
+	drawFan(fanA,gpuFX,gpuFY1,gpuFY2,gpuFY3,gpuFZ,black,black2);
 	glPopMatrix();
 	//PCIs
 	drawPCI(1,19,pciX1,pciX2,pciY,pciZ1,pciZ2,WhiteSlot);
@@ -118,7 +121,7 @@ void MotherboardPiece::StartMotherboardLevel(int motherboardSurface,int CPU,int 
 	//Fan
 	glPushMatrix();
 	glTranslatef(-100,0,-150);
-	drawFan(fanAngle,fanX,fanY1,fanY2,fanY3,fanZ,black,black2);
+	drawFan(fanA,fanX,fanY1,fanY2,fanY3,fanZ,black,black2);
 	glPopMatrix();
 	//P4 Power
 	drawP4Power();
@@ -348,8 +351,8 @@ void MotherboardPiece::drawBios(int BIOS)
 	//back face
 	glBegin(GL_QUADS);
 	glVertex3f(biosX1,biosY,biosZ2);
-	glVertex3f(biosX1,biosY,biosZ2);
-	glVertex3f(biosX1,0,biosZ2);
+	glVertex3f(biosX2,biosY,biosZ2);
+	glVertex3f(biosX2,0,biosZ2);
 	glVertex3f(biosX1,0,biosZ2);
 	glEnd();
 	//////////////////////////

@@ -52,6 +52,7 @@ public:
 	/*Chipset 1*/ GLfloat chipX1,chipX2,chipY,chipZ1,chipZ2;
 	/*Chipset 2*/ GLfloat chip2X1,chip2X2,chip2Y,chip2Z1,chip2Z2;
 	/*Full Cable*/ GLfloat cableX1,cableX2,cableY,cableZ1,cableZ2;
+	GLfloat fanA;
 	
 
 public:
